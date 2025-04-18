@@ -47,7 +47,7 @@ const NavbarWeb = () => {
               <Nav.Link href="#home">Trang chủ</Nav.Link>
               <Nav.Link href="#link">Thực đơn</Nav.Link>
               <NavDropdown
-                title="Dropdown"
+                title="Tiếng Việt"
                 id="basic-nav-dropdown"
                 menuVariant="dark"
               >
@@ -57,6 +57,19 @@ const NavbarWeb = () => {
                 >
                   Tiếng Việt
                 </NavDropdown.Item>
+                <NavDropdown.Item
+                  href="#action/3.1"
+                  className="bg-dark text-light"
+                >
+                  EngLish
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  href="#action/3.1"
+                  className="bg-dark text-light"
+                >
+                  中文
+                </NavDropdown.Item>
+
               </NavDropdown>
             </Nav>
             <div className="d-flex align-items-center">
@@ -66,35 +79,17 @@ const NavbarWeb = () => {
               <a href="#" className="text-light mx-2">
                 Hỗ trợ
               </a>
-              <div className="dropdown mx-2">
-                <a
-                  className="text-light dropdown-toggle"
-                  href="#"
-                  role="button"
-                  data-toggle="dropdown"
-                >
-                  Tiếng Việt
-                </a>
-                <div className="dropdown-menu">
-                  <a className="text-dark dropdown-item" href="#">
-                    English
-                  </a>
-                  <a className="text-dark dropdown-item" href="#">
-                    中文
-                  </a>
-                </div>
-              </div>
-              <a href="#" className="btn btn-outline-primary mx-2">
-                Đăng ký
-              </a>
-              <a href="#" className="btn btn-primary">
-                <FaSignInAlt /> Đăng nhập
-              </a>
             </div>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-    </div>
+            <a href="#" className="btn btn-outline-primary mx-2">
+              Đăng ký
+            </a>
+            <a href="#" className="btn btn-primary">
+              <FaSignInAlt /> Đăng nhập
+            </a>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+    </div >
   );
 };
 
