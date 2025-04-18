@@ -1,15 +1,15 @@
+import './App.css'
 import React from 'react';
-import { Routes, Route } from 'react-router';
+import { Route, Routes } from 'react-router';
 import NavbarWeb from './components/Navigate/NavbarWeb';
 import Header from './pages/Home/Header';
 import About from './pages/About/About';
 import Team from './pages/Team/Team';
 import Footer from './components/Footer/Footer';
 import Profile from './pages/Profile/Profile';
-import Register from './components/Register/Register';
-import Signup from './components/Signup/Signup';
-import Login from './components/Login/Login';
+import Users from './pages/Users/Users';
 
+// Define an ErrorBoundary class to handle any potential errors in the app
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
@@ -21,14 +21,15 @@ class ErrorBoundary extends React.Component {
   }
 
   componentDidCatch(error, errorInfo) {
-    console.error('Lỗi:', error);
-    console.error('Thông tin lỗi:', errorInfo);
+    console.log('Error:', error);
+    console.log('Error Info:', errorInfo);
   }
 
   render() {
     if (this.state.hasError) {
-      return <h1>Đã xảy ra lỗi. Vui lòng tải lại trang.</h1>;
+      return <h1>Something went wrong.</h1>;
     }
+
     return this.props.children;
   }
 }
@@ -49,9 +50,11 @@ function App() {
               </>
             }
           />
-          <Route path="/register" element={<Register />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/menu" element={<h1>Menu</h1>} />
+          <Route path="/login" element={<h1>Login pages</h1>} />
+          <Route path="/register" element={<h1>Register pages</h1>} />
         </Routes>
         <Footer />
       </div>
