@@ -5,6 +5,7 @@ import About from './pages/About/About';
 import Team from './pages/Team/Team';
 import Footer from './components/Footer/Footer';
 import Profile from './pages/Profile/Profile';
+import Users from './pages/Users/Users';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -38,6 +39,7 @@ function App() {
         <Header />
         <About />
         <Profile />
+        <Users />
         <Team />
         <Footer />
       </div>
