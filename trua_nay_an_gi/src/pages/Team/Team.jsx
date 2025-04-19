@@ -13,7 +13,7 @@ const Team = () => {
         <h6 className="section-subtitle text-center">Great Team</h6>
         <h3 className="section-title mb-5 text-center">Talented Chefs</h3>
         <div className="row">
-          <div className="col-md-4 my-4">
+          <div className="col-md-3 my-4">
             <div className="team-wrapper text-center">
               <img
                 src="/images/avatar.jpg"
@@ -38,7 +38,7 @@ const Team = () => {
               </h6>
             </div>
           </div>
-          <div className="col-md-4 my-4">
+          <div className="col-md-3 my-4">
             <div className="team-wrapper text-center">
               <img
                 src="/images/avatar.jpg"
@@ -63,7 +63,7 @@ const Team = () => {
               </h6>
             </div>
           </div>
-          <div className="col-md-4 my-4">
+          <div className="col-md-3 my-4">
             <div className="team-wrapper text-center">
               <img
                 src="/images/avatar.jpg"
@@ -88,7 +88,7 @@ const Team = () => {
               </h6>
             </div>
           </div>
-          <div className="col-md-4 my-4">
+          <div className="col-md-3 my-4">
             <div className="team-wrapper text-center">
               <img
                 src="/images/avatar.jpg"

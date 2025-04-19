@@ -1,0 +1,36 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "username": "admin",
+      "email": "hmld@example.com",
+      "phone": "0123456787",
+      "password": "admin123",
+      "role": "admin",
+      "blocked": false,
+      "name": "nguyen thi hai",
+      "birthday": "24/10/1997",
+      "gender": "nam",
+      "address": "hulrl"
+    },
+    {
+      "id": "2",
+      "username": "user1",
+      "email": "user1@example.com",
+      "phone": "0987654321",
+      "password": "user123",
+      "role": "user",
+      "blocked": false
+    },
+    {
+      "id": "3",
+      "username": "user2",
+      "email": "tote.that.tha@gmail.com",
+      "phone": "0123456789",
+      "password": "123456",
+      "role": "user",
+      "blocked": false,
+      "verified": false
+    }
+  ]
+}
