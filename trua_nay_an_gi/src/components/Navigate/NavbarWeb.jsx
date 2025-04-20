@@ -36,7 +36,7 @@ const NavbarWeb = () => {
       >
         <Container>
           <Navbar.Brand
-            href="#home"
+            href="/"
             className="navbar-brand font-weight-bold text-light"
           >
             Trưa nay ăn gì
@@ -44,27 +44,27 @@ const NavbarWeb = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mx-auto">
-              <Nav.Link href="#home">Trang chủ</Nav.Link>
-              <Nav.Link href="#link">Thực đơn</Nav.Link>
+              <Nav.Link href="/">Trang chủ</Nav.Link>
+              <Nav.Link href="/menu">Thực đơn</Nav.Link>
               <NavDropdown
                 title="Tiếng Việt"
                 id="basic-nav-dropdown"
                 menuVariant="dark"
               >
                 <NavDropdown.Item
-                  href="#action/3.1"
+                  href="/"
                   className="bg-dark text-light"
                 >
                   Tiếng Việt
                 </NavDropdown.Item>
                 <NavDropdown.Item
-                  href="#action/3.1"
+                  href="#english"
                   className="bg-dark text-light"
                 >
                   EngLish
                 </NavDropdown.Item>
                 <NavDropdown.Item
-                  href="#action/3.1"
+                  href="#中文"
                   className="bg-dark text-light"
                 >
                   中文
@@ -76,14 +76,14 @@ const NavbarWeb = () => {
               <a href="#" className="text-light mx-2">
                 <FaRegBell />
               </a>
-              <a href="#" className="text-light mx-2">
+              <a href="../#about" className="text-light mx-2">
                 Hỗ trợ
               </a>
             </div>
-            <a href="#" className="btn btn-outline-primary mx-2">
+            <a href="/register" className="btn btn-outline-primary mx-2">
               Đăng ký
             </a>
-            <a href="#" className="btn btn-primary">
+            <a href="/login" className="btn btn-primary">
               <FaSignInAlt /> Đăng nhập
             </a>
         </Navbar.Collapse>

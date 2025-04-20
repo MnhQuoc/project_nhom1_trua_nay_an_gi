@@ -25,16 +25,16 @@ const Footer = () => {
               />
             </div>
             <div className="col-md-9 text-md-right">
-              <a href="#" className="px-3">
+              <a href="../#team" className="px-3">
                 <small className="font-weight-bold">Về chúng tôi</small>
               </a>
-              <a href="#" className="px-3">
+              <a href="../#" className="px-3">
                 <small className="font-weight-bold">Địa điểm</small>
               </a>
-              <a href="#" className="px-3">
+              <a href="../#" className="px-3">
                 <small className="font-weight-bold">Trung tâm hỗ trợ</small>
               </a>
-              <a href="#" className="pl-3">
+              <a href="../#" className="pl-3">
                 <small className="font-weight-bold">Điều khoản</small>
               </a>
             </div>
@@ -53,16 +53,16 @@ const Footer = () => {
             </div>
             <div className="social-links d-none d-md-block">
               <h6 className="small mb-0">
-                <a href="#" className="px-2">
+                <a href="https://www.facebook.com/" className="px-2">
                   <FaFacebook />
                 </a>
-                <a href="#" className="px-2">
+                <a href="https://t.co/" className="px-2">
                   <FaSquareXTwitter />
                 </a>
-                <a href="#" className="px-2">
+                <a href="https://www.instagram.com/" className="px-2">
                   <FaSquareInstagram />
                 </a>
-                <a href="#" className="px-2">
+                <a href="https://mail.google.com/" className="px-2">
                   <FaSquareGooglePlus />
                 </a>
               </h6>

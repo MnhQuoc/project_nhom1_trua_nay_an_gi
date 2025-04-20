@@ -338,11 +338,11 @@ progress {
 
 [type="search"] {
   outline-offset: -2px;
-  -webkit-appearance: none;
+  -webkit-appearance: button;
 }
 
 [type="search"]::-webkit-search-decoration {
-  -webkit-appearance: none;
+  -webkit-appearance: button;
 }
 
 ::-webkit-file-upload-button {
@@ -4160,9 +4160,9 @@ input[type="button"].btn-block {
   background-color: #fff;
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+  -webkit-appearance: button;
+     -moz-appearance: button;
+          appearance: button;
 }
 
 .custom-select:focus {
@@ -4279,9 +4279,9 @@ input[type="button"].btn-block {
   height: calc(1rem + 0.4rem);
   padding: 0;
   background-color: transparent;
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+  -webkit-appearance: button;
+     -moz-appearance: button;
+          appearance: button;
 }
 
 .custom-range:focus {
@@ -4313,8 +4313,8 @@ input[type="button"].btn-block {
   border-radius: 1rem;
   -webkit-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  -webkit-appearance: none;
-          appearance: none;
+  -webkit-appearance: button;
+          appearance: button;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -4346,8 +4346,8 @@ input[type="button"].btn-block {
   border-radius: 1rem;
   -webkit-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  -moz-appearance: none;
-       appearance: none;
+  -moz-appearance: button;
+       appearance: button;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -4382,7 +4382,7 @@ input[type="button"].btn-block {
   border-radius: 1rem;
   -webkit-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  appearance: none;
+  appearance: button;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -6232,9 +6232,9 @@ button.close {
   padding: 0;
   background-color: transparent;
   border: 0;
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+  -webkit-appearance: button;
+     -moz-appearance: button;
+          appearance: button;
 }
 
 a.close.disabled {
