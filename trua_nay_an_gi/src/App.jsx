@@ -1,6 +1,6 @@
-import './App.css'
+import './App.css';
 import React from 'react';
-import { Route, Routes } from 'react-router';
+import { Route, Routes, Navigate } from 'react-router';
 import NavbarWeb from './components/Navigate/NavbarWeb';
 import Header from './pages/Home/Header';
 import About from './pages/About/About';
@@ -8,6 +8,7 @@ import Team from './pages/Team/Team';
 import Footer from './components/Footer/Footer';
 import Profile from './pages/Profile/Profile';
 import Users from './pages/Users/Users';
+import Intro from './pages/Intro/Intro';
 
 // Define an ErrorBoundary class to handle any potential errors in the app
 class ErrorBoundary extends React.Component {
@@ -40,8 +41,20 @@ function App() {
       <div className="App">
         <NavbarWeb />
         <Routes>
+         
+
+          {/* Page Intro will be shown first */}
+          <Route path="/" element={<Intro />} />
+
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/menu" element={<h1>Menu</h1>} />
+          <Route path="/login" element={<h1>Login pages</h1>} />
+          <Route path="/register" element={<h1>Register pages</h1>} />
+
+          {/* Main page */}
           <Route
-            path="/"
+            path="/home"
             element={
               <>
                 <Header />
@@ -50,11 +63,6 @@ function App() {
               </>
             }
           />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/users" element={<Users />} />
-          <Route path="/menu" element={<h1>Menu</h1>} />
-          <Route path="/login" element={<h1>Login pages</h1>} />
-          <Route path="/register" element={<h1>Register pages</h1>} />
         </Routes>
         <Footer />
       </div>
