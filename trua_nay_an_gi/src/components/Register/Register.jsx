@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import emailjs from '@emailjs/browser';
 import { useNavigate } from 'react-router';
 
 function Register() {
@@ -11,6 +12,7 @@ function Register() {
   });
 
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false); // Thêm loading để quản lý trạng thái gửi
   const [errors, setErrors] = useState({
     username: '',
     password: '',
@@ -57,28 +59,6 @@ function Register() {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validateForm()) {
-      setMessage('Vui lòng sửa lỗi trong các trường.');
-      return;
-    }
-
-    try {
-      const response = await axios.post('http://localhost:3001/users', form);
-
-      if (response.status === 201) {
-        setMessage('Đăng ký thành công!');
-        setForm({ username: '', password: '', phone: '', email: '' });
-      } else {
-        throw new Error('Đăng ký thất bại!');
-      }
-    } catch (error) {
-      console.error(error);
-      setMessage('Đăng ký thất bại!');
-    }
-  };
-
   const validateForm = () => {
     let valid = true;
     let errorMessages = {};
@@ -106,6 +86,70 @@ function Register() {
 
     setErrors(errorMessages);
     return valid;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    if (!validateForm()) {
+      setMessage('Vui lòng sửa lỗi trong các trường.');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      // Kiểm tra nếu tên đăng nhập đã tồn tại
+      const response = await axios.get(`http://localhost:3001/users?username=${form.username}`);
+      if (response.data.length > 0) {
+        setMessage('Tài khoản đã được đăng ký. Vui lòng chọn tên đăng nhập khác.');
+        setLoading(false);
+        return;
+      }
+
+      // Nếu tên đăng nhập không trùng, tiến hành đăng ký
+      const { username, password, phone, email } = form;
+      const newId = Date.now(); // Tạo id mới cho user
+
+      // Thêm user mới vào cơ sở dữ liệu trên API (cổng 3001)
+      await axios.post("http://localhost:3001/users", {
+        id: newId,
+        username,
+        email,
+        phone,
+        password,
+        role: "user",
+        blocked: false,
+        verified: false, // Trạng thái chưa xác minh
+      });
+
+      // Tạo link xác nhận cho người dùng
+      const confirmationLink = `http://localhost:3000/verify/${newId}`;
+
+      // Gửi email xác nhận qua EmailJS
+      await emailjs.send(
+        "service_2o1ywkk",  // ID dịch vụ EmailJS
+        "template_m0x0lah",  // ID template EmailJS
+        {
+          username: username,
+          email: email,
+          userId: newId,
+          confirmationLink: confirmationLink,  // Link xác nhận
+        },
+        "ZcmKYaJ0MqbWwcw2h"  // public key từ EmailJS
+      );
+
+      // Hiển thị thông báo thành công và chuyển hướng người dùng
+      setMessage('Đăng ký thành công! Vui lòng kiểm tra email để xác nhận.');
+      setForm({ username: '', password: '', phone: '', email: '' });
+      setLoading(false);
+      navigate('/login'); // Chuyển hướng đến trang đăng nhập nếu cần
+
+    } catch (error) {
+      console.error(error);
+      setMessage('Lỗi đăng ký. Vui lòng thử lại.');
+      setLoading(false);
+    }
   };
 
   return (
@@ -173,9 +217,8 @@ function Register() {
             {errors.email && <p className="text-danger">{errors.email}</p>}
           </div>
 
-          {/* Thêm kiểu dáng cho nút Đăng ký */}
-          <button type="submit" className="btn btn-primary w-100" style={{ padding: '15px' }}>
-            Đăng ký
+          <button type="submit" className="btn btn-primary w-100" style={{ padding: '15px' }} disabled={loading}>
+            {loading ? 'Đang đăng ký...' : 'Đăng ký'}
           </button>
         </form>
 

@@ -59,11 +59,15 @@ function Login() {
       setMessage('Vui lòng sửa lỗi trước khi gửi');
       return;
     }
+    
     setMessage('Đăng nhập thành công!');
     setForm({
       username: '',
       password: ''
     });
+    
+    // Chuyển hướng đến trang chủ sau khi đăng nhập thành công
+    navigate('/home');  // Đảm bảo rằng bạn đã cấu hình route '/home'
   };
 
   return (

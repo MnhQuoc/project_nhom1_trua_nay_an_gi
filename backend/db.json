@@ -1,0 +1,47 @@
+{
+  "users": [
+    {
+      "id": "4fea"
+    },
+    {
+      "id": "1745293587693",
+      "username": "nhanhnhen",
+      "email": "nhomhaiduan@gmail.com",
+      "phone": "01234567891",
+      "password": "nhanhnhen1",
+      "role": "user",
+      "blocked": false,
+      "verified": true
+    },
+    {
+      "id": "1745295208833",
+      "username": "nhanhnhen",
+      "email": "nhomhaiduan@gmail.com",
+      "phone": "01234567891",
+      "password": "nhanhnhen1",
+      "role": "user",
+      "blocked": false,
+      "verified": true
+    },
+    {
+      "id": 1745312310240,
+      "username": "hoangphuc1234",
+      "email": "lhphuc822004@gmail.com",
+      "phone": "09898645881",
+      "password": "phuc2004@",
+      "role": "user",
+      "blocked": false,
+      "verified": false
+    },
+    {
+      "id": 1745312503910,
+      "username": "hoangphuc1234",
+      "email": "lhphuc822004@gmail.com",
+      "phone": "09898645881",
+      "password": "phuc2004@",
+      "role": "user",
+      "blocked": false,
+      "verified": false
+    }
+  ]
+}
