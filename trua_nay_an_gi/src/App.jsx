@@ -9,7 +9,9 @@ import Footer from './components/Footer/Footer';
 import Profile from './pages/Profile/Profile';
 import Users from './pages/Users/Users';
 import Intro from './pages/Intro/Intro';
-
+import Register from './components/Register/Register';
+import Login from './components/Login/Login';
+import Signup from './components/Signup/Signup'
 // Define an ErrorBoundary class to handle any potential errors in the app
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -49,8 +51,9 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/users" element={<Users />} />
           <Route path="/menu" element={<h1>Menu</h1>} />
-          <Route path="/login" element={<h1>Login pages</h1>} />
-          <Route path="/register" element={<h1>Register pages</h1>} />
+          <Route path="/login" element={<Login/>} />
+          <Route path="/register" element={<Register/>} />
+          <Route path="/signup" element={<Signup/>} />
 
           {/* Main page */}
           <Route

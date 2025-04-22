@@ -1,7 +1,8 @@
 import React from "react";
 import { Typography, Button, Row, Col, Space } from "antd";
 import { useNavigate } from "react-router-dom"; // Thêm dòng này
-
+import LoadingCat from "./Loading"
+import  { useState } from "react";
 const { Title, Paragraph } = Typography;
 
 const styles = {
@@ -18,7 +19,7 @@ const styles = {
   overlay: {
     position: "absolute",
     inset: 0,
-    backgroundColor: "rgba(0, 0, 0, 0.6)", // lớp phủ làm tối ảnh nền
+    backgroundColor: "rgba(0, 0, 0, 0.6)", 
     zIndex: 1,
   },
   content: {
@@ -52,11 +53,13 @@ const styles = {
 
 const Intro = () => {
   const navigate = useNavigate(); // Khởi tạo navigate
-
+  const [loading, setLoading] = useState(false);
   const handleExploreClick = () => {
-    navigate("/home"); // Chuyển hướng tới route "/home"
+    setLoading(true);
+    setTimeout(() => {
+      navigate("/home"); 
+    }, 1500); 
   };
-
   return (
     <div style={styles.wrapper}>
       <div style={styles.overlay}></div>
@@ -90,6 +93,7 @@ const Intro = () => {
           </div>
         </Col>
       </Row>
+      {loading && <LoadingCat />}
     </div>
   );
 };
