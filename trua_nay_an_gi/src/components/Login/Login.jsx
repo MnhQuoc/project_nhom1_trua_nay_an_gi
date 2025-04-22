@@ -13,17 +13,14 @@ function Login() {
   });
 
   const [message, setMessage] = useState('');
-  
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     setForm({
       ...form,
       [name]: value,
     });
-
     validateField(name, value);
   };
 
@@ -33,16 +30,12 @@ function Login() {
     if (name === 'username') {
       if (value.trim() === '') {
         errorMessage = 'Tên đăng nhập không được để trống';
-      } else if (value.length < 6) {
-        errorMessage = 'Tên đăng nhập phải có ít nhất 6 ký tự';
       }
     }
 
     if (name === 'password') {
       if (value.trim() === '') {
         errorMessage = 'Mật khẩu không được để trống';
-      } else if (value.length < 8) {
-        errorMessage = 'Mật khẩu phải có ít nhất 8 ký tự';
       }
     }
 
@@ -52,22 +45,53 @@ function Login() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     Object.keys(form).forEach((field) => validateField(field, form[field]));
     if (Object.values(errors).some((error) => error !== '')) {
       setMessage('Vui lòng sửa lỗi trước khi gửi');
       return;
     }
-    
-    setMessage('Đăng nhập thành công!');
-    setForm({
-      username: '',
-      password: ''
-    });
-    
-    // Chuyển hướng đến trang chủ sau khi đăng nhập thành công
-    navigate('/home');  // Đảm bảo rằng bạn đã cấu hình route '/home'
+
+    try {
+      const response = await fetch('http://localhost:3001/users', {
+        method: 'GET'
+      });
+      const users = await response.json();
+
+      // Tìm user phù hợp
+      const user = users.find(u => 
+        u.username === form.username && 
+        u.password === form.password
+      );
+
+      if (user) {
+        // Lưu thông tin user vào localStorage
+        localStorage.setItem('user', JSON.stringify({
+          id: user.id,
+          username: user.username,
+          role: user.role
+        }));
+        
+        setMessage('Đăng nhập thành công!');
+        // Reset form
+        setForm({
+          username: '',
+          password: ''
+        });
+
+        // Chuyển hướng đến trang chủ sau 1 giây
+        setTimeout(() => {
+          navigate('/home');
+          window.location.reload(); // Reload để cập nhật navbar
+        }, 1000);
+      } else {
+        setMessage('Tên đăng nhập hoặc mật khẩu không đúng');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      setMessage('Có lỗi xảy ra khi đăng nhập');
+    }
   };
 
   return (
@@ -98,15 +122,14 @@ function Login() {
         </div>
         <button type="submit" className="btn btn-primary btn-block">Đăng nhập</button>
       </form>
-      {message && <p className="mt-3">{message}</p>}
+      {message && <div className={`alert ${message.includes('thành công') ? 'alert-success' : 'alert-danger'} mt-3`}>{message}</div>}
 
-      {/* Câu hỏi nếu chưa có tài khoản */}
       <div className="mt-4 text-center">
         <span>Bạn chưa có tài khoản?</span>
         <button
           type="button"
           className="btn btn-link"
-          onClick={() => navigate('/register')} // Đường dẫn đến trang đăng ký
+          onClick={() => navigate('/register')}
         >
           Đăng ký
         </button>

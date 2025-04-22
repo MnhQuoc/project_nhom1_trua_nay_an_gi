@@ -78,7 +78,7 @@ const NavbarWeb = () => {
                 <NavDropdown.Item href="#english" className=" text-dark">
                   English
                 </NavDropdown.Item>
-                <NavDropdown.Item href="#中文" className="text-dark ">
+                <NavDropdown.Item href="#中文" className="text-dark">
                   中文
                 </NavDropdown.Item>
               </NavDropdown>
