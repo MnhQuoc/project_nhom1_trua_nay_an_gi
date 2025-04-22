@@ -100,7 +100,7 @@ function Register() {
 
     try {
       // Kiểm tra nếu tên đăng nhập đã tồn tại
-      const response = await axios.get(`http://localhost:3000/users?username=${form.username}`);
+      const response = await axios.get(`http://localhost:3001/users?username=${form.username}`);
       if (response.data.length > 0) {
         setMessage('Tài khoản đã được đăng ký. Vui lòng chọn tên đăng nhập khác.');
         setLoading(false);
@@ -112,7 +112,7 @@ function Register() {
       const newId = Date.now(); // Tạo id mới cho user
 
       // Thêm user mới vào cơ sở dữ liệu trên API (cổng 3001)
-      await axios.post("http://localhost:3000/users", {
+      await axios.post("http://localhost:3001/users", {
         id: newId,
         username,
         email,
@@ -124,7 +124,7 @@ function Register() {
       });
 
       // Tạo link xác nhận cho người dùng
-      const confirmationLink = `http://localhost:3000/verify/${newId}`;
+      const confirmationLink = `http://localhost:3001/verify/${newId}`;
 
       // Gửi email xác nhận qua EmailJS
       await emailjs.send(

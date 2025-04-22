@@ -27,7 +27,90 @@
       "password": "phuc2004@",
       "role": "user",
       "blocked": false,
+      "verified": false,
+      "address": "Cầu Giấy",
+      "time": "8AM-12PM",
+      "restname": "Quán Anh Béo"
+    },
+    {
+      "id": 1745338495664,
+      "username": "admin1111",
+      "email": "albumanh1234@gmail.com",
+      "phone": "02343943941",
+      "password": "admin1234",
+      "role": "admin",
+      "blocked": false,
       "verified": false
+    },
+    {
+      "id": 1745348611792,
+      "username": "usertest1",
+      "email": "albumanh1234@gmail.com",
+      "phone": "02149293486",
+      "password": "user1234",
+      "role": "merchant",
+      "blocked": false,
+      "verified": true,
+      "restname": "Quán Anh Béo 22",
+      "address": "Cầu Giấy",
+      "time": "8AM-12PM"
+    },
+    {
+      "id": 1745349964177,
+      "username": "usertesst2",
+      "email": "albumanh1234@gmail.com",
+      "phone": "01248124124",
+      "password": "user1234",
+      "role": "user",
+      "blocked": false,
+      "verified": false,
+      "restname": "Ngõ Nhỏ Quán",
+      "address": "Quan Hoa",
+      "time": "9PM-5AM"
+    }
+  ],
+  "request": [
+    {
+      "userId": 1745348611792,
+      "status": "rejected",
+      "role": "merchant",
+      "verified": false,
+      "id": 1
+    },
+    {
+      "userId": 1745348611792,
+      "status": "rejected",
+      "role": "merchant",
+      "verified": false,
+      "id": 2
+    },
+    {
+      "userId": 1745348611792,
+      "status": "approved",
+      "role": "merchant",
+      "verified": false,
+      "id": 3
+    },
+    {
+      "userId": 1745348611792,
+      "status": "rejected",
+      "role": "merchant",
+      "verified": false,
+      "id": 4
+    },
+    {
+      "userId": 1745349964177,
+      "status": "pending",
+      "role": "merchant",
+      "verified": false,
+      "id": 5
+    },
+    {
+      "userId": 1745349964177,
+      "status": "pending",
+      "role": "merchant",
+      "verified": false,
+      "id": 6
     }
   ]
 }

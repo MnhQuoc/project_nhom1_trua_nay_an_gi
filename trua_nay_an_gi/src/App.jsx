@@ -12,6 +12,9 @@ import Intro from './pages/Intro/Intro';
 import Register from './components/Register/Register';
 import Login from './components/Login/Login';
 import Signup from './components/Signup/Signup'
+import MerchantList from "./pages/MerchantList/MerchantList.jsx";
+import ChangeInfo from "./pages/ChangeInfo/ChangeInfo.jsx";
+
 // Define an ErrorBoundary class to handle any potential errors in the app
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -43,17 +46,17 @@ function App() {
       <div className="App">
         <NavbarWeb />
         <Routes>
-         
-
           {/* Page Intro will be shown first */}
           <Route path="/" element={<Intro />} />
-
           <Route path="/profile" element={<Profile />} />
           <Route path="/users" element={<Users />} />
           <Route path="/menu" element={<h1>Menu</h1>} />
           <Route path="/login" element={<Login/>} />
           <Route path="/register" element={<Register/>} />
           <Route path="/signup" element={<Signup/>} />
+          <Route path='/listmerchant' element={<MerchantList/>} />
+          <Route path='/changeinfo' element={<ChangeInfo/>} />
+
 
           {/* Main page */}
           <Route
