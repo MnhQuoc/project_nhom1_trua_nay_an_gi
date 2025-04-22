@@ -13,7 +13,8 @@ function Login() {
   });
 
   const [message, setMessage] = useState('');
-  
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -46,28 +47,45 @@ function Login() {
       }
     }
 
-    setErrors({
-      ...errors,
+    setErrors((prevErrors) => ({
+      ...prevErrors,
       [name]: errorMessage,
-    });
+    }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Kiểm tra và hiển thị lỗi nếu có
     Object.keys(form).forEach((field) => validateField(field, form[field]));
     if (Object.values(errors).some((error) => error !== '')) {
       setMessage('Vui lòng sửa lỗi trước khi gửi');
       return;
     }
-    
-    setMessage('Đăng nhập thành công!');
-    setForm({
-      username: '',
-      password: ''
-    });
-    
-    // Chuyển hướng đến trang chủ sau khi đăng nhập thành công
-    navigate('/home');  // Đảm bảo rằng bạn đã cấu hình route '/home'
+
+    setIsLoading(true);
+    setMessage('');
+
+    try {
+      const response = await fetch('http://localhost:3000/users');
+      const data = await response.json();
+
+      const user = data.find(
+        (user) => user.username === form.username && user.password === form.password
+      );
+
+      if (user) {
+        setMessage('Đăng nhập thành công!');
+        setForm({ username: '', password: '' });
+        navigate('/home');
+      } else {
+        setMessage('Tên đăng nhập hoặc mật khẩu không đúng!');
+      }
+    } catch (error) {
+      setMessage('Đã xảy ra lỗi, vui lòng thử lại!');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -85,6 +103,7 @@ function Login() {
           />
           {errors.username && <p style={{ color: 'red' }}>{errors.username}</p>}
         </div>
+
         <div className="form-group">
           <label style={{ textAlign: 'left', display: 'block' }}>Mật khẩu:</label>
           <input
@@ -96,17 +115,20 @@ function Login() {
           />
           {errors.password && <p style={{ color: 'red' }}>{errors.password}</p>}
         </div>
-        <button type="submit" className="btn btn-primary btn-block">Đăng nhập</button>
+
+        <button type="submit" className="btn btn-primary btn-block" disabled={isLoading}>
+          {isLoading ? 'Đang đăng nhập...' : 'Đăng nhập'}
+        </button>
       </form>
+
       {message && <p className="mt-3">{message}</p>}
 
-      {/* Câu hỏi nếu chưa có tài khoản */}
       <div className="mt-4 text-center">
         <span>Bạn chưa có tài khoản?</span>
         <button
           type="button"
           className="btn btn-link"
-          onClick={() => navigate('/register')} // Đường dẫn đến trang đăng ký
+          onClick={() => navigate('/register')}
         >
           Đăng ký
         </button>
