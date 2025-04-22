@@ -1,12 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Navbar.css';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { FaRegBell, FaSignInAlt } from 'react-icons/fa';
+import { FaRegBell, FaSignInAlt, FaUserCircle, FaSignOutAlt } from 'react-icons/fa';
+import { useNavigate } from 'react-router';
 
 const NavbarWeb = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Kiểm tra nếu có thông tin người dùng trong localStorage
+    const user = localStorage.getItem('user');
+    if (user) {
+      setIsLoggedIn(true);
+      setUsername(JSON.parse(user).username);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    setIsLoggedIn(false);
+    setUsername('');
+    navigate('/');
+  };
+
   return (
     <div>
       {/* First Navigation */}
@@ -51,25 +72,15 @@ const NavbarWeb = () => {
                 id="basic-nav-dropdown"
                 menuVariant="dark"
               >
-                <NavDropdown.Item
-                  href="/"
-                  className="bg-dark text-light"
-                >
+                <NavDropdown.Item href="/" className=" text-dark">
                   Tiếng Việt
                 </NavDropdown.Item>
-                <NavDropdown.Item
-                  href="#english"
-                  className="bg-dark text-light"
-                >
-                  EngLish
+                <NavDropdown.Item href="#english" className=" text-dark">
+                  English
                 </NavDropdown.Item>
-                <NavDropdown.Item
-                  href="#中文"
-                  className="bg-dark text-light"
-                >
+                <NavDropdown.Item href="#中文" className="text-dark ">
                   中文
                 </NavDropdown.Item>
-
               </NavDropdown>
             </Nav>
             <div className="d-flex align-items-center">
@@ -80,16 +91,37 @@ const NavbarWeb = () => {
                 Hỗ trợ
               </a>
             </div>
-            <a href="/register" className="btn btn-outline-primary mx-2">
-              Đăng ký
-            </a>
-            <a href="/login" className="btn btn-primary">
-              <FaSignInAlt /> Đăng nhập
-            </a>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
-    </div >
+            {!isLoggedIn ? (
+              <>
+                <a href="/register" className="btn btn-outline-primary mx-2">
+                  Đăng ký
+                </a>
+                <a href="/login" className="btn btn-primary">
+                  <FaSignInAlt /> Đăng nhập
+                </a>
+              </>
+            ) : (
+              <NavDropdown
+                title={
+                  <span>
+                    <FaUserCircle /> {username}
+                  </span>
+                }
+                id="user-dropdown"
+                className="text-light"
+                menuVariant="dark"
+              >
+                <NavDropdown.Item href="/profile" className=" text-dark">Tài khoản</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item onClick={handleLogout} className=" text-dark">
+                  <FaSignOutAlt /> Đăng xuất
+                </NavDropdown.Item>
+              </NavDropdown>
+            )}
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+    </div>
   );
 };
 

@@ -19,12 +19,10 @@ function Login() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     setForm({
       ...form,
       [name]: value,
     });
-
     validateField(name, value);
   };
 
@@ -63,6 +61,7 @@ function Login() {
       return;
     }
 
+<<<<<<< HEAD
     setIsLoading(true);
     setMessage('');
 
@@ -85,6 +84,44 @@ function Login() {
       setMessage('Đã xảy ra lỗi, vui lòng thử lại!');
     } finally {
       setIsLoading(false);
+=======
+    try {
+      // TODO: Thay thế bằng API thực tế
+      const response = await fetch('http://localhost:3001/users', {
+        method: 'GET'
+      });
+      const users = await response.json();
+      
+      // Tìm user phù hợp
+      const user = users.find(u => 
+        u.username === form.username && 
+        u.password === form.password
+      );
+
+      if (user) {
+        // Lưu thông tin user vào localStorage
+        localStorage.setItem('user', JSON.stringify({
+          username: user.username,
+          id: user.id,
+          role: user.role
+        }));
+        
+        setMessage('Đăng nhập thành công!');
+        // Reset form
+        setForm({
+          username: '',
+          password: ''
+        });
+        
+        // Chuyển hướng đến trang chủ
+        navigate('/home');
+      } else {
+        setMessage('Tên đăng nhập hoặc mật khẩu không đúng');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      setMessage('Có lỗi xảy ra khi đăng nhập');
+>>>>>>> 0754ff21 (quoc)
     }
   };
 
