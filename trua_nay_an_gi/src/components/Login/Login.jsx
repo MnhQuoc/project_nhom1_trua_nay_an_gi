@@ -13,16 +13,17 @@ function Login() {
   });
 
   const [message, setMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-
+  
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
     setForm({
       ...form,
       [name]: value,
     });
+
     validateField(name, value);
   };
 
@@ -45,84 +46,28 @@ function Login() {
       }
     }
 
-    setErrors((prevErrors) => ({
-      ...prevErrors,
+    setErrors({
+      ...errors,
       [name]: errorMessage,
-    }));
+    });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Kiểm tra và hiển thị lỗi nếu có
     Object.keys(form).forEach((field) => validateField(field, form[field]));
     if (Object.values(errors).some((error) => error !== '')) {
       setMessage('Vui lòng sửa lỗi trước khi gửi');
       return;
     }
-
-<<<<<<< HEAD
-    setIsLoading(true);
-    setMessage('');
-
-    try {
-      const response = await fetch('http://localhost:3000/users');
-      const data = await response.json();
-
-      const user = data.find(
-        (user) => user.username === form.username && user.password === form.password
-      );
-
-      if (user) {
-        setMessage('Đăng nhập thành công!');
-        setForm({ username: '', password: '' });
-        navigate('/home');
-      } else {
-        setMessage('Tên đăng nhập hoặc mật khẩu không đúng!');
-      }
-    } catch (error) {
-      setMessage('Đã xảy ra lỗi, vui lòng thử lại!');
-    } finally {
-      setIsLoading(false);
-=======
-    try {
-      // TODO: Thay thế bằng API thực tế
-      const response = await fetch('http://localhost:3001/users', {
-        method: 'GET'
-      });
-      const users = await response.json();
-      
-      // Tìm user phù hợp
-      const user = users.find(u => 
-        u.username === form.username && 
-        u.password === form.password
-      );
-
-      if (user) {
-        // Lưu thông tin user vào localStorage
-        localStorage.setItem('user', JSON.stringify({
-          username: user.username,
-          id: user.id,
-          role: user.role
-        }));
-        
-        setMessage('Đăng nhập thành công!');
-        // Reset form
-        setForm({
-          username: '',
-          password: ''
-        });
-        
-        // Chuyển hướng đến trang chủ
-        navigate('/home');
-      } else {
-        setMessage('Tên đăng nhập hoặc mật khẩu không đúng');
-      }
-    } catch (error) {
-      console.error('Login error:', error);
-      setMessage('Có lỗi xảy ra khi đăng nhập');
->>>>>>> 0754ff21 (quoc)
-    }
+    
+    setMessage('Đăng nhập thành công!');
+    setForm({
+      username: '',
+      password: ''
+    });
+    
+    // Chuyển hướng đến trang chủ sau khi đăng nhập thành công
+    navigate('/home');  // Đảm bảo rằng bạn đã cấu hình route '/home'
   };
 
   return (
@@ -140,7 +85,6 @@ function Login() {
           />
           {errors.username && <p style={{ color: 'red' }}>{errors.username}</p>}
         </div>
-
         <div className="form-group">
           <label style={{ textAlign: 'left', display: 'block' }}>Mật khẩu:</label>
           <input
@@ -152,20 +96,17 @@ function Login() {
           />
           {errors.password && <p style={{ color: 'red' }}>{errors.password}</p>}
         </div>
-
-        <button type="submit" className="btn btn-primary btn-block" disabled={isLoading}>
-          {isLoading ? 'Đang đăng nhập...' : 'Đăng nhập'}
-        </button>
+        <button type="submit" className="btn btn-primary btn-block">Đăng nhập</button>
       </form>
-
       {message && <p className="mt-3">{message}</p>}
 
+      {/* Câu hỏi nếu chưa có tài khoản */}
       <div className="mt-4 text-center">
         <span>Bạn chưa có tài khoản?</span>
         <button
           type="button"
           className="btn btn-link"
-          onClick={() => navigate('/register')}
+          onClick={() => navigate('/register')} // Đường dẫn đến trang đăng ký
         >
           Đăng ký
         </button>
