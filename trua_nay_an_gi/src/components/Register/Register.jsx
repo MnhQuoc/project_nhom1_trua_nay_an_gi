@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router';
 
 function Register() {
   const [form, setForm] = useState({
@@ -16,6 +17,8 @@ function Register() {
     phone: '',
     email: ''
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({
@@ -106,68 +109,89 @@ function Register() {
   };
 
   return (
-    <div className="container" style={{ maxWidth: '400px', margin: 'auto', padding: '20px' }}>
-      <h2>Đăng ký</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="username" className="form-label">Tên đăng nhập:</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            className="form-control"
-            value={form.username}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            required
-          />
-          {errors.username && <p className="text-danger">{errors.username}</p>}
+    <div className="container d-flex justify-content-center">
+      <div style={{ maxWidth: '400px', width: '100%', padding: '20px', textAlign: 'left' }}>
+        <h2 className="mb-4 text-center">Đăng Ký</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="username" className="form-label">Tên đăng nhập:</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              className="form-control"
+              value={form.username}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              required
+            />
+            {errors.username && <p className="text-danger">{errors.username}</p>}
+          </div>
+
+          <div className="mb-3">
+            <label htmlFor="password" className="form-label">Mật khẩu:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              className="form-control"
+              value={form.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              required
+            />
+            {errors.password && <p className="text-danger">{errors.password}</p>}
+          </div>
+
+          <div className="mb-3">
+            <label htmlFor="phone" className="form-label">Số điện thoại:</label>
+            <input
+              type="text"
+              id="phone"
+              name="phone"
+              className="form-control"
+              value={form.phone}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              required
+            />
+            {errors.phone && <p className="text-danger">{errors.phone}</p>}
+          </div>
+
+          <div className="mb-3">
+            <label htmlFor="email" className="form-label">Email:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              className="form-control"
+              value={form.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              required
+            />
+            {errors.email && <p className="text-danger">{errors.email}</p>}
+          </div>
+
+          {/* Thêm kiểu dáng cho nút Đăng ký */}
+          <button type="submit" className="btn btn-primary w-100" style={{ padding: '15px' }}>
+            Đăng ký
+          </button>
+        </form>
+
+        {message && <p className="mt-3">{message}</p>}
+
+        <div className="mt-4 d-flex justify-content-between align-items-center">
+          <span>Bạn đã có tài khoản?</span>
+          <button
+            type="button"
+            className="btn btn-link"
+            onClick={() => navigate('/login')}
+          >
+            Đăng nhập
+          </button>
         </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">Mật khẩu:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            className="form-control"
-            value={form.password}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            required
-          />
-          {errors.password && <p className="text-danger">{errors.password}</p>}
-        </div>
-        <div className="mb-3">
-          <label htmlFor="phone" className="form-label">Số điện thoại:</label>
-          <input
-            type="text"
-            id="phone"
-            name="phone"
-            className="form-control"
-            value={form.phone}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            required
-          />
-          {errors.phone && <p className="text-danger">{errors.phone}</p>}
-        </div>
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">Email:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            className="form-control"
-            value={form.email}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            required
-          />
-          {errors.email && <p className="text-danger">{errors.email}</p>}
-        </div>
-        <button type="submit" className="btn btn-primary">Đăng ký</button>
-      </form>
-      {message && <p>{message}</p>}
+      </div>
     </div>
   );
 }

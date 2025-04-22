@@ -1,6 +1,6 @@
 import React from "react";
 import { Typography, Button, Row, Col, Space } from "antd";
-import { useNavigate } from "react-router-dom"; // Thêm dòng này
+import { useNavigate } from "react-router"; // Thêm dòng này
 import LoadingCat from "./Loading"
 import  { useState } from "react";
 const { Title, Paragraph } = Typography;

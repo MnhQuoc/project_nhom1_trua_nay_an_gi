@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
 
 function Signup() {
   const [form, setForm] = useState({
@@ -20,6 +21,8 @@ function Signup() {
   });
 
   const [message, setMessage] = useState('');
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -101,11 +104,11 @@ function Signup() {
   };
 
   return (
-    <div className="container mt-5">
-      <h2 className="mb-4">Đăng ký thành viên</h2>
+    <div className="container mt-5" style={{ maxWidth: '400px', margin: 'auto', padding: '20px' }}>
+      <h2 className="mb-4 text-center">Đăng ký thành viên</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label className="form-label">Họ và tên</label>
+          <label className="form-label" style={{ textAlign: 'left', display: 'block' }}>Họ và tên</label>
           <input
             type="text"
             className={`form-control ${errors.fullName ? 'is-invalid' : ''}`}
@@ -117,7 +120,7 @@ function Signup() {
         </div>
 
         <div className="mb-3">
-          <label className="form-label">Địa chỉ</label>
+          <label className="form-label" style={{ textAlign: 'left', display: 'block' }}>Địa chỉ</label>
           <input
             type="text"
             className={`form-control ${errors.address ? 'is-invalid' : ''}`}
@@ -129,7 +132,7 @@ function Signup() {
         </div>
 
         <div className="mb-3">
-          <label className="form-label">Số điện thoại</label>
+          <label className="form-label" style={{ textAlign: 'left', display: 'block' }}>Số điện thoại</label>
           <input
             type="text"
             className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
@@ -141,7 +144,7 @@ function Signup() {
         </div>
 
         <div className="mb-3">
-          <label className="form-label">Email</label>
+          <label className="form-label" style={{ textAlign: 'left', display: 'block' }}>Email</label>
           <input
             type="email"
             className={`form-control ${errors.email ? 'is-invalid' : ''}`}
@@ -153,7 +156,7 @@ function Signup() {
         </div>
 
         <div className="mb-3">
-          <label className="form-label">Giới tính</label>
+          <label className="form-label" style={{ textAlign: 'left', display: 'block' }}>Giới tính</label>
           <select
             className={`form-select ${errors.gender ? 'is-invalid' : ''}`}
             name="gender"
@@ -169,7 +172,7 @@ function Signup() {
         </div>
 
         <div className="mb-3">
-          <label className="form-label">Quốc tịch</label>
+          <label className="form-label" style={{ textAlign: 'left', display: 'block' }}>Quốc tịch</label>
           <input
             type="text"
             className={`form-control ${errors.nationality ? 'is-invalid' : ''}`}
@@ -180,7 +183,7 @@ function Signup() {
           {errors.nationality && <div className="invalid-feedback">{errors.nationality}</div>}
         </div>
 
-        <button type="submit" className="btn btn-primary">Đăng ký</button>
+        <button type="submit" className="btn btn-primary btn-block">Đăng ký</button>
       </form>
 
       {message && <div className="alert alert-info mt-3">{message}</div>}

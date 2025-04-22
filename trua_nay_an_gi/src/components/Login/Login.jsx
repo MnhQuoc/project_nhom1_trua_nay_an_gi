@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
 
 function Login() {
   const [form, setForm] = useState({
@@ -10,6 +11,10 @@ function Login() {
     username: '',
     password: ''
   });
+
+  const [message, setMessage] = useState('');
+  
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -61,14 +66,12 @@ function Login() {
     });
   };
 
-  const [message, setMessage] = useState('');
-
   return (
     <div className="container" style={{ maxWidth: '400px', margin: 'auto', padding: '20px' }}>
       <h2 className="text-center">Đăng nhập</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>Tên đăng nhập:</label>
+          <label style={{ textAlign: 'left', display: 'block' }}>Tên đăng nhập:</label>
           <input
             type="text"
             name="username"
@@ -79,7 +82,7 @@ function Login() {
           {errors.username && <p style={{ color: 'red' }}>{errors.username}</p>}
         </div>
         <div className="form-group">
-          <label>Mật khẩu:</label>
+          <label style={{ textAlign: 'left', display: 'block' }}>Mật khẩu:</label>
           <input
             type="password"
             name="password"
@@ -92,6 +95,18 @@ function Login() {
         <button type="submit" className="btn btn-primary btn-block">Đăng nhập</button>
       </form>
       {message && <p className="mt-3">{message}</p>}
+
+      {/* Câu hỏi nếu chưa có tài khoản */}
+      <div className="mt-4 text-center">
+        <span>Bạn chưa có tài khoản?</span>
+        <button
+          type="button"
+          className="btn btn-link"
+          onClick={() => navigate('/register')} // Đường dẫn đến trang đăng ký
+        >
+          Đăng ký
+        </button>
+      </div>
     </div>
   );
 }
