@@ -1,29 +1,64 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router';
+import React, {useEffect, useState} from 'react';
+import {useNavigate} from "react-router";
+
+
+
 
 function Signup() {
   const [form, setForm] = useState({
-    fullName: '',
+    restname: '',
     address: '',
     phone: '',
     email: '',
-    gender: '',
-    nationality: '',
+    time: '',
   });
 
   const [errors, setErrors] = useState({
-    fullName: '',
+    restname: '',
     address: '',
     phone: '',
     email: '',
-    gender: '',
-    nationality: '',
+    time: '',
   });
-
+  const [showConfirmBox, setShowConfirmBox] = useState(false);
   const [message, setMessage] = useState('');
-
   const navigate = useNavigate();
+  useEffect(() => {
+    // Kiểm tra đăng nhập
+    const userStr = localStorage.getItem('user');
+    if (!userStr) {
+      navigate('/login');
+      return;
+    }
+    // Lấy thông tin user từ API
+    const fetchUserData = async () => {
+      try {
+        const user = JSON.parse(userStr);
+        const response = await fetch(`http://localhost:3001/users/${user.id}`);
+        if (response.ok) {
+          const data = await response.json();
+          setForm({
+            restname: data.restname,
+            email: data.email || '',
+            phone: data.phone || '',
+            address: data.address || '',
+            time:data.time || ''
+          });
+          // Kiểm tra và hiển thị thông báo nếu thông tin chưa đầy đủ
+          if (!data.email || !data.name || !data.phone || !data.address) {
+            setMessage('Vui lòng cập nhật thông tin');
+          }
+        } else {
+          setMessage('Không thể tải thông tin người dùng');
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+        setMessage('Có lỗi xảy ra khi tải thông tin');
+      }
+    };
 
+    fetchUserData();
+  }, [navigate]);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({
@@ -36,7 +71,7 @@ function Signup() {
   const validateField = (name, value) => {
     let errorMessage = '';
 
-    if (name === 'fullName' && value.trim() === '') {
+    if (name === 'restname' && value.trim() === '') {
       errorMessage = 'Họ và tên không được để trống';
     }
     if (name === 'address' && value.trim() === '') {
@@ -54,11 +89,8 @@ function Signup() {
         errorMessage = 'Email không hợp lệ';
       }
     }
-    if (name === 'gender' && value === '') {
-      errorMessage = 'Giới tính không được để trống';
-    }
-    if (name === 'nationality' && value.trim() === '') {
-      errorMessage = 'Quốc tịch không được để trống';
+    if (name === 'time' && value.trim() === '') {
+      errorMessage = 'Giờ mở cửa không được để trống ';
     }
 
     setErrors({
@@ -66,40 +98,72 @@ function Signup() {
       [name]: errorMessage,
     });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    Object.keys(form).forEach((field) => validateField(field, form[field]));
 
-    if (Object.values(errors).some((error) => error !== '')) {
-      setMessage('Vui lòng sửa lỗi trước khi gửi');
+    // Kiểm tra xem có lỗi nào không
+    const hasErrors = Object.values(errors).some((error) => error !== '');
+    if (hasErrors) {
+      return; // Nếu có lỗi, không gửi form
+    }
+
+    // Lấy userID từ localStorage (giả sử đã lưu user sau khi đăng nhập)
+    const userStr = localStorage.getItem('user');
+    if (!userStr) {
+      setMessage('Bạn cần đăng nhập để cập nhật thông tin');
       return;
     }
 
+    const user = JSON.parse(userStr);
+    const userId = user.id; // Lấy userId từ thông tin user trong localStorage
+
+    // Tạo đối tượng chứa dữ liệu cập nhật
+    const updatedUser = {
+      restname: form.restname,
+      address: form.address,
+      phone: form.phone,
+      email: form.email,
+      time: form.time,
+    };
+
     try {
-      const response = await fetch('http://localhost:3001/members', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+      // Cập nhật thông tin người dùng trong DB
+      const response = await fetch(`http://localhost:3001/users/${userId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedUser),
       });
 
       if (response.ok) {
-        setMessage('Đăng ký thành công!');
-        setForm({
-          fullName: '',
-          address: '',
-          phone: '',
-          email: '',
-          gender: '',
-          nationality: '',
+        const data = await response.json();
+        setMessage('Đăng ký trở thành người bán hàng thành công');
+        // Gửi yêu cầu tới admin để duyệt
+        const approvalRequest = {
+          userId: userId,
+          status: 'pending', // Trạng thái yêu cầu đang chờ duyệt
+          role: 'merchant',
+          verified: false,
+        };
+
+        // Gửi yêu cầu duyệt
+        await fetch('http://localhost:3001/request', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(approvalRequest),
         });
-        setErrors({});
+        setShowConfirmBox(true);
+
+        console.log('Thông tin người dùng đã được cập nhật và yêu cầu duyệt đã gửi');
       } else {
-        setMessage('Có lỗi xảy ra. Vui lòng thử lại.');
+        setMessage('Có lỗi xảy ra khi cập nhật thông tin');
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      setMessage('Có lỗi xảy ra. Vui lòng thử lại.');
+      setMessage('Có lỗi xảy ra khi cập nhật thông tin');
     }
   };
 
@@ -108,17 +172,16 @@ function Signup() {
       <h2 className="mb-4 text-center">Đăng ký thành viên</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label className="form-label" style={{ textAlign: 'left', display: 'block' }}>Họ và tên</label>
+          <label className="form-label" style={{ textAlign: 'left', display: 'block' }}>Tên cửa hàng </label>
           <input
             type="text"
-            className={`form-control ${errors.fullName ? 'is-invalid' : ''}`}
-            name="fullName"
-            value={form.fullName}
+            className={`form-control ${errors.restname ? 'is-invalid' : ''}`}
+            name="restname"
+            value={form.restname}
             onChange={handleChange}
           />
-          {errors.fullName && <div className="invalid-feedback">{errors.fullName}</div>}
+          {errors.restname && <div className="invalid-feedback">{errors.restname}</div>}
         </div>
-
         <div className="mb-3">
           <label className="form-label" style={{ textAlign: 'left', display: 'block' }}>Địa chỉ</label>
           <input
@@ -134,6 +197,7 @@ function Signup() {
         <div className="mb-3">
           <label className="form-label" style={{ textAlign: 'left', display: 'block' }}>Số điện thoại</label>
           <input
+
             type="text"
             className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
             name="phone"
@@ -156,37 +220,28 @@ function Signup() {
         </div>
 
         <div className="mb-3">
-          <label className="form-label" style={{ textAlign: 'left', display: 'block' }}>Giới tính</label>
-          <select
-            className={`form-select ${errors.gender ? 'is-invalid' : ''}`}
-            name="gender"
-            value={form.gender}
-            onChange={handleChange}
-          >
-            <option value="">Chọn giới tính</option>
-            <option value="Male">Nam</option>
-            <option value="Female">Nữ</option>
-            <option value="Other">Khác</option>
-          </select>
-          {errors.gender && <div className="invalid-feedback">{errors.gender}</div>}
-        </div>
-
-        <div className="mb-3">
-          <label className="form-label" style={{ textAlign: 'left', display: 'block' }}>Quốc tịch</label>
+          <label className="form-label" style={{ textAlign: 'left', display: 'block' }}>Giờ đóng - mở cửa </label>
           <input
             type="text"
-            className={`form-control ${errors.nationality ? 'is-invalid' : ''}`}
-            name="nationality"
-            value={form.nationality}
+            className={`form-control ${errors.time ? 'is-invalid' : ''}`}
+            name="time"
+            value={form.time}
             onChange={handleChange}
           />
-          {errors.nationality && <div className="invalid-feedback">{errors.nationality}</div>}
+          {errors.time && <div className="invalid-feedback">{errors.time}</div>}
         </div>
 
         <button type="submit" className="btn btn-primary btn-block">Đăng ký</button>
       </form>
 
-      {message && <div className="alert alert-info mt-3">{message}</div>}
+      {showConfirmBox && (
+          <div className="alert alert-success mt-4">
+            <h5 className="alert-heading">Yêu cầu đã được gửi!</h5>
+            <p>
+              Yêu cầu đăng ký trở thành người bán hàng của bạn đã được gửi. Xin vui lòng chờ xét duyệt từ quản trị viên.
+            </p>
+          </div>
+      )}
     </div>
   );
 }

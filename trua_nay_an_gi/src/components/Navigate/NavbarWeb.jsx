@@ -6,11 +6,22 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { FaRegBell, FaSignInAlt, FaUserCircle, FaSignOutAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router';
+import {Link} from "react-router-dom";
 
 const NavbarWeb = () => {
+  const [role, setRole] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
   const navigate = useNavigate();
+  useEffect(() => {
+    const user = localStorage.getItem('user');
+    if (user) {
+      const parsedUser = JSON.parse(user);
+      setIsLoggedIn(true);
+      setUsername(parsedUser.username);
+      setRole(parsedUser.role);
+    }
+  }, []);
 
   useEffect(() => {
     // Kiểm tra nếu có thông tin người dùng trong localStorage
@@ -33,9 +44,9 @@ const NavbarWeb = () => {
       {/* First Navigation */}
       <nav className="navbar nav-first navbar-dark bg-dark">
         <div className="container">
-          <a className="navbar-brand" href="/">
+          <Link className="navbar-brand" to="/home">
             <img src="navbar-brand.svg" alt="Logo" />
-          </a>
+          </Link>
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
               <a className="nav-link text-primary" href="#home">
@@ -65,14 +76,14 @@ const NavbarWeb = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mx-auto">
-              <Nav.Link href="/">Trang chủ</Nav.Link>
+              <Nav.Link href="/home">Trang chủ</Nav.Link>
               <Nav.Link href="/menu">Thực đơn</Nav.Link>
               <NavDropdown
                 title="Tiếng Việt"
                 id="basic-nav-dropdown"
                 menuVariant="dark"
               >
-                <NavDropdown.Item href="/" className=" text-dark">
+                <NavDropdown.Item href="/vietnam" className=" text-dark">
                   Tiếng Việt
                 </NavDropdown.Item>
                 <NavDropdown.Item href="#english" className=" text-dark">
@@ -83,6 +94,20 @@ const NavbarWeb = () => {
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>
+            <div className="d-flex align-items-center">
+              {role === 'admin' && (
+                  <Link to='/listmerchant' className="text-light mx-2">
+                    Danh sách người bán
+                  </Link>
+              )}
+              {role === 'merchant' && (
+                  <Link to='/changeinfo'  className="text-light mx-2">
+                    Thông tin cửa hàng
+                  </Link>
+              )}
+
+            </div>
+
             <div className="d-flex align-items-center">
               <a href="#" className="text-light mx-2">
                 <FaRegBell />
@@ -111,7 +136,7 @@ const NavbarWeb = () => {
                 className="text-light"
                 menuVariant="dark"
               >
-                <NavDropdown.Item href="/profile" className=" text-dark">Tài khoản</NavDropdown.Item>
+                {role === 'user' && (<NavDropdown.Item href="/profile" className=" text-dark">Tài khoản</NavDropdown.Item>)}
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={handleLogout} className=" text-dark">
                   <FaSignOutAlt /> Đăng xuất
