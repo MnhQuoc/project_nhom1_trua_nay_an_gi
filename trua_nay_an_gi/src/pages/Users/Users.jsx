@@ -144,7 +144,7 @@ const Users = () => {
         
         <form onSubmit={handleSubmit} className="contact-form">
           <div className="form-group">
-            <label>Tên (*)</label>
+            <label style={{textAlign: 'left', display: 'block'}}>Tên (*)</label>
             <input
               type="text"
               name="name"
@@ -156,7 +156,7 @@ const Users = () => {
           </div>
 
           <div className="form-group">
-            <label>Số điện thoại (*)</label>
+            <label style={{textAlign: 'left', display: 'block'}}>Số điện thoại (*)</label>
             <input
               type="tel"
               name="phone"
@@ -168,7 +168,7 @@ const Users = () => {
           </div>
 
           <div className="form-group">
-            <label>Tỉnh/thành phố (*)</label>
+            <label style={{textAlign: 'left', display: 'block'}}>Tỉnh/thành phố (*)</label>
             <input
               type="text"
               name="city"
@@ -180,7 +180,7 @@ const Users = () => {
           </div>
 
           <div className="form-group">
-            <label>Quận/huyện (*)</label>
+            <label style={{textAlign: 'left', display: 'block'}}>Quận/huyện (*)</label>
             <input
               type="text"
               name="district"
@@ -192,7 +192,7 @@ const Users = () => {
           </div>
 
           <div className="form-group">
-            <label>Phường/xã (*)</label>
+            <label style={{textAlign: 'left', display: 'block'}}>Phường/xã (*)</label>
             <input
               type="text"
               name="ward"
@@ -204,7 +204,7 @@ const Users = () => {
           </div>
 
           <div className="form-group">
-            <label>Tên đường, Tòa nhà, Số nhà (*)</label>
+            <label style={{textAlign: 'left', display: 'block'}}>Tên đường, Tòa nhà, Số nhà (*)</label>
             <input
               type="text"
               name="streetAddress"

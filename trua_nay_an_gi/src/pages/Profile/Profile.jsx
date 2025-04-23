@@ -116,7 +116,7 @@ const Profile = () => {
               <form onSubmit={handleSubmit}>
               
                 <div className="mb-3">
-                  <label className="form-label">Họ và tên:</label>
+                  <label style={{textAlign: 'left', display: 'block'}} className="form-label">Họ và tên:</label>
                   <input
                     type="text"
                     className="form-control"
@@ -128,7 +128,7 @@ const Profile = () => {
                 </div>
 
                 <div className="mb-3">
-                  <label className="form-label">Email:</label>
+                  <label style={{textAlign: 'left', display: 'block'}} className="form-label">Email:</label>
                   <input
                     type="email"
                     className="form-control"
@@ -140,7 +140,7 @@ const Profile = () => {
                 </div>
 
                 <div className="mb-3">
-                  <label className="form-label">Số điện thoại:</label>
+                  <label style={{textAlign: 'left', display: 'block'}} className="form-label">Số điện thoại:</label>
                   <input
                     type="tel"
                     className="form-control"
@@ -152,7 +152,7 @@ const Profile = () => {
                 </div>
 
                 <div className="mb-3">
-                  <label className="form-label">Địa chỉ:</label>
+                  <label style={{textAlign: 'left', display: 'block'}} className="form-label">Địa chỉ:</label>
                   <input
                     type="text"
                     className="form-control"
@@ -166,14 +166,14 @@ const Profile = () => {
                 <div className="d-flex gap-2">
                   <button 
                     type="button" 
-                    className="btn btn-primary flex-grow-1"
+                    className="btn btn-primary flex-grow-1 mx-2"
                     onClick={() => navigate('/users')}
                   >
                     Cập nhật thông tin
                   </button>
                   <button 
                     type="button" 
-                    className="btn btn-success flex-grow-1"
+                    className="btn btn-success flex-grow-1 mx-2"
                     onClick={() => navigate('/signup')}
                   >
                     Trở thành Merchant
