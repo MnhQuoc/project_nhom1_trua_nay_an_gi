@@ -67,6 +67,24 @@
       "restname": "Ngõ Nhỏ Quán",
       "address": "Quan Hoa",
       "time": "9PM-5AM"
+    },
+    {
+      "id": 1745421209258,
+      "username": "usertest3",
+      "email": "albumanh1234@gmail.com",
+      "phone": "0182381238",
+      "password": "user1234",
+      "role": "merchant",
+      "blocked": false,
+      "verified": true,
+      "name": "Tuấn",
+      "city": "Hà Nội",
+      "district": "Cầu Giayas",
+      "ward": "Quan Hoa",
+      "streetAddress": "Số 16",
+      "address": "Số 16, Quan Hoa, Cầu Giayas, Hà Nội",
+      "restname": "Bún đậu",
+      "time": "11AM-2PM"
     }
   ],
   "request": [
@@ -100,17 +118,24 @@
     },
     {
       "userId": 1745349964177,
-      "status": "pending",
+      "status": "rejected",
       "role": "merchant",
       "verified": false,
       "id": 5
     },
     {
       "userId": 1745349964177,
-      "status": "pending",
+      "status": "rejected",
       "role": "merchant",
       "verified": false,
       "id": 6
+    },
+    {
+      "userId": 1745421209258,
+      "status": "approved",
+      "role": "merchant",
+      "verified": false,
+      "id": 7
     }
   ]
 }
