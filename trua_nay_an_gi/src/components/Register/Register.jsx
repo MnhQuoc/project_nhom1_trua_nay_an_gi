@@ -91,63 +91,65 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
+    setMessage('');
+  
     if (!validateForm()) {
-      setMessage('Vui lòng sửa lỗi trong các trường.');
+      setMessage('Vui lòng sửa các lỗi ở biểu mẫu.');
       setLoading(false);
       return;
     }
-
+  
     try {
-      // Kiểm tra nếu tên đăng nhập đã tồn tại
-      const response = await axios.get(`http://localhost:3001/users?username=${form.username}`);
-      if (response.data.length > 0) {
-        setMessage('Tài khoản đã được đăng ký. Vui lòng chọn tên đăng nhập khác.');
+      // Kiểm tra username đã tồn tại
+      const res = await axios.get(`http://localhost:3001/users?username=${form.username}`);
+      console.log('API response:', res.data);
+  
+      if (!Array.isArray(res.data)) {
+        throw new Error('API không trả về mảng dữ liệu');
+      }
+  
+      if (res.data.some(user => user.username === form.username)) {
+        setMessage('Tên đăng nhập đã tồn tại. Vui lòng chọn tên khác.');
         setLoading(false);
         return;
       }
-
-      // Nếu tên đăng nhập không trùng, tiến hành đăng ký
+  
+      const newUserId = Date.now();
       const { username, password, phone, email } = form;
-      const newId = Date.now(); // Tạo id mới cho user
-
-      // Thêm user mới vào cơ sở dữ liệu trên API (cổng 3001)
-      await axios.post("http://localhost:3001/users", {
-        id: newId,
+  
+      // Đăng ký user mới
+      await axios.post('http://localhost:3001/users', {
+        id: newUserId,
         username,
-        email,
-        phone,
         password,
-        role: "user",
+        phone,
+        email,
+        role: 'user',
         blocked: false,
-        verified: false, // Trạng thái chưa xác minh
+        verified: false,
       });
-
-      // Tạo link xác nhận cho người dùng
-      const confirmationLink = `http://localhost:3001/verify/${newId}`;
-
-      // Gửi email xác nhận qua EmailJS
+  
+      // Gửi email xác nhận
+      const confirmationLink = `http://localhost:5173/verify/${newUserId}`;
       await emailjs.send(
-        "service_2o1ywkk",  // ID dịch vụ EmailJS
-        "template_m0x0lah",  // ID template EmailJS
+        'service_2o1ywkk',
+        'template_m0x0lah',
         {
-          username: username,
-          email: email,
-          userId: newId,
-          confirmationLink: confirmationLink,  // Link xác nhận
+          username,
+          email,
+          userId: newUserId,
+          confirmationLink,
         },
-        "ZcmKYaJ0MqbWwcw2h"  // public key từ EmailJS
+        'ZcmKYaJ0MqbWwcw2h'
       );
-
-      // Hiển thị thông báo thành công và chuyển hướng người dùng
+  
       setMessage('Đăng ký thành công! Vui lòng kiểm tra email để xác nhận.');
       setForm({ username: '', password: '', phone: '', email: '' });
-      setLoading(false);
-      navigate('/login'); // Chuyển hướng đến trang đăng nhập nếu cần
-
+      setTimeout(() => navigate('/login'), 3000);
     } catch (error) {
-      console.error(error);
-      setMessage('Lỗi đăng ký. Vui lòng thử lại.');
+      console.error('Lỗi:', error);
+      setMessage('Đã xảy ra lỗi. Vui lòng thử lại sau.');
+    } finally {
       setLoading(false);
     }
   };

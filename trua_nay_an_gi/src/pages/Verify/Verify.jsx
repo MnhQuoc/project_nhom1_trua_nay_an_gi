@@ -1,12 +1,9 @@
-// src/pages/Verify/Verify.jsx
 import { useEffect } from "react";
-import { useSearchParams, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { message } from "antd";
 
 const Verify = () => {
- 
   let { userId } = useParams();
-  console.log(userId)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,11 +20,18 @@ const Verify = () => {
           body: JSON.stringify({ verified: true }),
         });
 
+        if (!response.ok) {
+          throw new Error(`API error: ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        console.log("API response:", data);
+
         message.success("Tài khoản đã được xác minh thành công!");
-        navigate("/login");
+        setTimeout(() => navigate("/login"), 1000); // Thêm độ trễ để người dùng thấy thông báo
       } catch (error) {
-        console.error(error);
-        message.error("Xác minh tài khoản thất bại.");
+        console.error("Lỗi xác minh:", error);
+        message.error(`Xác minh tài khoản thất bại: ${error.message}`);
       }
     };
 
