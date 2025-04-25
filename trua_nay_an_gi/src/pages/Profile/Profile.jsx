@@ -122,8 +122,7 @@ const Profile = () => {
                     className="form-control"
                     name="name"
                     value={userData.name}
-                    onChange={handleChange}
-                    required
+                    readOnly
                   />
                 </div>
 
@@ -134,8 +133,7 @@ const Profile = () => {
                     className="form-control"
                     name="email"
                     value={userData.email}
-                    onChange={handleChange}
-                    required
+                    readOnly
                   />
                 </div>
 
@@ -146,8 +144,7 @@ const Profile = () => {
                     className="form-control"
                     name="phone"
                     value={userData.phone}
-                    onChange={handleChange}
-                    required
+                    readOnly
                   />
                 </div>
 
@@ -158,8 +155,7 @@ const Profile = () => {
                     className="form-control"
                     name="address"
                     value={userData.address}
-                    onChange={handleChange}
-                    required
+                    readOnly
                   />
                 </div>
 

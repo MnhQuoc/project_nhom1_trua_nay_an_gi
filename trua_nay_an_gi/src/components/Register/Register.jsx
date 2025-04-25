@@ -45,8 +45,8 @@ function Register() {
       errorMessage = 'Mật khẩu phải từ 8 ký tự trở lên và bao gồm cả chữ và số';
     }
 
-    if (name === 'phone' && !/^\d{11}$/.test(value)) {
-      errorMessage = 'Số điện thoại phải có 11 số';
+    if (name === 'phone' && !/^\d{10}$/.test(value)) {
+      errorMessage = 'Số điện thoại phải có 10 số';
     }
 
     if (name === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
@@ -72,9 +72,9 @@ function Register() {
       valid = false;
     }
 
-    const phoneRegex = /^\d{11}$/;
+    const phoneRegex = /^\d{10}$/;
     if (!phoneRegex.test(form.phone)) {
-      errorMessages.phone = 'Số điện thoại phải có 11 số';
+      errorMessages.phone = 'Số điện thoại phải có 10 số';
       valid = false;
     }
 

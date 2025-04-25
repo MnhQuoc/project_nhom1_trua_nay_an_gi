@@ -1,0 +1,48 @@
+#language-dropdown {
+  color: white;
+  padding-right: 20px; 
+  position: relative;
+}
+
+#language-dropdown img {
+  width: 20px;
+  height: auto;
+  margin-right: 5px;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+}
+
+
+#language-dropdown.dropdown-toggle {
+  display: flex;
+  align-items: center;
+  min-width: 120px;  
+}
+
+#language-dropdown.dropdown-toggle::after {
+  position: absolute;
+  right: 6px;  
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Shopping cart hover effect */
+.ms-3.position-relative.text-light {
+  transition: color 0.2s ease;
+}
+
+.ms-3.position-relative.text-light:hover {
+  color: #0d6efd !important;
+}
+
+/* Tooltip styling */
+.tooltip {
+  font-size: 0.875rem;
+}

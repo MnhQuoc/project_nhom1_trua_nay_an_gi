@@ -4,11 +4,43 @@
       "id": "1745454378925",
       "username": "nhanhnhen23",
       "password": "nhanhnhen1",
-      "phone": "01234567891",
+      "phone": "0123456789",
       "email": "nhomhaiduan@gmail.com",
       "role": "user",
       "blocked": false,
-      "verified": true
+      "verified": true,
+      "name": "Minh Quốc",
+      "city": "HCM",
+      "district": "Q9",
+      "ward": "Nam Hoa",
+      "streetAddress": "144 Nam Hoa",
+      "address": "144 Nam Hoa, Nam Hoa, Q9, HCM",
+      "addresses": [
+        {
+          "id": 1,
+          "name": "Minh Quốc",
+          "phone": "0123456789",
+          "address": "144 Nam Hoa, Nam Hoa, Q9, HCM"
+        },
+        {
+          "id": 1745585432800,
+          "name": "Mnh QC",
+          "phone": "0987654321",
+          "address": "2906, Nam Hoa, Q9, HCM"
+        },
+        {
+          "id": 1745598253258,
+          "name": "ABC",
+          "phone": "0123456781",
+          "address": "1111, A1, A1, A1"
+        },
+        {
+          "id": 1745598279736,
+          "name": "ABCD",
+          "phone": "0123456787",
+          "address": "11112, A12, A12, A12"
+        }
+      ]
     },
     {
       "id": "1745455563680",
@@ -19,6 +51,16 @@
       "role": "user",
       "blocked": false,
       "verified": true
+    },
+    {
+      "id": 1745597996971,
+      "username": "quoctest1",
+      "password": "quoc1234",
+      "phone": "0978870124",
+      "email": "nguyenminhquoc812005@gmail.com",
+      "role": "user",
+      "blocked": false,
+      "verified": false
     }
   ],
   "request": [
@@ -70,6 +112,164 @@
       "role": "merchant",
       "verified": false,
       "id": "7"
+    }
+  ],
+  "orders": [
+    {
+      "id": "1",
+      "userId": "1745454378925",
+      "totalAmount": 125000,
+      "status": "completed",
+      "orderDate": "2025-04-24T15:30:00.000Z",
+      "items": [
+        {
+          "id": 1,
+          "name": "Phở bò",
+          "price": 45000,
+          "quantity": 2
+        },
+        {
+          "id": 2,
+          "name": "Cơm gà",
+          "price": 35000,
+          "quantity": 1
+        }
+      ],
+      "address": "123 Nguyễn Văn Linh, Đà Nẵng",
+      "phone": "01234567891"
+    },
+    {
+      "id": "2",
+      "userId": "1745454378925",
+      "totalAmount": 80000,
+      "status": "delivering",
+      "orderDate": "2025-04-25T10:15:00.000Z",
+      "items": [
+        {
+          "id": 3,
+          "name": "Bún chả",
+          "price": 40000,
+          "quantity": 2
+        }
+      ],
+      "address": "456 Hùng Vương, Đà Nẵng",
+      "phone": "01234567891"
+    },
+    {
+      "id": "3",
+      "userId": "1745454378925",
+      "totalAmount": 95000,
+      "status": "pending",
+      "orderDate": "2025-04-25T14:20:00.000Z",
+      "items": [
+        {
+          "id": 4,
+          "name": "Mì Quảng",
+          "price": 35000,
+          "quantity": 2
+        },
+        {
+          "id": 5,
+          "name": "Bánh mì thịt",
+          "price": 25000,
+          "quantity": 1
+        }
+      ],
+      "address": "789 Trần Phú, Đà Nẵng",
+      "phone": "01234567891"
+    },
+    {
+      "id": "baa2",
+      "userId": "1745454378925",
+      "items": [
+        {
+          "id": "1",
+          "userId": "1745454378925",
+          "name": "Phở bò",
+          "price": 45000,
+          "description": "Phở bò truyền thống",
+          "image": "/images/dish-1.jpg",
+          "category": "Vietnamese",
+          "quantity": 2
+        },
+        {
+          "id": "2",
+          "userId": "1745454378925",
+          "name": "Cơm gà",
+          "price": 35000,
+          "description": "Cơm gà Hội An",
+          "image": "/images/dish-2.jpg",
+          "category": "Vietnamese",
+          "quantity": 2
+        },
+        {
+          "id": "5",
+          "userId": "1745454378925",
+          "name": "Bánh mì thịt",
+          "price": 25000,
+          "description": "Bánh mì thịt nguội",
+          "image": "/images/dish-5.jpg",
+          "category": "Vietnamese",
+          "quantity": 2
+        }
+      ],
+      "address": "ABCD | 0123456787 | 11112, A12, A12, A12",
+      "paymentMethod": "COD",
+      "note": "",
+      "subtotal": 210000,
+      "serviceFee": 15000,
+      "deliveryFee": 25000,
+      "discount": 0,
+      "total": 250000,
+      "status": "pending",
+      "createdAt": "2025-04-25T16:24:48.746Z"
+    }
+  ],
+  "products": [
+    {
+      "id": "1",
+      "userId": "1745454378925",
+      "name": "Phở bò",
+      "price": 45000,
+      "description": "Phở bò truyền thống",
+      "image": "/images/dish-1.jpg",
+      "category": "Vietnamese"
+    },
+    {
+      "id": "2",
+      "userId": "1745454378925",
+      "name": "Cơm gà",
+      "price": 35000,
+      "description": "Cơm gà Hội An",
+      "image": "/images/dish-2.jpg",
+      "category": "Vietnamese"
+    },
+    {
+      "id": "3",
+      "userId": "1745455563680",
+      "name": "Bún chả",
+      "price": 40000,
+      "description": "Bún chả Hà Nội",
+      "image": "/images/dish-3.jpg",
+      "category": "Vietnamese"
+    },
+    {
+      "id": "4",
+      "userId": "1745455563680",
+      "name": "Mì Quảng",
+      "price": 35000,
+      "description": "Mì Quảng đặc biệt",
+      "image": "/images/dish-4.jpg",
+      "category": "Vietnamese"
+    },
+    {
+      "id": "5",
+      "userId": "1745454378925",
+      "name": "Bánh mì thịt",
+      "price": 25000,
+      "description": "Bánh mì thịt nguội",
+      "image": "/images/dish-5.jpg",
+      "category": "Vietnamese"
     }
   ]
 }
