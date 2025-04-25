@@ -1,75 +1,110 @@
 {
   "users": [
     {
-      "id": "1745454378925",
-      "username": "nhanhnhen23",
+      "id": "4fea"
+    },
+    {
+      "id": "1745312310240",
+      "username": "hoangphuc1234",
+      "email": "lhphuc822004@gmail.com",
+      "phone": "09898645881",
+      "password": "phuc2004@",
+      "role": "user",
+      "blocked": false,
+      "verified": false,
+      "address": "Cầu Giấy",
+      "time": "8AM-12PM",
+      "restname": "Quán Anh Béo"
+    },
+    {
+      "id": "1745338495664",
+      "username": "admin1111",
+      "email": "albumanh1234@gmail.com",
+      "phone": "02343943941",
+      "password": "admin1234",
+      "role": "admin",
+      "blocked": false,
+      "verified": false
+    },
+    {
+      "id": "1745348611792",
+      "username": "usertest1",
+      "email": "albumanh1234@gmail.com",
+      "phone": "02149293486",
+      "password": "user1234",
+      "role": "merchant",
+      "blocked": false,
+      "verified": true,
+      "restname": "Quán Anh Béo 22",
+      "address": "Cầu Giấy",
+      "time": "8AM-12PM"
+    },
+    {
+      "id": "1745349964177",
+      "username": "usertesst2",
+      "email": "albumanh1234@gmail.com",
+      "phone": "01248124124",
+      "password": "user1234",
+      "role": "user",
+      "blocked": false,
+      "verified": false,
+      "restname": "Ngõ Nhỏ Quán",
+      "address": "Quan Hoa",
+      "time": "9PM-5AM"
+    },
+    {
+      "id": 1745576361267,
+      "username": "nhanhnhen2332",
       "password": "nhanhnhen1",
       "phone": "01234567891",
       "email": "nhomhaiduan@gmail.com",
       "role": "user",
       "blocked": false,
       "verified": true
-    },
-    {
-      "id": "1745455563680",
-      "username": "nhanhnhen2334",
-      "password": "nhanhnhen1",
-      "phone": "01234569877",
-      "email": "tote.that.tha@gmail.com",
-      "role": "user",
-      "blocked": false,
-      "verified": true
     }
   ],
-  "request": [
+  "requests": [
     {
-      "userId": 1745348611792,
+      "id": 1,
+      "userId": "1745348611792",
       "status": "rejected",
       "role": "merchant",
-      "verified": false,
-      "id": "1"
+      "verified": false
     },
     {
-      "userId": 1745348611792,
+      "id": 2,
+      "userId": "1745348611792",
       "status": "rejected",
       "role": "merchant",
-      "verified": false,
-      "id": "2"
+      "verified": false
     },
     {
-      "userId": 1745348611792,
+      "id": 3,
+      "userId": "1745348611792",
       "status": "approved",
       "role": "merchant",
-      "verified": false,
-      "id": "3"
+      "verified": false
     },
     {
-      "userId": 1745348611792,
+      "id": 4,
+      "userId": "1745348611792",
       "status": "rejected",
       "role": "merchant",
-      "verified": false,
-      "id": "4"
+      "verified": false
     },
     {
-      "userId": 1745349964177,
-      "status": "rejected",
+      "id": 5,
+      "userId": "1745349964177",
+      "status": "pending",
       "role": "merchant",
-      "verified": false,
-      "id": "5"
+      "verified": false
     },
     {
-      "userId": 1745349964177,
-      "status": "rejected",
+      "id": 6,
+      "userId": "1745349964177",
+      "status": "pending",
       "role": "merchant",
-      "verified": false,
-      "id": "6"
-    },
-    {
-      "userId": 1745421209258,
-      "status": "approved",
-      "role": "merchant",
-      "verified": false,
-      "id": "7"
+      "verified": false
     }
   ]
 }

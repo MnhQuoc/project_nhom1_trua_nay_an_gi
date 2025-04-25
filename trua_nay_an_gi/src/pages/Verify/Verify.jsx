@@ -1,44 +1,54 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { message } from "antd";
+import { Container, Spinner, Alert, Button } from "react-bootstrap";
 
 const Verify = () => {
-  let { userId } = useParams();
+  const { userId } = useParams();
   const navigate = useNavigate();
+  const [status, setStatus] = useState({ type: "", message: "" });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const verifyUser = async () => {
       if (!userId) {
-        message.error("Liên kết không hợp lệ.");
+        setStatus({ type: "danger", message: "Liên kết không hợp lệ." });
+        setLoading(false);
         return;
       }
 
       try {
-        const response = await fetch(`http://localhost:3001/users/${userId}`, {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ verified: true }),
-        });
+        const response = await fetch(`http://localhost:3001/verify/${userId}`);
+        if (!response.ok) throw new Error("Xác minh thất bại");
 
-        if (!response.ok) {
-          throw new Error(`API error: ${response.status} ${response.statusText}`);
-        }
-
-        const data = await response.json();
-        console.log("API response:", data);
-
-        message.success("Tài khoản đã được xác minh thành công!");
-        setTimeout(() => navigate("/login"), 1000); // Thêm độ trễ để người dùng thấy thông báo
+        const message = await response.text();
+        setStatus({ type: "success", message });
       } catch (error) {
         console.error("Lỗi xác minh:", error);
-        message.error(`Xác minh tài khoản thất bại: ${error.message}`);
+        setStatus({ type: "danger", message: "Đã xảy ra lỗi khi xác minh tài khoản." });
+      } finally {
+        setLoading(false);
       }
     };
 
     verifyUser();
-  }, [userId, navigate]);
+  }, [userId]);
 
-  return null;
+  return (
+    <Container className="mt-5 text-center">
+      {loading ? (
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Đang xác minh...</span>
+        </Spinner>
+      ) : (
+        <>
+          <Alert variant={status.type}>{status.message}</Alert>
+          <Button onClick={() => navigate("/login")} variant="primary">
+            Về trang đăng nhập
+          </Button>
+        </>
+      )}
+    </Container>
+  );
 };
 
 export default Verify;
