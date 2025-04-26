@@ -72,8 +72,12 @@ const NavbarWeb = ({ isLoggedIn, setIsLoggedIn }) => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mx-auto">
-              <Nav.Link href="/home">Trang chủ</Nav.Link>
-              <Nav.Link href="/menu">Thực đơn</Nav.Link>
+              <Nav.Link as={NavLink} to="/home">
+                Trang chủ
+              </Nav.Link>
+              <Nav.Link as={NavLink} to="/menu">
+                Thực đơn
+              </Nav.Link>
               <NavDropdown
                 title="Tiếng Việt"
                 id="basic-nav-dropdown"
