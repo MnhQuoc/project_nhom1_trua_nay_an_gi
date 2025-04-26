@@ -18,10 +18,10 @@
     },
     {
       "id": "1745338495664",
-      "username": "admin1111",
-      "email": "albumanh1234@gmail.com",
+      "username": "admin",
+      "email": "admin@gmail.com",
       "phone": "02343943941",
-      "password": "admin1234",
+      "password": "admin",
       "role": "admin",
       "blocked": false,
       "verified": false
