@@ -15,7 +15,9 @@ import Signup from './components/Signup/Signup'
 import MerchantList from "./pages/MerchantList/MerchantList.jsx";
 import ChangeInfo from "./pages/ChangeInfo/ChangeInfo.jsx";
 import Verify from "./pages/Verify/Verify.jsx";
-
+import MidPromotions from "./pages/MidPromotions/MidPromotions.jsx";
+import OrderList from "./pages/Orders/OrderList.jsx";
+import OrderDetail from "./pages/Orders/OrderDetail.jsx"
 // Define an ErrorBoundary class to handle any potential errors in the app
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -58,6 +60,11 @@ function App() {
           <Route path='/listmerchant' element={<MerchantList/>} />
           <Route path='/changeinfo' element={<ChangeInfo/>} />
           <Route path="/verify/:userId" element={<Verify />} />
+          <Route path='/midpromotions' element={<MidPromotions/>} />
+          <Route path='/orderlist' element={<OrderList/>} />
+          <Route path='/orderdetail' element={<OrderDetail/>} />
+
+
 
           {/* Main page */}
           <Route
@@ -66,6 +73,7 @@ function App() {
               <>
                 <Header />
                 <About />
+                
                 <Team />
               </>
             }
