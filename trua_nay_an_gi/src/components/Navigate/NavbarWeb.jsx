@@ -13,35 +13,25 @@ import {
 import { NavLink, useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 
-const NavbarWeb = () => {
+const NavbarWeb = ({ isLoggedIn, setIsLoggedIn }) => {
   const [role, setRole] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
   const navigate = useNavigate();
+
   useEffect(() => {
     const user = localStorage.getItem('user');
     if (user) {
       const parsedUser = JSON.parse(user);
-      setIsLoggedIn(true);
       setUsername(parsedUser.username);
       setRole(parsedUser.role);
     }
-  }, []);
-
-  useEffect(() => {
-    // Kiểm tra nếu có thông tin người dùng trong localStorage
-    const user = localStorage.getItem('user');
-    if (user) {
-      setIsLoggedIn(true);
-      setUsername(JSON.parse(user).username);
-    }
-  }, []);
+  }, [isLoggedIn]);
 
   const handleLogout = () => {
-    localStorage.removeItem('user');
+    localStorage.clear();
     setIsLoggedIn(false);
     setUsername('');
-    navigate('/');
+    navigate('/login');
   };
 
   return (

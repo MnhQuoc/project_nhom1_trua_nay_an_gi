@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 
-function Login() {
+function Login({ setIsLoggedIn }) {
   const [form, setForm] = useState({
     username: '',
     password: '',
@@ -13,6 +13,7 @@ function Login() {
   });
 
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false); // Thêm loading để quản lý trạng thái gửi
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -53,6 +54,8 @@ function Login() {
       return;
     }
 
+    setLoading(true); // Bắt đầu trạng thái loading
+
     try {
       const response = await fetch('http://localhost:3001/users', {
         method: 'GET',
@@ -82,17 +85,16 @@ function Login() {
           password: '',
         });
 
-        // Chuyển hướng đến trang chủ sau 1 giây
-        setTimeout(() => {
-          navigate('/home');
-          window.location.reload(); // Reload để cập nhật navbar
-        }, 1000);
+        setIsLoggedIn(true); // Đặt trạng thái đăng nhập thành công
+        navigate('/home');
       } else {
         setMessage('Tên đăng nhập hoặc mật khẩu không đúng');
       }
     } catch (error) {
       console.error('Login error:', error);
       setMessage('Có lỗi xảy ra khi đăng nhập');
+    } finally {
+      setLoading(false); // Kết thúc trạng thái loading
     }
   };
 
@@ -139,8 +141,23 @@ function Login() {
           />
           {errors.password && <p className="text-danger">{errors.password}</p>}
         </div>
-        <button type="submit" className="btn btn-primary btn-block">
-          Đăng nhập
+        <button
+          type="submit"
+          className="btn btn-primary btn-block"
+          disabled={loading}
+        >
+          {loading ? (
+            <>
+              <span
+                className="spinner-border spinner-border-sm ms-2"
+                role="status"
+                aria-hidden="true"
+              ></span>
+              &nbsp; Đang đăng nhập
+            </>
+          ) : (
+            'Đăng nhập'
+          )}
         </button>
       </form>
 
