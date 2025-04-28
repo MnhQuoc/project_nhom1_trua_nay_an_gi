@@ -1,5 +1,12 @@
 {
-  "users": [
+  "admin": [
+    {
+      "username": "admin",
+      "password": "admin",
+      "id": "bd49"
+    }
+  ],
+  "user": [
     {
       "id": "1745454378925",
       "username": "nhanhnhen23",
@@ -21,7 +28,7 @@
       "verified": true
     }
   ],
-  "request": [
+  "merchant": [
     {
       "userId": 1745348611792,
       "status": "rejected",
@@ -70,6 +77,40 @@
       "role": "merchant",
       "verified": false,
       "id": "7"
+    }
+  ],
+  "food": [
+    {
+      "id": "1",
+      "name": "Bún bò Huế",
+      "address": "123 Đường Lê Lợi, Huế",
+      "image": "https://example.com/images/bunbohue.jpg",
+      "prepareTime": 15,
+      "note": "Món đặc trưng miền Trung, cay nhẹ.",
+      "price": 45000,
+      "discountPrice": 40000,
+      "serviceFee": 5000,
+      "tag": [
+        "bún",
+        "món nước",
+        "đặc sản"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Phở bò",
+      "address": "456 Trần Hưng Đạo, Hà Nội",
+      "image": "https://example.com/images/phobo.jpg",
+      "prepareTime": 10,
+      "note": "",
+      "price": 50000,
+      "discountPrice": 45000,
+      "serviceFee": 3000,
+      "tag": [
+        "phở",
+        "món nước",
+        "truyền thống"
+      ]
     }
   ]
 }
