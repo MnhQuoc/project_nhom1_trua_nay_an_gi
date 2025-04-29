@@ -3,7 +3,7 @@ import React from 'react';
 import { Route, Routes, Navigate } from 'react-router';
 import NavbarWeb from './components/Navigate/NavbarWeb';
 import Header from './pages/Home/Header';
-import About from './pages/About/About';
+import About from './pages/RecommendFood/About';
 import Team from './pages/Team/Team';
 import Footer from './components/Footer/Footer';
 import Profile from './pages/Profile/Profile';
