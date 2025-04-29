@@ -36,6 +36,11 @@ const OrderHistory = () => {
     return <Badge bg={statusColors[status] || 'secondary'}>{status}</Badge>;
   };
 
+  const formatDate = (dateString) => {
+    const date = dateString ? new Date(dateString) : new Date();
+    return date.toLocaleDateString('vi-VN');
+  };
+
   const handleRowClick = (order) => {
     setSelectedOrder(order);
     setShowModal(true);
@@ -68,8 +73,8 @@ const OrderHistory = () => {
               onClick={() => handleRowClick(order)}
               style={{ cursor: 'pointer' }}
             >
-              <td>{new Date(order.orderDate).toLocaleDateString('vi-VN')}</td>
-              <td>{order.totalAmount.toLocaleString('vi-VN')}đ</td>
+              <td>{formatDate(order.orderDate || order.createdAt)}</td>
+              <td>{(order.totalAmount || order.total).toLocaleString('vi-VN')}đ</td>
               <td>{getStatusBadge(order.status)}</td>
             </tr>
           ))}
@@ -84,9 +89,9 @@ const OrderHistory = () => {
           {selectedOrder && (
             <>
               <p><strong>Mã đơn hàng:</strong> {selectedOrder.id}</p>
-              <p><strong>Ngày đặt:</strong> {new Date(selectedOrder.orderDate).toLocaleDateString('vi-VN')}</p>
+              <p><strong>Ngày đặt:</strong> {formatDate(selectedOrder.orderDate || selectedOrder.createdAt)}</p>
               <p><strong>Trạng thái:</strong> {getStatusBadge(selectedOrder.status)}</p>
-              <p><strong>Tổng tiền:</strong> {selectedOrder.totalAmount.toLocaleString('vi-VN')}đ</p>
+              <p><strong>Tổng tiền:</strong> {(selectedOrder.totalAmount || selectedOrder.total).toLocaleString('vi-VN')}đ</p>
               {selectedOrder.items && (
                 <>
                   <h5 className="mt-3">Danh sách món ăn:</h5>
