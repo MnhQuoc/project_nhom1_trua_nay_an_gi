@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 
-function Login() {
+function Login({ setIsLoggedIn }) {
   const [form, setForm] = useState({
     username: '',
-    password: ''
+    password: '',
   });
 
   const [errors, setErrors] = useState({
     username: '',
-    password: ''
+    password: '',
   });
 
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false); // Thêm loading để quản lý trạng thái gửi
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -53,76 +54,112 @@ function Login() {
       return;
     }
 
+    setLoading(true); // Bắt đầu trạng thái loading
+
     try {
       const response = await fetch('http://localhost:3001/users', {
-        method: 'GET'
+        method: 'GET',
       });
       const users = await response.json();
 
       // Tìm user phù hợp
-      const user = users.find(u => 
-        u.username === form.username && 
-        u.password === form.password
+      const user = users.find(
+        (u) => u.username === form.username && u.password === form.password
       );
 
       if (user) {
         // Lưu thông tin user vào localStorage
-        localStorage.setItem('user', JSON.stringify({
-          id: user.id,
-          username: user.username,
-          role: user.role
-        }));
-        
+        localStorage.setItem(
+          'user',
+          JSON.stringify({
+            id: user.id,
+            username: user.username,
+            role: user.role,
+          })
+        );
+
         setMessage('Đăng nhập thành công!');
         // Reset form
         setForm({
           username: '',
-          password: ''
+          password: '',
         });
 
-        // Chuyển hướng đến trang chủ sau 1 giây
-        setTimeout(() => {
-          navigate('/home');
-          window.location.reload(); // Reload để cập nhật navbar
-        }, 1000);
+        setIsLoggedIn(true); // Đặt trạng thái đăng nhập thành công
+        navigate('/home');
       } else {
         setMessage('Tên đăng nhập hoặc mật khẩu không đúng');
       }
     } catch (error) {
       console.error('Login error:', error);
       setMessage('Có lỗi xảy ra khi đăng nhập');
+    } finally {
+      setLoading(false); // Kết thúc trạng thái loading
     }
   };
 
   return (
-    <div className="container" style={{ maxWidth: '400px', margin: 'auto', padding: '20px' }}>
+    <div
+      className="container"
+      style={{ maxWidth: '400px', margin: 'auto', padding: '20px' }}
+    >
       <h2 className="text-center">Đăng nhập</h2>
+
+      {message && (
+        <div
+          className={`alert ${
+            message.includes('thành công') ? 'alert-success' : 'alert-danger'
+          } mt-3`}
+        >
+          {message}
+        </div>
+      )}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label style={{ textAlign: 'left', display: 'block' }}>Tên đăng nhập:</label>
+          <label>Tên đăng nhập:</label>
           <input
             type="text"
             name="username"
             value={form.username}
             onChange={handleChange}
             className="form-control"
+            placeholder="Nhập tên đăng nhập của bạn"
+            required
           />
-          {errors.username && <p style={{ color: 'red' }}>{errors.username}</p>}
+          {errors.username && <p className="text-danger">{errors.username}</p>}
         </div>
         <div className="form-group">
-          <label style={{ textAlign: 'left', display: 'block' }}>Mật khẩu:</label>
+          <label>Mật khẩu:</label>
           <input
             type="password"
             name="password"
             value={form.password}
             onChange={handleChange}
             className="form-control"
+            placeholder="Nhập mật khẩu của bạn"
+            required
           />
-          {errors.password && <p style={{ color: 'red' }}>{errors.password}</p>}
+          {errors.password && <p className="text-danger">{errors.password}</p>}
         </div>
-        <button type="submit" className="btn btn-primary btn-block">Đăng nhập</button>
+        <button
+          type="submit"
+          className="btn btn-primary btn-block"
+          disabled={loading}
+        >
+          {loading ? (
+            <>
+              <span
+                className="spinner-border spinner-border-sm ms-2"
+                role="status"
+                aria-hidden="true"
+              ></span>
+              &nbsp; Đang đăng nhập
+            </>
+          ) : (
+            'Đăng nhập'
+          )}
+        </button>
       </form>
-      {message && <div className={`alert ${message.includes('thành công') ? 'alert-success' : 'alert-danger'} mt-3`}>{message}</div>}
 
       <div className="mt-4 text-center">
         <span>Bạn chưa có tài khoản?</span>

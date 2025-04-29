@@ -8,7 +8,7 @@ function Register() {
     username: '',
     password: '',
     phone: '',
-    email: ''
+    email: '',
   });
 
   const [message, setMessage] = useState('');
@@ -17,7 +17,7 @@ function Register() {
     username: '',
     password: '',
     phone: '',
-    email: ''
+    email: '',
   });
 
   const navigate = useNavigate();
@@ -25,11 +25,11 @@ function Register() {
   const handleChange = (e) => {
     setForm({
       ...form,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
     setErrors({
       ...errors,
-      [e.target.name]: ''
+      [e.target.name]: '',
     });
   };
 
@@ -55,7 +55,7 @@ function Register() {
 
     setErrors({
       ...errors,
-      [name]: errorMessage
+      [name]: errorMessage,
     });
   };
 
@@ -68,7 +68,8 @@ function Register() {
     }
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d).{8,}$/;
     if (!passwordRegex.test(form.password)) {
-      errorMessages.password = 'Mật khẩu phải từ 8 ký tự trở lên và bao gồm cả chữ và số';
+      errorMessages.password =
+        'Mật khẩu phải từ 8 ký tự trở lên và bao gồm cả chữ và số';
       valid = false;
     }
 
@@ -92,31 +93,33 @@ function Register() {
     e.preventDefault();
     setLoading(true);
     setMessage('');
-  
+
     if (!validateForm()) {
       setMessage('Vui lòng sửa các lỗi ở biểu mẫu.');
       setLoading(false);
       return;
     }
-  
+
     try {
       // Kiểm tra username đã tồn tại
-      const res = await axios.get(`http://localhost:3001/users?username=${form.username}`);
+      const res = await axios.get(
+        `http://localhost:3001/users?username=${form.username}`
+      );
       console.log('API response:', res.data);
-  
+
       if (!Array.isArray(res.data)) {
         throw new Error('API không trả về mảng dữ liệu');
       }
-  
-      if (res.data.some(user => user.username === form.username)) {
+
+      if (res.data.some((user) => user.username === form.username)) {
         setMessage('Tên đăng nhập đã tồn tại. Vui lòng chọn tên khác.');
         setLoading(false);
         return;
       }
-  
+
       const newUserId = Date.now();
       const { username, password, phone, email } = form;
-  
+
       // Đăng ký user mới
       await axios.post('http://localhost:3001/users', {
         id: newUserId,
@@ -128,7 +131,7 @@ function Register() {
         blocked: false,
         verified: false,
       });
-  
+
       // Gửi email xác nhận
       const confirmationLink = `http://localhost:5173/verify/${newUserId}`;
       await emailjs.send(
@@ -142,7 +145,7 @@ function Register() {
         },
         'ZcmKYaJ0MqbWwcw2h'
       );
-  
+
       setMessage('Đăng ký thành công! Vui lòng kiểm tra email để xác nhận.');
       setForm({ username: '', password: '', phone: '', email: '' });
       setTimeout(() => navigate('/login'), 3000);
@@ -156,11 +159,22 @@ function Register() {
 
   return (
     <div className="container d-flex justify-content-center">
-      <div style={{ maxWidth: '400px', width: '100%', padding: '20px', textAlign: 'left' }}>
+      <div
+        style={{
+          maxWidth: '400px',
+          width: '100%',
+          padding: '20px',
+          textAlign: 'left',
+        }}
+      >
         <h2 className="mb-4 text-center">Đăng Ký</h2>
+        <p>Các trường có dấu * bắt buộc phải nhập</p>
+        {message && <p className="mt-3">{message}</p>}
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label htmlFor="username" className="form-label">Tên đăng nhập:</label>
+            <label htmlFor="username" className="form-label">
+              Tên đăng nhập (<span className="text-danger">*</span>):
+            </label>
             <input
               type="text"
               id="username"
@@ -169,13 +183,18 @@ function Register() {
               value={form.username}
               onChange={handleChange}
               onBlur={handleBlur}
+              placeholder="Nhập tên đăng nhập của bạn"
               required
             />
-            {errors.username && <p className="text-danger">{errors.username}</p>}
+            {errors.username && (
+              <p className="text-danger">{errors.username}</p>
+            )}
           </div>
 
           <div className="mb-3">
-            <label htmlFor="password" className="form-label">Mật khẩu:</label>
+            <label htmlFor="password" className="form-label">
+              Mật khẩu (<span className="text-danger">*</span>):
+            </label>
             <input
               type="password"
               id="password"
@@ -184,13 +203,18 @@ function Register() {
               value={form.password}
               onChange={handleChange}
               onBlur={handleBlur}
+              placeholder="Nhập mật khẩu của bạn"
               required
             />
-            {errors.password && <p className="text-danger">{errors.password}</p>}
+            {errors.password && (
+              <p className="text-danger">{errors.password}</p>
+            )}
           </div>
 
           <div className="mb-3">
-            <label htmlFor="phone" className="form-label">Số điện thoại:</label>
+            <label htmlFor="phone" className="form-label">
+              Số điện thoại (<span className="text-danger">*</span>):
+            </label>
             <input
               type="text"
               id="phone"
@@ -199,13 +223,16 @@ function Register() {
               value={form.phone}
               onChange={handleChange}
               onBlur={handleBlur}
+              placeholder="Nhập số điện thoại của bạn"
               required
             />
             {errors.phone && <p className="text-danger">{errors.phone}</p>}
           </div>
 
           <div className="mb-3">
-            <label htmlFor="email" className="form-label">Email:</label>
+            <label htmlFor="email" className="form-label">
+              Email (<span className="text-danger">*</span>):
+            </label>
             <input
               type="email"
               id="email"
@@ -214,17 +241,21 @@ function Register() {
               value={form.email}
               onChange={handleChange}
               onBlur={handleBlur}
+              placeholder="Nhập email của bạn"
               required
             />
             {errors.email && <p className="text-danger">{errors.email}</p>}
           </div>
 
-          <button type="submit" className="btn btn-primary w-100" style={{ padding: '15px' }} disabled={loading}>
+          <button
+            type="submit"
+            className="btn btn-primary w-100"
+            style={{ padding: '15px' }}
+            disabled={loading}
+          >
             {loading ? 'Đang đăng ký...' : 'Đăng ký'}
           </button>
         </form>
-
-        {message && <p className="mt-3">{message}</p>}
 
         <div className="mt-4 d-flex justify-content-between align-items-center">
           <span>Bạn đã có tài khoản?</span>

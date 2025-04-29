@@ -4,39 +4,34 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { FaRegBell, FaSignInAlt, FaUserCircle, FaSignOutAlt } from 'react-icons/fa';
-import { useNavigate } from 'react-router';
-import {Link} from "react-router-dom";
+import {
+  FaRegBell,
+  FaSignInAlt,
+  FaUserCircle,
+  FaSignOutAlt,
+} from 'react-icons/fa';
+import { NavLink, useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 
-const NavbarWeb = () => {
+const NavbarWeb = ({ isLoggedIn, setIsLoggedIn }) => {
   const [role, setRole] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
   const navigate = useNavigate();
+
   useEffect(() => {
     const user = localStorage.getItem('user');
     if (user) {
       const parsedUser = JSON.parse(user);
-      setIsLoggedIn(true);
       setUsername(parsedUser.username);
       setRole(parsedUser.role);
     }
-  }, []);
-
-  useEffect(() => {
-    // Kiểm tra nếu có thông tin người dùng trong localStorage
-    const user = localStorage.getItem('user');
-    if (user) {
-      setIsLoggedIn(true);
-      setUsername(JSON.parse(user).username);
-    }
-  }, []);
+  }, [isLoggedIn]);
 
   const handleLogout = () => {
-    localStorage.removeItem('user');
+    localStorage.clear();
     setIsLoggedIn(false);
     setUsername('');
-    navigate('/');
+    navigate('/login');
   };
 
   return (
@@ -68,7 +63,8 @@ const NavbarWeb = () => {
       >
         <Container>
           <Navbar.Brand
-            href="/"
+            as={NavLink}
+            to={'/home'}
             className="navbar-brand font-weight-bold text-light"
           >
             Trưa nay ăn gì
@@ -76,8 +72,12 @@ const NavbarWeb = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mx-auto">
-              <Nav.Link href="/home">Trang chủ</Nav.Link>
-              <Nav.Link href="/menu">Thực đơn</Nav.Link>
+              <Nav.Link as={NavLink} to="/home">
+                Trang chủ
+              </Nav.Link>
+              <Nav.Link as={NavLink} to="/menu">
+                Thực đơn
+              </Nav.Link>
               <NavDropdown
                 title="Tiếng Việt"
                 id="basic-nav-dropdown"
@@ -96,16 +96,15 @@ const NavbarWeb = () => {
             </Nav>
             <div className="d-flex align-items-center">
               {role === 'admin' && (
-                  <Link to='/listmerchant' className="text-light mx-2">
-                    Danh sách người bán
-                  </Link>
+                <Link to="/listmerchant" className="text-light mx-2">
+                  Danh sách người bán
+                </Link>
               )}
               {role === 'merchant' && (
-                  <Link to='/changeinfo'  className="text-light mx-2">
-                    Thông tin cửa hàng
-                  </Link>
+                <Link to="/changeinfo" className="text-light mx-2">
+                  Thông tin cửa hàng
+                </Link>
               )}
-
             </div>
 
             <div className="d-flex align-items-center">
@@ -118,12 +117,15 @@ const NavbarWeb = () => {
             </div>
             {!isLoggedIn ? (
               <>
-                <a href="/register" className="btn btn-outline-primary mx-2">
+                <NavLink
+                  to="/register"
+                  className="btn btn-outline-primary mx-2"
+                >
                   Đăng ký
-                </a>
-                <a href="/login" className="btn btn-primary">
+                </NavLink>
+                <NavLink to="/login" className="btn btn-primary">
                   <FaSignInAlt /> Đăng nhập
-                </a>
+                </NavLink>
               </>
             ) : (
               <NavDropdown
@@ -136,7 +138,11 @@ const NavbarWeb = () => {
                 className="text-light"
                 menuVariant="dark"
               >
-                {role === 'user' && (<NavDropdown.Item href="/profile" className=" text-dark">Tài khoản</NavDropdown.Item>)}
+                {role === 'user' && (
+                  <NavDropdown.Item href="/profile" className=" text-dark">
+                    Tài khoản
+                  </NavDropdown.Item>
+                )}
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={handleLogout} className=" text-dark">
                   <FaSignOutAlt /> Đăng xuất
