@@ -93,7 +93,7 @@ const Intro = () => {
           </div>
         </Col>
       </Row>
-      {loading && <LoadingCat />}
+      {loading && <LoadingCat onFinish={() => navigate("/home")} />}
     </div>
   );
 };
