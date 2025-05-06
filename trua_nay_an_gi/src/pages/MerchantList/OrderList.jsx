@@ -6,9 +6,13 @@ import { Modal, Button, Table, Form } from "react-bootstrap";
 const OrderList = () => {
   const [orders, setOrders] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [selectedOrderId, setSelectedOrderId] = useState(null);
+  const [selectedOrder, setSelectedOrder] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState("");
   const API_URL = "http://localhost:3001/orders";
+
+  useEffect(() => {
+    fetchOrders();
+  }, []);
 
   const fetchOrders = async () => {
     try {
@@ -19,19 +23,15 @@ const OrderList = () => {
     }
   };
 
-  useEffect(() => {
-    fetchOrders();
-  }, []);
-
-  const handleChangeStatus = (orderId, newStatus) => {
-    setSelectedOrderId(orderId);
-    setSelectedStatus(newStatus);
+  const openConfirmModal = (order, status) => {
+    setSelectedOrder(order);
+    setSelectedStatus(status);
     setShowModal(true);
   };
 
-  const handleConfirmChange = async () => {
+  const confirmStatusChange = async () => {
     try {
-      await axios.patch(`${API_URL}/${selectedOrderId}`, { status: selectedStatus });
+      await axios.patch(`${API_URL}/${selectedOrder.id}`, { status: selectedStatus });
       fetchOrders();
     } catch (error) {
       console.error("Lỗi khi cập nhật đơn hàng:", error);
@@ -40,25 +40,46 @@ const OrderList = () => {
     }
   };
 
-  const isStatusDisabled = (currentStatus, targetStatus) => {
-    if (currentStatus === "Hủy" || currentStatus === "Đã hoàn thành") {
-      return true;
+  const isFinalStatus = (status) => ["Hủy", "Đã hoàn thành"].includes(status);
+
+  const orderStatusOrder = [
+    "Chờ nhận hàng",
+    "Đang chế biến",
+    "Đã nhận món",
+    "Đang giao",
+    "Đã hoàn thành",
+    "Hủy"
+  ];
+
+  const validTransitions = {
+    "Chờ nhận hàng": ["Đang chế biến", "Hủy"],
+    "Đang chế biến": ["Đã nhận món", "Hủy"],
+    "Đã nhận món": ["Đang giao"],
+    "Đang giao": ["Đã hoàn thành"]
+  };
+
+  const getStatusVariant = (status) => {
+    switch (status) {
+      case "Chờ nhận hàng":
+        return "secondary";
+      case "Đang chế biến":
+        return "warning";
+      case "Đã nhận món":
+        return "info";
+      case "Đang giao":
+        return "primary";
+      case "Đã hoàn thành":
+        return "success";
+      case "Hủy":
+        return "danger";
+      default:
+        return "light";
     }
-    if (currentStatus === "Đã nhận món" && targetStatus === "Hủy") {
-      return true;
-    }
-    if (currentStatus === "Hủy" && targetStatus !== "Hủy") {
-      return true;
-    }
-    return false;
   };
 
   return (
     <div className="container p-4">
-      <h1
-        className="text-center mb-4 p-2"
-        style={{ backgroundColor: "#c58d4e", color: "white", borderRadius: "8px" }}
-      >
+      <h1 className="text-center mb-4 p-2" style={{ backgroundColor: "#c58d4e", color: "white", borderRadius: "8px" }}>
         Danh sách đơn hàng
       </h1>
       <Table bordered striped>
@@ -82,18 +103,25 @@ const OrderList = () => {
               <td>{order.items.length}</td>
               <td>{order.totalAmount.toLocaleString("vi-VN")} VND</td>
               <td>
-                <Form.Select
-                  value={order.status}
-                  onChange={(e) => handleChangeStatus(order.id, e.target.value)}
-                >
-                  {["Chờ nhận hàng", "Đang chế biến", "Đã nhận món", "Đang giao", "Đã hoàn thành", "Hủy"].map(
-                    (status) => (
-                      <option key={status} value={status} disabled={isStatusDisabled(order.status, status)}>
-                        {status}
-                      </option>
-                    )
-                  )}
-                </Form.Select>
+                {isFinalStatus(order.status) ? (
+                  <span className={`badge bg-${getStatusVariant(order.status)}`}>
+                    {order.status}
+                  </span>
+                ) : (
+                  <Form.Select
+                    value={order.status}
+                    onChange={(e) => openConfirmModal(order, e.target.value)}
+                  >
+                    <option value={order.status}>{order.status}</option>
+                    {orderStatusOrder
+                      .filter((status) => validTransitions[order.status]?.includes(status))
+                      .map((status) => (
+                        <option key={status} value={status}>
+                          {status}
+                        </option>
+                    ))}
+                  </Form.Select>
+                )}
               </td>
               <td>
                 <Link
@@ -108,19 +136,20 @@ const OrderList = () => {
         </tbody>
       </Table>
 
+      {/* Modal xác nhận */}
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
         <Modal.Header closeButton>
           <Modal.Title>Xác nhận thay đổi</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Bạn có chắc chắn muốn chuyển trạng thái đơn hàng <strong>#{selectedOrderId}</strong> sang
+          Bạn có chắc chắn muốn chuyển trạng thái đơn hàng <strong>#{selectedOrder?.id}</strong> sang
           <strong style={{ color: "#c58d4e" }}> {selectedStatus}</strong>?
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowModal(false)}>
             Hủy
           </Button>
-          <Button variant="warning" onClick={handleConfirmChange}>
+          <Button variant="warning" onClick={confirmStatusChange}>
             Xác nhận
           </Button>
         </Modal.Footer>

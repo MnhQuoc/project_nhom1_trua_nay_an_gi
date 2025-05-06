@@ -82,6 +82,16 @@
       "address": "Số 16, Quan Hoa, Cầu Giayas, Hà Nội",
       "restname": "Bún đậu",
       "time": "11AM-2PM"
+    },
+    {
+      "id": "1746533121654",
+      "username": "nhanhnhen12",
+      "password": "nhahnhen1",
+      "phone": "01234567891",
+      "email": "nhomhaiduan@gmail.com",
+      "role": "user",
+      "blocked": false,
+      "verified": true
     }
   ],
   "request": [
@@ -152,7 +162,7 @@
         }
       ],
       "totalAmount": 139399,
-      "status": "Đã hoàn thành",
+      "status": "Chờ nhận hàng",
       "createdAt": "2025-05-01T02:02:43.058Z"
     },
     {
@@ -171,7 +181,7 @@
         }
       ],
       "totalAmount": 156635,
-      "status": "Hủy",
+      "status": "Chờ nhận hàng",
       "createdAt": "2025-05-02T02:02:43.058Z"
     },
     {
@@ -209,7 +219,7 @@
         }
       ],
       "totalAmount": 83643,
-      "status": "Đã nhận món",
+      "status": "Chờ nhận hàng",
       "createdAt": "2025-05-02T02:02:43.058Z"
     },
     {
@@ -228,7 +238,7 @@
         }
       ],
       "totalAmount": 176512,
-      "status": "Hủy",
+      "status": "Chờ nhận hàng",
       "createdAt": "2025-05-01T02:02:43.058Z"
     },
     {
@@ -247,7 +257,7 @@
         }
       ],
       "totalAmount": 145141,
-      "status": "Đã nhận món",
+      "status": "Chờ nhận hàng",
       "createdAt": "2025-04-28T02:02:43.058Z"
     },
     {
@@ -285,7 +295,7 @@
         }
       ],
       "totalAmount": 105476,
-      "status": "Hủy",
+      "status": "Chờ nhận hàng",
       "createdAt": "2025-04-27T02:02:43.058Z"
     },
     {
@@ -304,7 +314,7 @@
         }
       ],
       "totalAmount": 108303,
-      "status": "Đã nhận món",
+      "status": "Chờ nhận hàng",
       "createdAt": "2025-04-27T02:02:43.058Z"
     },
     {
@@ -323,7 +333,7 @@
         }
       ],
       "totalAmount": 151161,
-      "status": "Đã nhận món",
+      "status": "Chờ nhận hàng",
       "createdAt": "2025-04-27T02:02:43.058Z"
     }
   ],

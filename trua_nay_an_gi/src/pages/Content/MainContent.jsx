@@ -125,7 +125,7 @@ const MainContent = () => {
                 <strong>Điện thoại:</strong> {selectedProduct.phone || "Chưa có"}
               </p>
               <p>
-                <strong>Giá:</strong> ₫{selectedProduct.price.toLocaleString()}
+                <strong>Giá:</strong> {selectedProduct.price.toLocaleString()}₫
               </p>
               <p>
                 <strong>Giờ mở cửa:</strong> {selectedProduct.openTime || "Chưa rõ"}{" "}

@@ -31,7 +31,7 @@ const About = () => {
               <div className="product-card" key={product.id}>
                 <img src={product.image} alt={product.name} />
                 <p className="product-name">{product.name}</p>
-                <p className="price">₫ {product.price.toLocaleString()}</p>
+                <p className="price"> {product.price.toLocaleString()}₫</p>
               </div>
             ))}
           </div>
