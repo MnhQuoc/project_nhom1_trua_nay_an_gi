@@ -44,17 +44,18 @@ const OrderList = () => {
 
   const orderStatusOrder = [
     "Chờ nhận hàng",
-    "Đang chế biến",
     "Đã nhận món",
+    "Đang chế biến",
+    
     "Đang giao",
     "Đã hoàn thành",
     "Hủy"
   ];
 
   const validTransitions = {
-    "Chờ nhận hàng": ["Đang chế biến", "Hủy"],
-    "Đang chế biến": ["Đã nhận món", "Hủy"],
-    "Đã nhận món": ["Đang giao"],
+    "Chờ nhận hàng": ["Đã nhận món", "Hủy"],
+    "Đang chế biến": ["Đang giao"],
+    "Đã nhận món": ["Đang chế biến"],
     "Đang giao": ["Đã hoàn thành"]
   };
 
@@ -62,9 +63,9 @@ const OrderList = () => {
     switch (status) {
       case "Chờ nhận hàng":
         return "secondary";
-      case "Đang chế biến":
-        return "warning";
       case "Đã nhận món":
+        return "warning";
+      case "Đang chế biến":
         return "info";
       case "Đang giao":
         return "primary";

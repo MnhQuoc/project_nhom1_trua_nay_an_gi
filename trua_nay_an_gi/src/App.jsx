@@ -1,12 +1,10 @@
 import './App.css';
 import React from 'react';
 import { Route, Routes } from 'react-router';
-import NavbarWeb from './components/Navigate/NavbarWeb';
+import LayoutWithNavbar from "./components/LayoutWithNavbar/LayoutWithNavbar";
 import Header from './pages/Home/Header';
 import About from './pages/RecommendFood/About';
 import Team from './pages/Team/Team';
-import BackToTop from './components/backtotop/BackToTop.jsx';
-import Footer from './components/Footer/Footer';
 import Profile from './pages/Profile/Profile';
 import Users from './pages/Users/Users';
 import Intro from './pages/Intro/Intro';
@@ -19,22 +17,21 @@ import OrderList from './pages/MerchantList/OrderList.jsx';
 import OrderDetail from './pages/MerchantList/OrderDetail.jsx';
 import Verify from './pages/Verify/Verify.jsx';
 import ExploreSection from './pages/Content/ExploreSection';
+import AddFoodItem from './components/Addfood/AddFoodItem.jsx';
+import ListFood from './components/Listfood/ListFood.jsx';
+import FoodEdit from './components/Editfood/EditFood.jsx';
 
-// Bắt lỗi toàn cục
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
     this.state = { hasError: false };
   }
-
   static getDerivedStateFromError(error) {
     return { hasError: true };
   }
-
   componentDidCatch(error, errorInfo) {
     console.error('App Error:', error, errorInfo);
   }
-
   render() {
     if (this.state.hasError) {
       return <h1>Đã xảy ra lỗi. Vui lòng thử lại sau.</h1>;
@@ -47,58 +44,41 @@ function App() {
   return (
     <ErrorBoundary>
       <Routes>
-        {/* Trang Intro riêng biệt */}
+        {/* Trang intro riêng, không có navbar/footer */}
         <Route path="/" element={<Intro />} />
 
-        {/* Các layout có navbar + footer */}
-        <Route
-          path="/*"
-          element={
-            <div className="App">
-              <NavbarWeb />
-              <Routes>
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/users" element={<Users />} />
-                <Route path="/menu" element={<h1>Menu</h1>} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/listmerchant" element={<MerchantList />} />
-                <Route path="/changeinfo" element={<ChangeInfo />} />
-                <Route path="/orderlist" element={<OrderList />} />
-                <Route path="/orderdetail/:orderId" element={<OrderDetail />} />
-                <Route path="/verify/:userId" element={<Verify />} />
-
-                {/* Trang Home có banner động hai bên */}
-                <Route
-                  path="/home"
-                  element={
-                    <div className="home-banner-wrapper">
-                      {/* Banner trái */}
-                      <div className="side-banner left">
-                        <img src="/images/rice.gif" alt="Banner trái" />
-                      </div>
-
-                      {/* Banner phải */}
-                      <div className="side-banner right">
-                        <img src="/images/rice.gif" alt="Banner phải" />
-                      </div>
-
-                      <div className="home-content">
-                        <Header />
-                        <ExploreSection />
-                        <About />
-                        
-                      </div>
-                    </div>
-                  }
-                />
-              </Routes>
-              <BackToTop />
-              <Footer />
+        {/* Layout có Navbar/Footer */}
+        <Route path="/" element={<LayoutWithNavbar />}>
+          <Route path="home" element={
+            <div className="home-banner-wrapper">
+              <div className="side-banner left">
+                <img src="/images/rice.gif" alt="Banner trái" />
+              </div>
+              <div className="side-banner right">
+                <img src="/images/rice.gif" alt="Banner phải" />
+              </div>
+              <div className="home-content">
+                <Header />
+                <ExploreSection />
+                <About />
+              </div>
             </div>
-          }
-        />
+          } />
+          <Route path="profile" element={<Profile />} />
+          <Route path="users" element={<Users />} />
+          <Route path="menu" element={<h1>Menu</h1>} />
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+          <Route path="signup" element={<Signup />} />
+          <Route path="listmerchant" element={<MerchantList />} />
+          <Route path="changeinfo" element={<ChangeInfo />} />
+          <Route path="orderlist" element={<OrderList />} />
+          <Route path="orderdetail/:orderId" element={<OrderDetail />} />
+          <Route path="verify/:userId" element={<Verify />} />
+          <Route path="addfood" element={<AddFoodItem />} />
+          <Route path="listfood" element={<ListFood />} />
+          <Route path="editfood/:id" element={<FoodEdit />} />
+        </Route>
       </Routes>
     </ErrorBoundary>
   );
