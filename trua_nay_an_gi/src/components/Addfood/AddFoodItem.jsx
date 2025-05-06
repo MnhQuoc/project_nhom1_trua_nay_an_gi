@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router';
 
 const AddFoodItem = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     address: '',
@@ -14,6 +16,9 @@ const AddFoodItem = () => {
     tag: ''
   });
 
+  const [message, setMessage] = useState('');
+  const [isSuccess, setIsSuccess] = useState(true);
+
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
@@ -21,7 +26,7 @@ const AddFoodItem = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const data = {
       ...formData,
       prepareTime: parseInt(formData.prepareTime) || 0,
@@ -30,12 +35,12 @@ const AddFoodItem = () => {
       serviceFee: parseFloat(formData.serviceFee) || 0,
       tag: formData.tag.split(',').map(tag => tag.trim())
     };
-  
+
     try {
-      await axios.post('http://localhost:3001/foods', data);
-      alert('✅ Đã thêm món ăn thành công!');
-      
-      setFormData({ // Reset form
+      await axios.post('http://localhost:3001/food', data);
+      setMessage('✅ Đã thêm món ăn thành công!');
+      setIsSuccess(true);
+      setFormData({
         name: '',
         address: '',
         image: '',
@@ -46,76 +51,103 @@ const AddFoodItem = () => {
         serviceFee: '',
         tag: ''
       });
+      setTimeout(() => setMessage(''), 4000); // Thông báo tự ẩn sau 4 giây
     } catch (error) {
       console.error('❌ Lỗi khi thêm món ăn:', error);
-      alert('❌ Thêm món ăn thất bại!');
+      setMessage('❌ Thêm món ăn thất bại!');
+      setIsSuccess(false);
+      setTimeout(() => setMessage(''), 4000); // Thông báo tự ẩn sau 4 giây
     }
   };
-  
-  
 
   return (
     <div className="container mt-5">
       <h2 className="text-center mb-4">Thêm Món Ăn Mới</h2>
-      <form onSubmit={handleSubmit}>
+
+      {/* Thông báo */}
+      {message && (
+        <div
+          className={`alert ${isSuccess ? 'alert-success' : 'alert-danger'} mt-3`}
+          role="alert"
+        >
+          {message}
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit} className="text-start">
         <div className="mb-3">
-          <label htmlFor="name" className="form-label">Tên món ăn (*)</label>
+          <label htmlFor="name" className="form-label" style={{ textAlign: 'left', display: 'block' }}>Tên món ăn (*)</label>
           <input type="text" className="form-control" id="name" value={formData.name} onChange={handleChange} required />
         </div>
 
         <div className="mb-3">
-          <label htmlFor="address" className="form-label">Địa chỉ (*)</label>
+          <label htmlFor="address" className="form-label" style={{ textAlign: 'left', display: 'block' }}>Địa chỉ (*)</label>
           <input type="text" className="form-control" id="address" value={formData.address} onChange={handleChange} required />
         </div>
 
         <div className="mb-3">
-          <label htmlFor="image" className="form-label">Ảnh (URL) (*)</label>
-          <input
-  type="file"
-  className="form-control"
-  id="image"
-  accept="image/*"
-  onChange={(e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData({ ...formData, image: reader.result }); // Lưu base64
-      };
-      reader.readAsDataURL(file); // chuyển ảnh thành chuỗi base64
-    }
-  }}
-  required
-/>
+          <label className="form-label" style={{ textAlign: 'left', display: 'block' }}>Ảnh món ăn (*)</label>
+          <div className="d-flex align-items-center gap-3">
+            <input
+              type="file"
+              id="imageUpload"
+              accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files[0];
+                if (file) {
+                  const reader = new FileReader();
+                  reader.onloadend = () => {
+                    setFormData({ ...formData, image: reader.result });
+                  };
+                  reader.readAsDataURL(file);
+                }
+              }}
+              style={{ display: 'none' }}
+            />
+            <button
+              type="button"
+              className="btn btn-outline-primary"
+              onClick={() => document.getElementById('imageUpload').click()}
+            >
+              📷 Chọn ảnh
+            </button>
+            {formData.image && (
+              <img
+                src={formData.image}
+                alt="Preview"
+                style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '6px' }}
+              />
+            )}
+          </div>
         </div>
 
         <div className="mb-3">
-          <label htmlFor="prepareTime" className="form-label">Thời gian chuẩn bị (phút)</label>
+          <label htmlFor="prepareTime" className="form-label" style={{ textAlign: 'left', display: 'block' }}>Thời gian chuẩn bị (phút)</label>
           <input type="number" className="form-control" id="prepareTime" value={formData.prepareTime} onChange={handleChange} />
         </div>
 
         <div className="mb-3">
-          <label htmlFor="note" className="form-label">Ghi chú</label>
+          <label htmlFor="note" className="form-label" style={{ textAlign: 'left', display: 'block' }}>Ghi chú</label>
           <textarea className="form-control" id="note" rows="3" value={formData.note} onChange={handleChange}></textarea>
         </div>
 
         <div className="mb-3">
-          <label htmlFor="price" className="form-label">Giá tiền (*)</label>
+          <label htmlFor="price" className="form-label" style={{ textAlign: 'left', display: 'block' }}>Giá tiền (*)</label>
           <input type="number" className="form-control" id="price" value={formData.price} onChange={handleChange} required />
         </div>
 
         <div className="mb-3">
-          <label htmlFor="discountPrice" className="form-label">Giá KM (*)</label>
+          <label htmlFor="discountPrice" className="form-label" style={{ textAlign: 'left', display: 'block' }}>Giá KM (*)</label>
           <input type="number" className="form-control" id="discountPrice" value={formData.discountPrice} onChange={handleChange} required />
         </div>
 
         <div className="mb-3">
-          <label htmlFor="serviceFee" className="form-label">Phí dịch vụ</label>
+          <label htmlFor="serviceFee" className="form-label" style={{ textAlign: 'left', display: 'block' }}>Phí dịch vụ</label>
           <input type="number" className="form-control" id="serviceFee" value={formData.serviceFee} onChange={handleChange} />
         </div>
 
         <div className="mb-3">
-          <label htmlFor="tag" className="form-label">Tag (*) (ngăn cách bằng dấu phẩy)</label>
+          <label htmlFor="tag" className="form-label" style={{ textAlign: 'left', display: 'block' }}>Tag (*) (ngăn cách bằng dấu phẩy)</label>
           <input type="text" className="form-control" id="tag" value={formData.tag} onChange={handleChange} required />
         </div>
 

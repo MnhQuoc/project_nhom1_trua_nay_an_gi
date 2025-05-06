@@ -1,118 +1,112 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
-const EditFood = () => {
-  const { id } = useParams(); // lấy id từ URL
+const ListFood = () => {
+  const [foods, setFoods] = useState([]);
+  const [query, setQuery] = useState('');
+  const [filteredFoods, setFilteredFoods] = useState([]);
   const navigate = useNavigate();
 
-  const [food, setFood] = useState({
-    name: '',
-    address: '',
-    price: '',
-    discountPrice: '',
-    prepareTime: '',
-    note: '',
-    tag: '',
-    image: ''
-  });
-  const [loading, setLoading] = useState(true);
-
   useEffect(() => {
-    fetchFood();
+    fetchFoods();
   }, []);
 
-  const fetchFood = async () => {
+  const fetchFoods = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/food/${id}`);
-      const fetchedFood = response.data;
-
-      setFood({
-        ...fetchedFood,
-        tag: fetchedFood.tag ? fetchedFood.tag.join(', ') : '' // tags thành chuỗi để dễ nhập
-      });
-    } catch (error) {
-      console.error('❌ Lỗi khi tải món ăn:', error);
-    } finally {
-      setLoading(false);
+      const res = await axios.get('http://localhost:3001/food');
+      setFoods(res.data);
+      setFilteredFoods(res.data); // hiển thị toàn bộ ban đầu
+    } catch (err) {
+      console.error('Lỗi khi tải dữ liệu:', err);
     }
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFood((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const updatedFood = {
-      ...food,
-      tag: food.tag.split(',').map(tag => tag.trim()) // chuyển chuỗi tag thành mảng
-    };
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm('Bạn có chắc chắn muốn xóa món ăn này?');
+    if (!confirmDelete) return;
 
     try {
-      await axios.put(`http://localhost:3001/food/${id}`, updatedFood);
-      alert('✅ Cập nhật món ăn thành công!');
-      navigate('/'); // sau khi sửa sẽ quay lại trang ListFood
-    } catch (error) {
-      console.error('❌ Lỗi khi cập nhật món ăn:', error);
-      alert('❌ Cập nhật thất bại!');
+      await axios.delete(`http://localhost:3001/food/${id}`);
+      const updatedFoods = foods.filter(food => food.id !== id);
+      setFoods(updatedFoods);
+      setFilteredFoods(updatedFoods.filter(food =>
+        food.name.toLowerCase().includes(query.toLowerCase())
+      ));
+    } catch (err) {
+      console.error('Lỗi khi xóa:', err);
     }
   };
 
-  if (loading) {
-    return <p className="text-center mt-5">Đang tải dữ liệu món ăn...</p>;
-  }
+  const handleSearchClick = () => {
+    const results = foods.filter(food =>
+      food.name.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredFoods(results);
+  };
 
   return (
     <div className="container mt-5">
-      <h2 className="mb-4">Cập Nhật Món Ăn</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label className="form-label">Tên món ăn</label>
-          <input type="text" className="form-control" name="name" value={food.name} onChange={handleChange} required />
-        </div>
+      <h2 className="mb-4">Danh sách món ăn</h2>
 
-        <div className="mb-3">
-          <label className="form-label">Địa chỉ</label>
-          <input type="text" className="form-control" name="address" value={food.address} onChange={handleChange} />
-        </div>
+      <div className="mb-4 d-flex">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="🔍 Tìm kiếm món ăn..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+        <button
+          className="btn btn-outline-secondary"
+          style={{ marginLeft: '5px' }}
+          onClick={handleSearchClick}
+        >
+          Tìm kiếm
+        </button>
+      </div>
 
-        <div className="mb-3">
-          <label className="form-label">Giá</label>
-          <input type="number" className="form-control" name="price" value={food.price} onChange={handleChange} />
-        </div>
-
-        <div className="mb-3">
-          <label className="form-label">Giá Khuyến Mãi</label>
-          <input type="number" className="form-control" name="discountPrice" value={food.discountPrice} onChange={handleChange} />
-        </div>
-
-        <div className="mb-3">
-          <label className="form-label">Thời gian chuẩn bị (phút)</label>
-          <input type="number" className="form-control" name="prepareTime" value={food.prepareTime} onChange={handleChange} />
-        </div>
-
-        <div className="mb-3">
-          <label className="form-label">Ghi chú</label>
-          <textarea className="form-control" name="note" value={food.note} onChange={handleChange}></textarea>
-        </div>
-
-        <div className="mb-3">
-          <label className="form-label">Tags (cách nhau bằng dấu phẩy)</label>
-          <input type="text" className="form-control" name="tag" value={food.tag} onChange={handleChange} />
-        </div>
-
-        <div className="mb-3">
-          <label className="form-label">Link Hình Ảnh</label>
-          <input type="text" className="form-control" name="image" value={food.image} onChange={handleChange} />
-        </div>
-
-        <button type="submit" className="btn btn-success">✅ Cập Nhật</button>
-      </form>
+      <div className="row">
+        {filteredFoods.map((food) => (
+          <div className="col-md-4 mb-4" key={food.id}>
+            <div className="card h-100">
+              <img
+                src={food.image || 'https://via.placeholder.com/150'}
+                className="card-img-top"
+                alt={food.name}
+              />
+              <div className="card-body">
+                <h5 className="card-title">{food.name}</h5>
+                <p className="card-text">{food.note}</p>
+                <p className="card-text">
+                  <strong>Giá:</strong> {food.price}đ <br />
+                  <strong>Giá KM:</strong> {food.discountPrice}đ <br />
+                  <strong>Phí DV:</strong> {food.serviceFee}đ
+                </p>
+                <div className="d-flex justify-content-between">
+                  <button
+                    className="btn btn-sm btn-primary"
+                    onClick={() => navigate(`/editfood/${food.id}`)}
+                  >
+                    ✏️ Sửa
+                  </button>
+                  <button
+                    className="btn btn-sm btn-danger"
+                    onClick={() => handleDelete(food.id)}
+                  >
+                    🗑️ Xóa
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+        {filteredFoods.length === 0 && (
+          <div className="text-center mt-4 text-muted">Không tìm thấy món ăn nào.</div>
+        )}
+      </div>
     </div>
   );
 };
 
-export default EditFood;
+export default ListFood;

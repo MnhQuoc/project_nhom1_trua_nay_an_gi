@@ -17,7 +17,7 @@ import ChangeInfo from "./pages/ChangeInfo/ChangeInfo.jsx";
 import Verify from "./pages/Verify/Verify.jsx";
 import AddFoodItem from './components/Addfood/AddFoodItem.jsx';
 import ListFood from './components/Listfood/ListFood.jsx';
-import UpdateFoodItem from './components/Updatefood/UpdateFood.jsx';
+import FoodEdit from './components/Editfood/EditFood.jsx';
 // Define an ErrorBoundary class to handle any potential errors in the app
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -62,7 +62,7 @@ function App() {
           <Route path="/verify/:userId" element={<Verify />} />
           <Route path="/addfood" element={<AddFoodItem />} />
           <Route path="/listfood" element={<ListFood />} />
-          <Route path="/updatefood" element={<UpdateFoodItem />} />
+          <Route path="/editfood/:id" element={<FoodEdit />} />
           {/* Main page */}
           <Route
             path="/home"
