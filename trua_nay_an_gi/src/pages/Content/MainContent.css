@@ -14,6 +14,14 @@
     font-size: 16px;
     min-width: 150px;
 }
+.deal-title {
+    color: black;
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
 
 .product-grid {
     display: grid;
@@ -124,3 +132,17 @@
 * {
     box-sizing: border-box;
 }
+.product-card-grid {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer; /* giúp toàn bộ card có thể bấm */
+  }
+  
+  .product-card-grid:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  }

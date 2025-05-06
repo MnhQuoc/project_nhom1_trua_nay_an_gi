@@ -1,105 +1,46 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './About.css';
-import MainContent from "../Content/MainContent.jsx";
-import '../Content/MainContent.css'
-const products = [
-  {
-    id: 1,
-    name: 'Demo',
-    price: '164.000',
-    image: 'https://tse3.mm.bing.net/th?id=OIP.0AaGpmGFJyhgnrIBYgz9YAHaEk&pid=Api&P=0&h=220',
-
-  },
-  {
-    id: 2,
-    name: 'Demo',
-    price: '949.000',
-    image: 'https://tse3.mm.bing.net/th?id=OIP.0AaGpmGFJyhgnrIBYgz9YAHaEk&pid=Api&P=0&h=220',
-
-  },
-  {
-    id: 3,
-    name: 'Demo',
-    price: '11.490.000',
-    image: 'https://tse3.mm.bing.net/th?id=OIP.0AaGpmGFJyhgnrIBYgz9YAHaEk&pid=Api&P=0&h=220',
-
-  },
-  {
-    id: 3,
-    name: 'Demo',
-    price: '11.490.000',
-    image: 'https://tse3.mm.bing.net/th?id=OIP.0AaGpmGFJyhgnrIBYgz9YAHaEk&pid=Api&P=0&h=220',
-
-  },
-  {
-    id: 3,
-    name: 'Demo',
-    price: '11.490.000',
-    image: 'https://tse3.mm.bing.net/th?id=OIP.0AaGpmGFJyhgnrIBYgz9YAHaEk&pid=Api&P=0&h=220',
-
-  },{
-    id: 3,
-    name: 'Demo',
-    price: '11.490.000',
-    image: 'https://tse3.mm.bing.net/th?id=OIP.0AaGpmGFJyhgnrIBYgz9YAHaEk&pid=Api&P=0&h=220',
-
-  },
-  {
-    id: 3,
-    name: 'Demo',
-    price: '11.490.000',
-    image: 'https://tse3.mm.bing.net/th?id=OIP.0AaGpmGFJyhgnrIBYgz9YAHaEk&pid=Api&P=0&h=220',
-
-  },
-  {
-    id: 3,
-    name: 'Demo',
-    price: '11.490.000',
-    image: 'https://tse3.mm.bing.net/th?id=OIP.0AaGpmGFJyhgnrIBYgz9YAHaEk&pid=Api&P=0&h=220',
-
-  },
-  {
-    id: 3,
-    name: 'Demo',
-    price: '11.490.000',
-    image: 'https://tse3.mm.bing.net/th?id=OIP.0AaGpmGFJyhgnrIBYgz9YAHaEk&pid=Api&P=0&h=220',
-
-  },
-  {
-    id: 3,
-    name: 'Demo',
-    price: '11.490.000',
-    image: 'https://tse3.mm.bing.net/th?id=OIP.0AaGpmGFJyhgnrIBYgz9YAHaEk&pid=Api&P=0&h=220',
-
-  }
-
-];
+import axios from 'axios';
+import MainContent from '../Content/MainContent';
 
 const About = () => {
+  const [products, setProducts] = useState([]);
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    axios.get('http://localhost:3001/foods')
+      .then(res => setProducts(res.data))
+      .catch(err => console.error('Lỗi khi fetch foods:', err));
+  }, []);
+
+  const scrollLeft = () => scrollRef.current.scrollBy({ left: -400, behavior: 'smooth' });
+  const scrollRight = () => scrollRef.current.scrollBy({ left: 400, behavior: 'smooth' });
 
   return (
-   <>
-     <div className="flash-sale-section">
-       <div className="flash-sale-header">
-         <h2 style={{color:"white"}}>Top món ăn được yêu thích</h2>
-         <a style={{color:"white"}} href="#" className="view-all">Xem tất cả &gt;</a>
-       </div>
-       <div className="product-list">
-         {products.map(product => (
-             <div className="product-card" key={product.id}>
-               <img src={product.image} alt={product.name} />
-               <p>{product.name}</p>
-               <p className="price">₫ {product.price}</p>
-             </div>
-         ))}
-       </div>
-     </div>
-     <div>
-       <MainContent/>
-     </div>
+    <>
+      <div className="flash-sale-section">
+        <div className="flash-sale-header">
+          <h2>Top món ăn được yêu thích</h2>
+          <a href="#" className="view-all">Xem tất cả &gt;</a>
+        </div>
 
+        <div className="scroll-container">
+          <button className="scroll-btn left" onClick={scrollLeft}>❮</button>
+          <div className="product-list" ref={scrollRef}>
+            {products.map(product => (
+              <div className="product-card" key={product.id}>
+                <img src={product.image} alt={product.name} />
+                <p className="product-name">{product.name}</p>
+                <p className="price">₫ {product.price.toLocaleString()}</p>
+              </div>
+            ))}
+          </div>
+          <button className="scroll-btn right" onClick={scrollRight}>❯</button>
+        </div>
+      </div>
 
-   </>
+      <MainContent />
+    </>
   );
 };
 

@@ -1,176 +1,146 @@
-import React, {useState} from "react";
+import React, { useEffect, useState } from "react";
 import "./MainContent.css";
-
-const products1 = [
-    {
-        id: 1,
-        name: "Socola Nims giòn tan chảy hàng nhập khẩu",
-        price: "105.000",
-        location: "TP. Hồ Chí Minh",
-        image: "https://tse3.mm.bing.net/th?id=OIP.0AaGpmGFJyhgnrIBYgz9YAHaEk&pid=Api&P=0&h=220",
-        rating: 4.9,
-
-    },
-    {
-        id: 2,
-        name: "Bò Miếng Hàng Đại Gói 40 Miếng Cay",
-        price: "14.300",
-        location: "Hà Nội",
-        image: "https://tse3.mm.bing.net/th?id=OIP.0AaGpmGFJyhgnrIBYgz9YAHaEk&pid=Api&P=0&h=220",
-        rating: 4.9,
-
-    },
-    {
-        id: 3,
-        name: "Kitkat Socola Nội Địa Nhật",
-        price: "75.000",
-
-        location: "Hà Nội",
-        image: "https://tse3.mm.bing.net/th?id=OIP.0AaGpmGFJyhgnrIBYgz9YAHaEk&pid=Api&P=0&h=220",
-        rating: 4.9,
-
-    },
-    {
-        id: 4,
-        name: "Canh Riêu Tôm Ăn Liền I-Soup 42g",
-        price: "68.000",
-
-        location: "Đồng Nai",
-        image: "https://tse3.mm.bing.net/th?id=OIP.0AaGpmGFJyhgnrIBYgz9YAHaEk&pid=Api&P=0&h=220",
-        rating: 4.9,
-
-    },
-    {
-        id: 5,
-        name: "Combo Bánh Tráng Muối Tép Hành Phi",
-        price: "63.000",
-        location: "Ninh Thuận",
-        image: "https://tse3.mm.bing.net/th?id=OIP.0AaGpmGFJyhgnrIBYgz9YAHaEk&pid=Api&P=0&h=220",
-        rating: 4.7,
-    },
-    {
-        id: 5,
-        name: "Combo Bánh Tráng Muối Tép Hành Phi",
-        price: "63.000",
-        location: "Ninh Thuận",
-        image: "https://tse3.mm.bing.net/th?id=OIP.0AaGpmGFJyhgnrIBYgz9YAHaEk&pid=Api&P=0&h=220",
-        rating: 4.7,
-    },
-    {
-        id: 5,
-        name: "Combo Bánh Tráng Muối Tép Hành Phi",
-        price: "63.000",
-        location: "Ninh Thuận",
-        image: "https://tse3.mm.bing.net/th?id=OIP.0AaGpmGFJyhgnrIBYgz9YAHaEk&pid=Api&P=0&h=220",
-        rating: 4.7,
-    },
-    {
-        id: 5,
-        name: "Combo Bánh Tráng Muối Tép Hành Phi",
-        price: "63.000",
-        location: "Ninh Thuận",
-        image: "https://tse3.mm.bing.net/th?id=OIP.0AaGpmGFJyhgnrIBYgz9YAHaEk&pid=Api&P=0&h=220",
-        rating: 4.7,
-    },
-    {
-        id: 5,
-        name: "Combo Bánh Tráng Muối Tép Hành Phi",
-        price: "63.000",
-        location: "Ninh Thuận",
-        image: "https://tse3.mm.bing.net/th?id=OIP.0AaGpmGFJyhgnrIBYgz9YAHaEk&pid=Api&P=0&h=220",
-        rating: 4.7,
-    },
-    {
-        id: 1,
-        name: 'Bánh Tráng Cuốn Thịt Heo Hoàng Bèo',
-        price: '30.000đ - 100.000đ',
-        image: 'https://tse3.mm.bing.net/th?id=OIP.0AaGpmGFJyhgnrIBYgz9YAHaEk&pid=Api&P=0&h=220',
-        address: '40 Duy Tân, Quận Cầu Giấy, Hà Nội',
-        phone: '+91 01234-56789, +91 01234-56789',
-        openTime: 'Today 11am - 5pm, 6pm - 11pm',
-        status: 'OPEN NOW',
-        description: 'Ba mẹ cho bạc cho vàng 🌟, KHÔNG BẰNG NHẬN ĐƯỢC KHÍ ĐÁNH 5⭐️...'
-    }
-];
+import axios from "axios";
 
 const MainContent = () => {
-    const [selectedProduct, setSelectedProduct] = useState(null);
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10;
-    const totalPages = Math.ceil(products1.length / itemsPerPage);
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const currentProducts = products1.slice(startIndex, startIndex + itemsPerPage);
+  const [products, setProducts] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedCategory, setSelectedCategory] = useState("Tất cả");
+  const [selectedLocation, setSelectedLocation] = useState("Tất cả");
 
-    const handleImageClick = (products1) => {
-        setSelectedProduct(products1);
-    };
+  const itemsPerPage = 10;
 
-    const closeModal = () => {
-        setSelectedProduct(null);
-    };
-    const handlePageChange = (page) => {
-        setCurrentPage(page);
-    };
-    return (
-        <>
-            <h2 style={{ color: 'black', textAlign: 'center' }}>Deal hot trong ngày</h2>
-            <div className="flash-sale-section">
-                <div className="flash-sale-header">
-                    <select className="dropdown-filter">
-                        <option>Danh mục</option>
-                        <option>Cơm</option>
-                        <option>Bánh mỳ</option>
-                        <option>Phở</option>
-                    </select>
-                </div>
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/foods")
+      .then((response) => setProducts(response.data))
+      .catch((error) => console.error("Lỗi khi tải dữ liệu món ăn:", error));
+  }, []);
 
-                {/* Grid sản phẩm */}
-                <div className="product-grid">
-                    {currentProducts.map((item) => (
-                        <div className="product-card-grid" key={item.id + Math.random()}>
-                            <div className="image-wrap">
-                                <img
-                                    src={item.image}
-                                    alt={item.name}
-                                    onClick={() => handleImageClick(item)}
-                                    style={{ cursor: 'pointer' }}
-                                />
-                            </div>
-                            <div className="product-name">{item.name}</div>
-                            <div className="product-price">₫{item.price}</div>
-                            <div className="rating">⭐ {item.rating}</div>
-                            <div className="location">{item.location}</div>
-                        </div>
-                    ))}
-                </div>
-                <div className="pagination">
-                    {Array.from({ length: totalPages }, (_, index) => (
-                        <button
-                            key={index}
-                            className={`page-button ${currentPage === index + 1 ? 'active' : ''}`}
-                            onClick={() => handlePageChange(index + 1)}
-                        >
-                            {index + 1}
-                        </button>
-                    ))}
-                </div>
-                {selectedProduct && (
-                    <div className="modal-overlay" onClick={closeModal}>
-                        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                            <h2>{selectedProduct.name}</h2>
-                            <img src={selectedProduct.image} alt={selectedProduct.name} />
-                            <p><strong>Địa chỉ:</strong> {selectedProduct.address}</p>
-                            <p><strong>Điện thoại:</strong> {selectedProduct.phone}</p>
-                            <p><strong>Giá:</strong> {selectedProduct.price}</p>
-                            <p><strong>Giờ mở cửa:</strong> {selectedProduct.openTime} <span className="open-status">{selectedProduct.status}</span></p>
-                            <p>{selectedProduct.description}</p>
-                            <button onClick={closeModal} className="close-button">Đóng</button>
-                        </div>
-                    </div>
-                )}
+  const handleImageClick = (product) => {
+    setSelectedProduct(product);
+  };
+
+  const closeModal = () => {
+    setSelectedProduct(null);
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const handleCategoryChange = (e) => {
+    setSelectedCategory(e.target.value);
+    setCurrentPage(1);
+  };
+
+  const handleLocationChange = (e) => {
+    setSelectedLocation(e.target.value);
+    setCurrentPage(1);
+  };
+
+  // Lọc theo danh mục và địa điểm
+  const filteredProducts = products.filter((p) => {
+    const matchCategory =
+      selectedCategory === "Tất cả" ||
+      p.category?.toLowerCase() === selectedCategory.toLowerCase();
+    const matchLocation =
+      selectedLocation === "Tất cả" ||
+      p.location?.toLowerCase() === selectedLocation.toLowerCase();
+    return matchCategory && matchLocation;
+  });
+
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentProducts = filteredProducts.slice(startIndex, startIndex + itemsPerPage);
+
+  return (
+    <>
+      <h2 className="deal-title">Deal hot trong ngày</h2>
+      <div className="flash-sale-section">
+        <div className="flash-sale-header">
+          <div className="filter-bar d-flex gap-3">
+            <select className="dropdown-filter" onChange={handleCategoryChange}>
+              <option value="Tất cả">Tất cả món</option>
+              <option value="cơm">Cơm</option>
+              <option value="bánh mì">Bánh mì</option>
+              <option value="phở">Phở</option>
+            </select>
+
+            <select className="dropdown-filter" onChange={handleLocationChange}>
+              <option value="Tất cả">Tất cả địa điểm</option>
+              <option value="TP. Hồ Chí Minh">TP. Hồ Chí Minh</option>
+              <option value="Hà Nội">Hà Nội</option>
+              <option value="Cần Thơ">Cần Thơ</option>
+              <option value="Đà Nẵng">Đà Nẵng</option>
+              <option value="Huế">Huế</option>
+              <option value="Vĩnh Long">Vĩnh Long</option>
+              <option value="Vũng Tàu">Vũng Tàu</option>
+              <option value="Quảng Nam">Quảng Nam</option>
+              <option value="Long An">Long An</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="product-grid">
+          {currentProducts.map((item) => (
+            <div
+              className="product-card-grid"
+              key={item.id}
+              onClick={() => handleImageClick(item)}
+            >
+              <div className="image-wrap">
+                <img src={item.image} alt={item.name} />
+              </div>
+              <div className="product-name">{item.name}</div>
+              <div className="product-price">₫{item.price.toLocaleString()}</div>
+              <div className="rating">⭐ {item.rating || "4.9"}</div>
+              <div className="location">{item.location || "Đang cập nhật"}</div>
             </div>
-        </>
-    );
+          ))}
+        </div>
+
+        <div className="pagination">
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button
+              key={index}
+              className={`page-button ${currentPage === index + 1 ? "active" : ""}`}
+              onClick={() => handlePageChange(index + 1)}
+            >
+              {index + 1}
+            </button>
+          ))}
+        </div>
+
+        {selectedProduct && (
+          <div className="modal-overlay" onClick={closeModal}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              <h2>{selectedProduct.name}</h2>
+              <img src={selectedProduct.image} alt={selectedProduct.name} />
+              <p>
+                <strong>Địa chỉ:</strong> {selectedProduct.address || "Chưa có"}
+              </p>
+              <p>
+                <strong>Điện thoại:</strong> {selectedProduct.phone || "Chưa có"}
+              </p>
+              <p>
+                <strong>Giá:</strong> ₫{selectedProduct.price.toLocaleString()}
+              </p>
+              <p>
+                <strong>Giờ mở cửa:</strong> {selectedProduct.openTime || "Chưa rõ"}{" "}
+                <span className="open-status">{selectedProduct.status || "OPEN"}</span>
+              </p>
+              <p>{selectedProduct.description || "Không có mô tả."}</p>
+              <button onClick={closeModal} className="close-button">
+                Đóng
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </>
+  );
 };
 
 export default MainContent;

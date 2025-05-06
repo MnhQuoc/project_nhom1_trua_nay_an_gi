@@ -1,12 +1,9 @@
 {
   "users": [
     {
-      "id": "4fea"
-    },
-    {
       "id": "1745293587693",
       "username": "nhanhnhen",
-      "email": "nhomhaiduan@gmail.com",
+      "email": "nhommotduan@gmail.com",
       "phone": "0123456789",
       "password": "nhanhnhen1",
       "role": "user",
@@ -27,13 +24,13 @@
       "password": "phuc2004@",
       "role": "user",
       "blocked": false,
-      "verified": false,
+      "verified": true,
       "address": "Cầu Giấy",
       "time": "8AM-12PM",
       "restname": "Quán Anh Béo"
     },
     {
-      "id": 1745338495664,
+      "id": "1745338495664",
       "username": "admin1111",
       "email": "albumanh1234@gmail.com",
       "phone": "02343943941",
@@ -43,7 +40,7 @@
       "verified": false
     },
     {
-      "id": 1745348611792,
+      "id": "1745348611792",
       "username": "usertest1",
       "email": "albumanh1234@gmail.com",
       "phone": "02149293486",
@@ -56,20 +53,20 @@
       "time": "8AM-12PM"
     },
     {
-      "id": 1745349964177,
+      "id": "1745349964177",
       "username": "usertesst2",
       "email": "albumanh1234@gmail.com",
       "phone": "01248124124",
       "password": "user1234",
       "role": "user",
       "blocked": false,
-      "verified": false,
+      "verified": true,
       "restname": "Ngõ Nhỏ Quán",
       "address": "Quan Hoa",
       "time": "9PM-5AM"
     },
     {
-      "id": 1745421209258,
+      "id": "1745421209258",
       "username": "usertest3",
       "email": "albumanh1234@gmail.com",
       "phone": "0182381238",
@@ -93,49 +90,523 @@
       "status": "rejected",
       "role": "merchant",
       "verified": false,
-      "id": 1
+      "id": "1"
     },
     {
       "userId": 1745348611792,
       "status": "rejected",
       "role": "merchant",
       "verified": false,
-      "id": 2
+      "id": "2"
     },
     {
       "userId": 1745348611792,
       "status": "approved",
       "role": "merchant",
       "verified": false,
-      "id": 3
+      "id": "3"
     },
     {
       "userId": 1745348611792,
       "status": "rejected",
       "role": "merchant",
       "verified": false,
-      "id": 4
+      "id": "4"
     },
     {
       "userId": 1745349964177,
       "status": "rejected",
       "role": "merchant",
       "verified": false,
-      "id": 5
+      "id": "5"
     },
     {
       "userId": 1745349964177,
       "status": "rejected",
       "role": "merchant",
       "verified": false,
-      "id": 6
+      "id": "6"
     },
     {
       "userId": 1745421209258,
       "status": "approved",
       "role": "merchant",
       "verified": false,
-      "id": 7
+      "id": "7"
+    }
+  ],
+  "orders": [
+    {
+      "id": "1",
+      "userId": "1745293587693",
+      "username": "nhanhnhen",
+      "merchantId": "7",
+      "items": [
+        {
+          "foodId": "2",
+          "quantity": 2
+        },
+        {
+          "foodId": "2",
+          "quantity": 2
+        }
+      ],
+      "totalAmount": 139399,
+      "status": "Đã hoàn thành",
+      "createdAt": "2025-05-01T02:02:43.058Z"
+    },
+    {
+      "id": "2",
+      "userId": "1745293587693",
+      "username": "nhanhnhen",
+      "merchantId": "3",
+      "items": [
+        {
+          "foodId": "2",
+          "quantity": 3
+        },
+        {
+          "foodId": "2",
+          "quantity": 2
+        }
+      ],
+      "totalAmount": 156635,
+      "status": "Hủy",
+      "createdAt": "2025-05-02T02:02:43.058Z"
+    },
+    {
+      "id": "3",
+      "userId": "1745293587693",
+      "username": "nhanhnhen",
+      "merchantId": "3",
+      "items": [
+        {
+          "foodId": "2",
+          "quantity": 3
+        },
+        {
+          "foodId": "2",
+          "quantity": 1
+        }
+      ],
+      "totalAmount": 194515,
+      "status": "Chờ nhận hàng",
+      "createdAt": "2025-05-01T02:02:43.058Z"
+    },
+    {
+      "id": "4",
+      "userId": "1745293587693",
+      "username": "nhanhnhen",
+      "merchantId": "3",
+      "items": [
+        {
+          "foodId": "2",
+          "quantity": 2
+        },
+        {
+          "foodId": "2",
+          "quantity": 1
+        }
+      ],
+      "totalAmount": 83643,
+      "status": "Đã nhận món",
+      "createdAt": "2025-05-02T02:02:43.058Z"
+    },
+    {
+      "id": "5",
+      "userId": "1745293587693",
+      "username": "nhanhnhen",
+      "merchantId": "7",
+      "items": [
+        {
+          "foodId": "1",
+          "quantity": 1
+        },
+        {
+          "foodId": "2",
+          "quantity": 2
+        }
+      ],
+      "totalAmount": 176512,
+      "status": "Hủy",
+      "createdAt": "2025-05-01T02:02:43.058Z"
+    },
+    {
+      "id": "6",
+      "userId": "1745293587693",
+      "username": "nhanhnhen",
+      "merchantId": "3",
+      "items": [
+        {
+          "foodId": "1",
+          "quantity": 3
+        },
+        {
+          "foodId": "1",
+          "quantity": 2
+        }
+      ],
+      "totalAmount": 145141,
+      "status": "Đã nhận món",
+      "createdAt": "2025-04-28T02:02:43.058Z"
+    },
+    {
+      "id": "7",
+      "userId": "1745293587693",
+      "username": "nhanhnhen",
+      "merchantId": "3",
+      "items": [
+        {
+          "foodId": "2",
+          "quantity": 1
+        },
+        {
+          "foodId": "2",
+          "quantity": 2
+        }
+      ],
+      "totalAmount": 114150,
+      "status": "Chờ nhận hàng",
+      "createdAt": "2025-05-02T02:02:43.058Z"
+    },
+    {
+      "id": "8",
+      "userId": "1745293587693",
+      "username": "nhanhnhen",
+      "merchantId": "3",
+      "items": [
+        {
+          "foodId": "1",
+          "quantity": 1
+        },
+        {
+          "foodId": "2",
+          "quantity": 1
+        }
+      ],
+      "totalAmount": 105476,
+      "status": "Hủy",
+      "createdAt": "2025-04-27T02:02:43.058Z"
+    },
+    {
+      "id": "9",
+      "userId": "1745293587693",
+      "username": "nhanhnhen",
+      "merchantId": "3",
+      "items": [
+        {
+          "foodId": "2",
+          "quantity": 1
+        },
+        {
+          "foodId": "2",
+          "quantity": 1
+        }
+      ],
+      "totalAmount": 108303,
+      "status": "Đã nhận món",
+      "createdAt": "2025-04-27T02:02:43.058Z"
+    },
+    {
+      "id": "10",
+      "userId": "1745293587693",
+      "username": "nhanhnhen",
+      "merchantId": "7",
+      "items": [
+        {
+          "foodId": "2",
+          "quantity": 3
+        },
+        {
+          "foodId": "1",
+          "quantity": 2
+        }
+      ],
+      "totalAmount": 151161,
+      "status": "Đã nhận món",
+      "createdAt": "2025-04-27T02:02:43.058Z"
+    }
+  ],
+  "foods": [
+    {
+      "id": "1",
+      "name": "Bánh mì thịt nguội",
+      "price": 25000,
+      "image": "https://tse4.mm.bing.net/th?id=OIP.t47v8dgxjhC1uFaYe4cSjAHaHa&w=474&h=474&c=7",
+      "category": "bánh mì",
+      "rating": 4.8,
+      "location": "TP. Hồ Chí Minh",
+      "address": "123 Nguyễn Trãi, Q.1",
+      "phone": "0901234567",
+      "openTime": "6:00 - 21:00",
+      "status": "OPEN",
+      "description": "Bánh mì giòn, pate béo, thịt nguội đậm đà."
+    },
+    {
+      "id": "2",
+      "name": "Bánh mì pate trứng",
+      "price": 20000,
+      "image": "https://tse1.mm.bing.net/th?id=OIP.IxSQxenayDYM2oZcHwj7PgHaEo&w=296&h=296&c=7",
+      "category": "bánh mì",
+      "rating": 4.7,
+      "location": "Cần Thơ",
+      "address": "15 Hòa Bình, Ninh Kiều",
+      "phone": "0902456789",
+      "openTime": "7:00 - 20:30",
+      "status": "OPEN",
+      "description": "Bánh mì nóng, pate béo ngậy, trứng ốp la vàng óng."
+    },
+    {
+      "id": "3",
+      "name": "Bánh mì bò nướng",
+      "price": 30000,
+      "image": "https://tse1.mm.bing.net/th?id=OIP.IxSQxenayDYM2oZcHwj7PgHaEo&w=296&h=296&c=7",
+      "category": "bánh mì",
+      "rating": 4.9,
+      "location": "Đà Nẵng",
+      "address": "20 Trần Phú, Hải Châu",
+      "phone": "0909988776",
+      "openTime": "8:00 - 22:00",
+      "status": "OPEN",
+      "description": "Bánh mì bò nướng sốt BBQ đậm đà, rau dưa tươi ngon."
+    },
+    {
+      "id": "4",
+      "name": "Phở bò tái nạm",
+      "price": 60000,
+      "image": "https://tse2.mm.bing.net/th?id=OIP.j8okE_ECVYln8KGKRlTeMgHaE8&cb=iwp1&w=316&h=316&c=7",
+      "category": "phở",
+      "rating": 5,
+      "location": "Hà Nội",
+      "address": "45 Lý Quốc Sư",
+      "phone": "0912345678",
+      "openTime": "6:00 - 14:00",
+      "status": "OPEN",
+      "description": "Phở bò tái nạm truyền thống, nước dùng trong, ngọt từ xương."
+    },
+    {
+      "id": "5",
+      "name": "Phở gà",
+      "price": 50000,
+      "image": "https://tse2.mm.bing.net/th?id=OIP.j8okE_ECVYln8KGKRlTeMgHaE8&cb=iwp1&w=316&h=316&c=7",
+      "category": "phở",
+      "rating": 4.6,
+      "location": "Hà Nội",
+      "address": "78 Cầu Giấy",
+      "phone": "0987123456",
+      "openTime": "6:30 - 13:30",
+      "status": "OPEN",
+      "description": "Phở gà truyền thống, thịt mềm, nước dùng thanh mát."
+    },
+    {
+      "id": "6",
+      "name": "Phở bò viên",
+      "price": 55000,
+      "image": "https://tse2.mm.bing.net/th?id=OIP.j8okE_ECVYln8KGKRlTeMgHaE8&cb=iwp1&w=316&h=316&c=7",
+      "category": "phở",
+      "rating": 4.5,
+      "location": "TP. Hồ Chí Minh",
+      "address": "100 Điện Biên Phủ, Q.3",
+      "phone": "0978765432",
+      "openTime": "7:00 - 15:00",
+      "status": "OPEN",
+      "description": "Phở bò viên thơm ngon, đậm vị, topping đầy đủ."
+    },
+    {
+      "id": "7",
+      "name": "Cơm tấm sườn bì chả",
+      "price": 50000,
+      "image": "https://tse3.mm.bing.net/th?id=OIP.s0yJBLAIl1OsoYH6ZXyJ3gHaFy&w=370&h=370&c=7",
+      "category": "cơm",
+      "rating": 5,
+      "location": "TP. Hồ Chí Minh",
+      "address": "200 Nguyễn Văn Cừ, Q.5",
+      "phone": "0905555555",
+      "openTime": "10:00 - 21:00",
+      "status": "OPEN",
+      "description": "Cơm tấm Sài Gòn trứ danh, sườn nướng thơm lừng."
+    },
+    {
+      "id": "8",
+      "name": "Cơm chiên Dương Châu",
+      "price": 45000,
+      "image": "https://tse1.mm.bing.net/th?id=OIP.J6uA2efmD5pE-PmL1hySRAHaE8&w=316&h=316&c=7",
+      "category": "cơm",
+      "rating": 4.7,
+      "location": "Bình Dương",
+      "address": "123 Quốc Lộ 13",
+      "phone": "0933333333",
+      "openTime": "10:30 - 20:00",
+      "status": "OPEN",
+      "description": "Cơm chiên vàng ươm, trứng, lạp xưởng và rau củ."
+    },
+    {
+      "id": "9",
+      "name": "Cơm gà xối mỡ",
+      "price": 48000,
+      "image": "https://tse1.mm.bing.net/th?id=OIP.DPlAJBRciXLa02HvnGDFrgHaFS&w=338&h=338&c=7",
+      "category": "cơm",
+      "rating": 4.8,
+      "location": "Long An",
+      "address": "40 Trần Hưng Đạo",
+      "phone": "0966666666",
+      "openTime": "9:00 - 20:00",
+      "status": "OPEN",
+      "description": "Cơm gà da giòn, thịt mềm, nước mắm gừng đặc trưng."
+    },
+    {
+      "id": "10",
+      "name": "Cơm cá kho tộ",
+      "price": 52000,
+      "image": "https://tse1.mm.bing.net/th?id=OIP.J6uA2efmD5pE-PmL1hySRAHaE8&w=316&h=316&c=7",
+      "category": "cơm",
+      "rating": 4.9,
+      "location": "Cà Mau",
+      "address": "59 Lý Thường Kiệt",
+      "phone": "0944444444",
+      "openTime": "11:00 - 22:00",
+      "status": "OPEN",
+      "description": "Cá kho tộ đậm đà, ăn kèm cơm trắng và dưa leo."
+    },
+    {
+      "id": "11",
+      "name": "Cơm cá kho tộ",
+      "price": 55000,
+      "image": "https://tse1.mm.bing.net/th?id=OIP.J6uA2efmD5pE-PmL1hySRAHaE8&w=316&h=316&c=7",
+      "category": "bún",
+      "rating": 4.9,
+      "location": "Hà Nội",
+      "address": "12 Hàng Mành",
+      "phone": "0911000001",
+      "openTime": "10:00 - 20:00",
+      "status": "OPEN",
+      "description": "Bún chả Hà Nội với thịt nướng thơm lừng, nước mắm pha chuẩn vị."
+    },
+    {
+      "id": "12",
+      "name": "Cơm gà xối mỡ",
+      "price": 40000,
+      "image": "https://tse1.mm.bing.net/th?id=OIP.DPlAJBRciXLa02HvnGDFrgHaFS&w=338&h=338&c=7",
+      "category": "bánh",
+      "rating": 4.7,
+      "location": "Hải Phòng",
+      "address": "99 Lạch Tray",
+      "phone": "0911000002",
+      "openTime": "6:00 - 11:00",
+      "status": "OPEN",
+      "description": "Bánh cuốn mỏng mịn, nhân thịt nấm, ăn kèm chả quế và nước mắm chua ngọt."
+    },
+    {
+      "id": "13",
+      "name": "Bánh mì thịt nguội",
+      "price": 45000,
+      "image": "https://tse1.mm.bing.net/th?id=OIP.IxSQxenayDYM2oZcHwj7PgHaEo&w=296&h=296&c=7",
+      "category": "bánh",
+      "rating": 4.6,
+      "location": "Đà Nẵng",
+      "address": "21 Nguyễn Văn Linh",
+      "phone": "0911000003",
+      "openTime": "14:00 - 21:00",
+      "status": "OPEN",
+      "description": "Bánh xèo giòn rụm, tôm thịt đầy đặn, ăn kèm rau sống và nước chấm đặc biệt."
+    },
+    {
+      "id": "14",
+      "name": "Bánh mì thịt nguội",
+      "price": 30000,
+      "image": "https://tse1.mm.bing.net/th?id=OIP.IxSQxenayDYM2oZcHwj7PgHaEo&w=296&h=296&c=7",
+      "category": "gỏi",
+      "rating": 4.8,
+      "location": "TP. Hồ Chí Minh",
+      "address": "15 Pasteur, Q.3",
+      "phone": "0911000004",
+      "openTime": "10:00 - 19:00",
+      "status": "OPEN",
+      "description": "Gỏi cuốn tươi mát, tôm thịt cuộn rau sống, chấm mắm nêm thơm ngon."
+    },
+    {
+      "id": "15",
+      "name": "Bánh mì thịt nguội",
+      "price": 60000,
+      "image": "https://tse1.mm.bing.net/th?id=OIP.IxSQxenayDYM2oZcHwj7PgHaEo&w=296&h=296&c=7",
+      "category": "hủ tiếu",
+      "rating": 4.9,
+      "location": "TP. Hồ Chí Minh",
+      "address": "38 Lý Tự Trọng, Q.1",
+      "phone": "0911000005",
+      "openTime": "6:00 - 14:00",
+      "status": "OPEN",
+      "description": "Hủ tiếu Nam Vang nước trong, topping đầy đủ, sợi dai vừa ăn."
+    },
+    {
+      "id": "16",
+      "name": "Phở bò viên",
+      "price": 45000,
+      "image": "https://tse2.mm.bing.net/th?id=OIP.j8okE_ECVYln8KGKRlTeMgHaE8&cb=iwp1&w=316&h=316&c=7",
+      "category": "cháo",
+      "rating": 4.5,
+      "location": "Vĩnh Long",
+      "address": "Khu phố 1, Long Hồ",
+      "phone": "0911000006",
+      "openTime": "5:00 - 10:00",
+      "status": "OPEN",
+      "description": "Cháo lòng đậm đà, lòng sạch sẽ, ăn kèm rau thơm và quẩy giòn."
+    },
+    {
+      "id": "17",
+      "name": "Phở bò viên",
+      "price": 35000,
+      "image": "https://tse2.mm.bing.net/th?id=OIP.j8okE_ECVYln8KGKRlTeMgHaE8&cb=iwp1&w=316&h=316&c=7",
+      "category": "bánh",
+      "rating": 4.7,
+      "location": "Huế",
+      "address": "23 Lê Lợi",
+      "phone": "0911000007",
+      "openTime": "9:00 - 18:00",
+      "status": "OPEN",
+      "description": "Bánh bèo thơm béo, tôm cháy bùi, mắm ngọt chuẩn vị Huế."
+    },
+    {
+      "id": "18",
+      "name": "Bánh mì thịt nguội",
+      "price": 55000,
+      "image": "https://tse1.mm.bing.net/th?id=OIP.IxSQxenayDYM2oZcHwj7PgHaEo&w=296&h=296&c=7",
+      "category": "bún",
+      "rating": 4.8,
+      "location": "Huế",
+      "address": "18 Nguyễn Huệ",
+      "phone": "0911000008",
+      "openTime": "6:00 - 13:00",
+      "status": "OPEN",
+      "description": "Bún bò Huế cay nồng, thịt bò mềm, nước lèo đậm đà đặc trưng."
+    },
+    {
+      "id": "19",
+      "name": "Bánh mì thịt nguội",
+      "price": 50000,
+      "image": "https://tse1.mm.bing.net/th?id=OIP.IxSQxenayDYM2oZcHwj7PgHaEo&w=296&h=296&c=7",
+      "category": "mì",
+      "rating": 4.7,
+      "location": "Quảng Nam",
+      "address": "55 Phan Chu Trinh",
+      "phone": "0911000009",
+      "openTime": "7:00 - 14:00",
+      "status": "OPEN",
+      "description": "Mì Quảng trứng thịt đầy đủ, sợi mì vàng óng, nước lèo sánh đậm."
+    },
+    {
+      "id": "20",
+      "name": "Bánh mì thịt nguội",
+      "price": 50000,
+      "image": "https://tse1.mm.bing.net/th?id=OIP.IxSQxenayDYM2oZcHwj7PgHaEo&w=296&h=296&c=7",
+      "category": "bánh",
+      "rating": 4.9,
+      "location": "Vũng Tàu",
+      "address": "66 Trần Phú",
+      "phone": "0911000010",
+      "openTime": "8:00 - 21:00",
+      "status": "OPEN",
+      "description": "Bánh khọt giòn tan, tôm tươi, ăn kèm rau sống và nước mắm chua ngọt."
     }
   ]
 }

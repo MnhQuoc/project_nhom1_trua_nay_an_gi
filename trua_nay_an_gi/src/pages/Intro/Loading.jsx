@@ -1,100 +1,87 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-const LoadingCat = () => {
+const LoadingCat = ({ onFinish }) => {
+  const [hidden, setHidden] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setHidden(true);
+      if (onFinish) onFinish();
+    }, 6000);
+
+    return () => clearTimeout(timer);
+  }, [onFinish]);
+
+  if (hidden) return null;
+
   return (
     <>
       <style>{`
-        #loading {
+        .loading-container {
           position: fixed;
           inset: 0;
-          background: #fff;
-          z-index: 9999;
+          background-color: #111;
           display: flex;
+          flex-direction: column;
           justify-content: center;
           align-items: center;
+          z-index: 9999;
+          animation: fadeOut 1s ease 2.5s forwards;
         }
 
-        .cat {
-          position: relative;
-          width: 100%;
-          max-width: 20em;
-          overflow: hidden;
-          background-color: #e6dcdc;
+        .flag-image {
+          width: 320px;
+          height: auto;
+          margin-bottom: 10px;
         }
 
-        .cat::before {
-          content: '';
-          display: block;
-          padding-bottom: 100%;
+        .tank-image {
+          width: 220px;
+          animation: moveTank 3s ease forwards;
+          margin-bottom: 30px;
         }
 
-        .cat > * {
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          animation: rotating 2.79s cubic-bezier(.65, .54, .12, .93) infinite;
+        .loading-text {
+          color: #aaa;
+          font-weight: bold;
+          font-size: 1.4rem;
+          text-align: center;
+          line-height: 1.6;
         }
 
-        .cat > *::before {
-          content: '';
-          position: absolute;
-          width: 50%;
-          height: 50%;
-          background-size: 200%;
-          background-repeat: no-repeat;
-          background-image: url('https://images.weserv.nl/?url=i.imgur.com/M1raXX3.png&il');
+        @keyframes moveTank {
+          0% {
+            transform: translateX(-100px);
+            opacity: 0.6;
+          }
+          50% {
+            opacity: 1;
+          }
+          100% {
+            transform: translateX(0);
+            opacity: 1;
+          }
         }
 
-        .cat__head::before {
-          top: 0;
-          right: 0;
-          background-position: 100% 0%;
-          transform-origin: 0% 100%;
-          transform: rotate(90deg);
-        }
-
-        .cat__tail::before {
-          left: 0;
-          bottom: 0;
-          background-position: 0% 100%;
-          transform-origin: 100% 0%;
-          transform: rotate(-30deg);
-        }
-
-        .cat__body::before {
-          right: 0;
-          bottom: 0;
-          background-position: 100% 100%;
-          transform-origin: 0% 0%;
-        }
-
-        .cat__body:nth-of-type(2) {
-          animation-delay: .2s;
-        }
-
-        .cat__tail {
-          animation-delay: .2s;
-        }
-
-        .cat__body {
-          animation-delay: .1s;
-        }
-
-        @keyframes rotating {
-          from { transform: rotate(720deg); }
-          to { transform: none; }
+        @keyframes fadeOut {
+          to {
+            opacity: 0;
+            visibility: hidden;
+          }
         }
       `}</style>
 
-      <div id="loading">
-        <div className="cat">
-          <div className="cat__head"></div>
-          <div className="cat__body"></div>
-          <div className="cat__body"></div>
-          <div className="cat__tail"></div>
-        </div>
+      <div className="loading-container">
+        <img
+          src="/images/vietnam-flag.gif"
+          alt="Vietnam Flag"
+          className="flag-image"
+        />
+        <img src="/images/tank.webp" alt="Tank" className="tank-image" />
+        <p className="loading-text">
+          Cùng Trưa Nay Ăn Gì! Chào Mừng 50 Năm Thống Nhất<br />
+          Đất Nước 30/04/1975 - 30/04/2025
+        </p>
       </div>
     </>
   );
