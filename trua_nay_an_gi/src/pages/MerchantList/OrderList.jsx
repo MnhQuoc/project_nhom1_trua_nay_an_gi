@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { Modal, Button, Table, Form } from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
+import { FaEye } from "react-icons/fa";
 
 const OrderList = () => {
   const [orders, setOrders] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-  const [selectedOrder, setSelectedOrder] = useState(null);
-  const [selectedStatus, setSelectedStatus] = useState("");
   const API_URL = "http://localhost:3001/orders";
 
   useEffect(() => {
@@ -17,46 +15,28 @@ const OrderList = () => {
   const fetchOrders = async () => {
     try {
       const response = await axios.get(API_URL);
-      setOrders(response.data);
+      const user = JSON.parse(localStorage.getItem("user"));
+
+      if (user && user.role === "merchant") {
+        const merchantOrders = response.data.filter(
+          (order) => order.merchantId === user.id
+        );
+        setOrders(merchantOrders);
+      } else {
+        setOrders([]);
+      }
     } catch (error) {
       console.error("Lỗi khi tải đơn hàng:", error);
     }
   };
 
-  const openConfirmModal = (order, status) => {
-    setSelectedOrder(order);
-    setSelectedStatus(status);
-    setShowModal(true);
-  };
-
-  const confirmStatusChange = async () => {
+  const confirmStatusChange = async (id, status) => {
     try {
-      await axios.patch(`${API_URL}/${selectedOrder.id}`, { status: selectedStatus });
+      await axios.patch(`${API_URL}/${id}`, { status });
       fetchOrders();
     } catch (error) {
       console.error("Lỗi khi cập nhật đơn hàng:", error);
-    } finally {
-      setShowModal(false);
     }
-  };
-
-  const isFinalStatus = (status) => ["Hủy", "Đã hoàn thành"].includes(status);
-
-  const orderStatusOrder = [
-    "Chờ nhận hàng",
-    "Đã nhận món",
-    "Đang chế biến",
-    
-    "Đang giao",
-    "Đã hoàn thành",
-    "Hủy"
-  ];
-
-  const validTransitions = {
-    "Chờ nhận hàng": ["Đã nhận món", "Hủy"],
-    "Đang chế biến": ["Đang giao"],
-    "Đã nhận món": ["Đang chế biến"],
-    "Đang giao": ["Đã hoàn thành"]
   };
 
   const getStatusVariant = (status) => {
@@ -80,8 +60,15 @@ const OrderList = () => {
 
   return (
     <div className="container p-4">
-      <h1 className="text-center mb-4 p-2" style={{ backgroundColor: "#c58d4e", color: "white", borderRadius: "8px" }}>
-        Danh sách đơn hàng
+      <h1
+        className="text-center mb-4 p-2"
+        style={{
+          backgroundColor: "#c58d4e",
+          color: "white",
+          borderRadius: "8px",
+        }}
+      >
+        Danh sách đơn hàng của bạn
       </h1>
       <Table bordered striped>
         <thead style={{ backgroundColor: "#f5e6d0" }}>
@@ -96,65 +83,75 @@ const OrderList = () => {
           </tr>
         </thead>
         <tbody>
-          {orders.map((order) => (
-            <tr key={order.id}>
-              <td>{order.id}</td>
-              <td>{new Date(order.createdAt).toLocaleString("vi-VN")}</td>
-              <td>{order.username || order.userId}</td>
-              <td>{order.items.length}</td>
-              <td>{order.totalAmount.toLocaleString("vi-VN")} VND</td>
-              <td>
-                {isFinalStatus(order.status) ? (
+          {orders.length > 0 ? (
+            orders.map((order) => (
+              <tr key={order.id}>
+                <td>{order.id}</td>
+                <td>{new Date(order.createdAt).toLocaleString("vi-VN")}</td>
+                <td>{order.username || order.userId}</td>
+                <td>{order.items.length}</td>
+                <td>{order.totalAmount.toLocaleString("vi-VN")} VND</td>
+                <td className="text-center">
                   <span className={`badge bg-${getStatusVariant(order.status)}`}>
                     {order.status}
                   </span>
-                ) : (
-                  <Form.Select
-                    value={order.status}
-                    onChange={(e) => openConfirmModal(order, e.target.value)}
-                  >
-                    <option value={order.status}>{order.status}</option>
-                    {orderStatusOrder
-                      .filter((status) => validTransitions[order.status]?.includes(status))
-                      .map((status) => (
-                        <option key={status} value={status}>
-                          {status}
-                        </option>
-                    ))}
-                  </Form.Select>
-                )}
-              </td>
-              <td>
-                <Link
-                  to={`/orderdetail/${order.id}`}
-                  className="btn btn-info rounded-pill w-100 text-center"
-                >
-                  Xem chi tiết
-                </Link>
+                </td>
+                <td>
+                  <div className="hstack gap-1">
+                    {order.status === "Chờ nhận hàng" && (
+                      <>
+                        <Button
+                          size="sm"
+                          variant="primary"
+                          onClick={() =>
+                            confirmStatusChange(order.id, "Đã nhận món")
+                          }
+                        >
+                          Nhận đơn
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="danger"
+                          onClick={() =>
+                            confirmStatusChange(order.id, "Hủy")
+                          }
+                        >
+                          Hủy đơn
+                        </Button>
+                      </>
+                    )}
+
+                    {order.status === "Đã nhận món" && (
+                      <span className="text-muted small">
+                        Đơn đã được nhận
+                      </span>
+                    )}
+
+                    {order.status === "Hủy" && (
+                      <span className="text-muted small">
+                        Đơn đã bị hủy
+                      </span>
+                    )}
+
+                    <Link
+                      to={`/orderdetail/${order.id}`}
+                      className="btn btn-info btn-sm text-center"
+                    >
+                      <FaEye />
+                    </Link>
+                  </div>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="7" className="text-center">
+                Không có đơn hàng nào.
               </td>
             </tr>
-          ))}
+          )}
         </tbody>
       </Table>
-
-      {/* Modal xác nhận */}
-      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Xác nhận thay đổi</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          Bạn có chắc chắn muốn chuyển trạng thái đơn hàng <strong>#{selectedOrder?.id}</strong> sang
-          <strong style={{ color: "#c58d4e" }}> {selectedStatus}</strong>?
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Hủy
-          </Button>
-          <Button variant="warning" onClick={confirmStatusChange}>
-            Xác nhận
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </div>
   );
 };

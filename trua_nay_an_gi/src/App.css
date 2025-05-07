@@ -155,3 +155,11 @@
 .explore-item:hover .explore-overlay {
   opacity: 1;
 }
+.bg-brand {
+  background-color: #c58d4e !important;
+  color: white !important;
+}
+
+.text-brand {
+  color: #c58d4e !important;
+}
