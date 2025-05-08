@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom"; // ✅ dùng để nhận dữ liệu từ navigate
 import "./MainContent.css";
 import axios from "axios";
 
 const MainContent = () => {
+  const location = useLocation();
+  const title = location.state?.title || "Deal hot trong ngày"; // ✅ nhận title nếu có
+
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -57,7 +61,7 @@ const MainContent = () => {
 
   return (
     <>
-      <h2 className="deal-title">Deal hot trong ngày</h2>
+      <h2 className="deal-title">{title}</h2> {/* ✅ tiêu đề thay đổi theo hình ảnh */}
       <div className="flash-sale-section">
         <div className="flash-sale-header">
           <div className="filter-bar d-flex gap-3">

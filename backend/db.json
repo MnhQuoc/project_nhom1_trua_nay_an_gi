@@ -350,7 +350,12 @@
       "phone": "0901234567",
       "openTime": "6:00 - 21:00",
       "status": "OPEN",
-      "description": "Bánh mì giòn, pate béo, thịt nguội đậm đà."
+      "description": "Bánh mì giòn, pate béo, thịt nguội đậm đà.",
+      "prepareTime": 10,
+      "note": "",
+      "discountPrice": 0,
+      "serviceFee": 0,
+      "tag": [1234567]
     },
     {
       "id": "2",
@@ -364,7 +369,12 @@
       "phone": "0902456789",
       "openTime": "7:00 - 20:30",
       "status": "OPEN",
-      "description": "Bánh mì nóng, pate béo ngậy, trứng ốp la vàng óng."
+      "description": "Bánh mì nóng, pate béo ngậy, trứng ốp la vàng óng.",
+      "prepareTime": 10,
+      "note": "",
+      "discountPrice": 0,
+      "serviceFee": 0,
+      "tag": [1234567]
     },
     {
       "id": "3",
@@ -378,7 +388,12 @@
       "phone": "0909988776",
       "openTime": "8:00 - 22:00",
       "status": "OPEN",
-      "description": "Bánh mì bò nướng sốt BBQ đậm đà, rau dưa tươi ngon."
+      "description": "Bánh mì bò nướng sốt BBQ đậm đà, rau dưa tươi ngon.",
+      "prepareTime": 10,
+      "note": "",
+      "discountPrice": 0,
+      "serviceFee": 0,
+      "tag": [1234567]
     },
     {
       "id": "4",
@@ -392,7 +407,12 @@
       "phone": "0912345678",
       "openTime": "6:00 - 14:00",
       "status": "OPEN",
-      "description": "Phở bò tái nạm truyền thống, nước dùng trong, ngọt từ xương."
+      "description": "Phở bò tái nạm truyền thống, nước dùng trong, ngọt từ xương.",
+      "prepareTime": 10,
+      "note": "",
+      "discountPrice": 0,
+      "serviceFee": 0,
+      "tag": [1234567]
     },
     {
       "id": "5",
@@ -406,7 +426,12 @@
       "phone": "0987123456",
       "openTime": "6:30 - 13:30",
       "status": "OPEN",
-      "description": "Phở gà truyền thống, thịt mềm, nước dùng thanh mát."
+      "description": "Phở gà truyền thống, thịt mềm, nước dùng thanh mát.",
+      "prepareTime": 10,
+      "note": "",
+      "discountPrice": 0,
+      "serviceFee": 0,
+      "tag": [1234567]
     },
     {
       "id": "6",
@@ -420,7 +445,12 @@
       "phone": "0978765432",
       "openTime": "7:00 - 15:00",
       "status": "OPEN",
-      "description": "Phở bò viên thơm ngon, đậm vị, topping đầy đủ."
+      "description": "Phở bò viên thơm ngon, đậm vị, topping đầy đủ.",
+      "prepareTime": 10,
+      "note": "",
+      "discountPrice": 0,
+      "serviceFee": 0,
+      "tag": [1234567]
     },
     {
       "id": "7",
@@ -434,7 +464,12 @@
       "phone": "0905555555",
       "openTime": "10:00 - 21:00",
       "status": "OPEN",
-      "description": "Cơm tấm Sài Gòn trứ danh, sườn nướng thơm lừng."
+      "description": "Cơm tấm Sài Gòn trứ danh, sườn nướng thơm lừng.",
+      "prepareTime": 10,
+      "note": "",
+      "discountPrice": 0,
+      "serviceFee": 0,
+      "tag": [1234567]
     },
     {
       "id": "8",
@@ -448,7 +483,12 @@
       "phone": "0933333333",
       "openTime": "10:30 - 20:00",
       "status": "OPEN",
-      "description": "Cơm chiên vàng ươm, trứng, lạp xưởng và rau củ."
+      "description": "Cơm chiên vàng ươm, trứng, lạp xưởng và rau củ.",
+      "prepareTime": 10,
+      "note": "",
+      "discountPrice": 0,
+      "serviceFee": 0,
+      "tag": [1234567]
     },
     {
       "id": "9",
@@ -462,7 +502,12 @@
       "phone": "0966666666",
       "openTime": "9:00 - 20:00",
       "status": "OPEN",
-      "description": "Cơm gà da giòn, thịt mềm, nước mắm gừng đặc trưng."
+      "description": "Cơm gà da giòn, thịt mềm, nước mắm gừng đặc trưng.",
+      "prepareTime": 10,
+      "note": "",
+      "discountPrice": 0,
+      "serviceFee": 0,
+      "tag": [1234567]
     },
     {
       "id": "10",
@@ -476,7 +521,12 @@
       "phone": "0944444444",
       "openTime": "11:00 - 22:00",
       "status": "OPEN",
-      "description": "Cá kho tộ đậm đà, ăn kèm cơm trắng và dưa leo."
+      "description": "Cá kho tộ đậm đà, ăn kèm cơm trắng và dưa leo.",
+      "prepareTime": 10,
+      "note": "",
+      "discountPrice": 0,
+      "serviceFee": 0,
+      "tag": [1234567]
     },
     {
       "id": "11",
@@ -490,7 +540,12 @@
       "phone": "0911000001",
       "openTime": "10:00 - 20:00",
       "status": "OPEN",
-      "description": "Bún chả Hà Nội với thịt nướng thơm lừng, nước mắm pha chuẩn vị."
+      "description": "Bún chả Hà Nội với thịt nướng thơm lừng, nước mắm pha chuẩn vị.",
+      "prepareTime": 10,
+      "note": "",
+      "discountPrice": 0,
+      "serviceFee": 0,
+      "tag": [1234567]
     },
     {
       "id": "12",
@@ -504,7 +559,12 @@
       "phone": "0911000002",
       "openTime": "6:00 - 11:00",
       "status": "OPEN",
-      "description": "Bánh cuốn mỏng mịn, nhân thịt nấm, ăn kèm chả quế và nước mắm chua ngọt."
+      "description": "Bánh cuốn mỏng mịn, nhân thịt nấm, ăn kèm chả quế và nước mắm chua ngọt.",
+      "prepareTime": 10,
+      "note": "",
+      "discountPrice": 0,
+      "serviceFee": 0,
+      "tag": [1234567]
     },
     {
       "id": "13",
@@ -518,7 +578,12 @@
       "phone": "0911000003",
       "openTime": "14:00 - 21:00",
       "status": "OPEN",
-      "description": "Bánh xèo giòn rụm, tôm thịt đầy đặn, ăn kèm rau sống và nước chấm đặc biệt."
+      "description": "Bánh xèo giòn rụm, tôm thịt đầy đặn, ăn kèm rau sống và nước chấm đặc biệt.",
+      "prepareTime": 10,
+      "note": "",
+      "discountPrice": 0,
+      "serviceFee": 0,
+      "tag": [1234567]
     },
     {
       "id": "14",
@@ -532,7 +597,12 @@
       "phone": "0911000004",
       "openTime": "10:00 - 19:00",
       "status": "OPEN",
-      "description": "Gỏi cuốn tươi mát, tôm thịt cuộn rau sống, chấm mắm nêm thơm ngon."
+      "description": "Gỏi cuốn tươi mát, tôm thịt cuộn rau sống, chấm mắm nêm thơm ngon.",
+      "prepareTime": 10,
+      "note": "",
+      "discountPrice": 0,
+      "serviceFee": 0,
+      "tag": [1234567]
     },
     {
       "id": "15",
@@ -546,7 +616,12 @@
       "phone": "0911000005",
       "openTime": "6:00 - 14:00",
       "status": "OPEN",
-      "description": "Hủ tiếu Nam Vang nước trong, topping đầy đủ, sợi dai vừa ăn."
+      "description": "Hủ tiếu Nam Vang nước trong, topping đầy đủ, sợi dai vừa ăn.",
+      "prepareTime": 10,
+      "note": "",
+      "discountPrice": 0,
+      "serviceFee": 0,
+      "tag": [1234567]
     },
     {
       "id": "16",
@@ -560,7 +635,12 @@
       "phone": "0911000006",
       "openTime": "5:00 - 10:00",
       "status": "OPEN",
-      "description": "Cháo lòng đậm đà, lòng sạch sẽ, ăn kèm rau thơm và quẩy giòn."
+      "description": "Cháo lòng đậm đà, lòng sạch sẽ, ăn kèm rau thơm và quẩy giòn.",
+      "prepareTime": 10,
+      "note": "",
+      "discountPrice": 0,
+      "serviceFee": 0,
+      "tag": [1234567]
     },
     {
       "id": "17",
@@ -574,7 +654,12 @@
       "phone": "0911000007",
       "openTime": "9:00 - 18:00",
       "status": "OPEN",
-      "description": "Bánh bèo thơm béo, tôm cháy bùi, mắm ngọt chuẩn vị Huế."
+      "description": "Bánh bèo thơm béo, tôm cháy bùi, mắm ngọt chuẩn vị Huế.",
+      "prepareTime": 10,
+      "note": "",
+      "discountPrice": 0,
+      "serviceFee": 0,
+      "tag": [1234567]
     },
     {
       "id": "18",
@@ -588,7 +673,12 @@
       "phone": "0911000008",
       "openTime": "6:00 - 13:00",
       "status": "OPEN",
-      "description": "Bún bò Huế cay nồng, thịt bò mềm, nước lèo đậm đà đặc trưng."
+      "description": "Bún bò Huế cay nồng, thịt bò mềm, nước lèo đậm đà đặc trưng.",
+      "prepareTime": 10,
+      "note": "",
+      "discountPrice": 0,
+      "serviceFee": 0,
+      "tag": [1234567]
     },
     {
       "id": "19",
@@ -602,7 +692,12 @@
       "phone": "0911000009",
       "openTime": "7:00 - 14:00",
       "status": "OPEN",
-      "description": "Mì Quảng trứng thịt đầy đủ, sợi mì vàng óng, nước lèo sánh đậm."
+      "description": "Mì Quảng trứng thịt đầy đủ, sợi mì vàng óng, nước lèo sánh đậm.",
+      "prepareTime": 10,
+      "note": "",
+      "discountPrice": 0,
+      "serviceFee": 0,
+      "tag": [1234567]
     },
     {
       "id": "20",
@@ -616,7 +711,12 @@
       "phone": "0911000010",
       "openTime": "8:00 - 21:00",
       "status": "OPEN",
-      "description": "Bánh khọt giòn tan, tôm tươi, ăn kèm rau sống và nước mắm chua ngọt."
+      "description": "Bánh khọt giòn tan, tôm tươi, ăn kèm rau sống và nước mắm chua ngọt.",
+      "prepareTime": 10,
+      "note": "",
+      "discountPrice": 0,
+      "serviceFee": 0,
+      "tag": [1234567]
     }
   ]
 }

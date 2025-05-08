@@ -20,6 +20,7 @@ import ExploreSection from './pages/Content/ExploreSection';
 import AddFoodItem from './components/Addfood/AddFoodItem.jsx';
 import ListFood from './components/Listfood/ListFood.jsx';
 import FoodEdit from './components/Editfood/EditFood.jsx';
+import MainContent from './pages/Content/MainContent.jsx';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -78,6 +79,7 @@ function App() {
           <Route path="addfood" element={<AddFoodItem />} />
           <Route path="listfood" element={<ListFood />} />
           <Route path="editfood/:id" element={<FoodEdit />} />
+          <Route path="main-content" element={<MainContent />} />
         </Route>
       </Routes>
     </ErrorBoundary>
