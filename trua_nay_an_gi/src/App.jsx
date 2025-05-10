@@ -2,6 +2,7 @@ import './App.css';
 import React from 'react';
 import { Route, Routes } from 'react-router';
 import LayoutWithNavbar from "./components/LayoutWithNavbar/LayoutWithNavbar";
+
 import Header from './pages/Home/Header';
 import About from './pages/RecommendFood/About';
 import Team from './pages/Team/Team';
@@ -23,6 +24,10 @@ import FoodEdit from './components/Editfood/EditFood.jsx';
 import MainContent from './pages/Content/MainContent.jsx';
 import Menu from './components/Navigate/Menu.jsx';
 import FoodDetail from './pages/FoodDetail/FoodDetail.jsx'; 
+import Checkout from './pages/Checkout/Checkout';
+import { CartProvider } from './contexts/CartContext';
+import Cart from './pages/Cart/Cart';
+
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
@@ -32,7 +37,8 @@ class ErrorBoundary extends React.Component {
     return { hasError: true };
   }
   componentDidCatch(error, errorInfo) {
-    console.error('App Error:', error, errorInfo);
+    console.log('Error:', error);
+    console.log('Error Info:', errorInfo);
   }
   render() {
     if (this.state.hasError) {
@@ -45,45 +51,49 @@ class ErrorBoundary extends React.Component {
 function App() {
   return (
     <ErrorBoundary>
-      <Routes>
-        {/* Trang intro riêng, không có navbar/footer */}
-        <Route path="/" element={<Intro />} />
+      <CartProvider>
+        <Routes>
+          {/* Trang intro riêng, không có navbar/footer */}
+          <Route path="/" element={<Intro />} />
 
-        {/* Layout có Navbar/Footer */}
-        <Route path="/" element={<LayoutWithNavbar />}>
-          <Route path="home" element={
-            <div className="home-banner-wrapper">
-              <div className="side-banner left">
-                <img src="/images/rice.gif" alt="Banner trái" />
+          {/* Layout có Navbar/Footer */}
+          <Route path="/" element={<LayoutWithNavbar />}>
+            <Route path="home" element={
+              <div className="home-banner-wrapper">
+                <div className="side-banner left">
+                  <img src="/images/rice.gif" alt="Banner trái" />
+                </div>
+                <div className="side-banner right">
+                  <img src="/images/rice.gif" alt="Banner phải" />
+                </div>
+                <div className="home-content">
+                  <Header />
+                  <ExploreSection />
+                  <About />
+                </div>
               </div>
-              <div className="side-banner right">
-                <img src="/images/rice.gif" alt="Banner phải" />
-              </div>
-              <div className="home-content">
-                <Header />
-                <ExploreSection />
-                <About />
-              </div>
-            </div>
-          } />
-          <Route path="profile" element={<Profile />} />
-          <Route path="users" element={<Users />} />
-          <Route path="menu" element={<Menu />} />
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-          <Route path="signup" element={<Signup />} />
-          <Route path="listmerchant" element={<MerchantList />} />
-          <Route path="changeinfo" element={<ChangeInfo />} />
-          <Route path="orderlist" element={<OrderList />} />
-          <Route path="orderdetail/:orderId" element={<OrderDetail />} />
-          <Route path="verify/:userId" element={<Verify />} />
-          <Route path="addfood" element={<AddFoodItem />} />
-          <Route path="listfood" element={<ListFood />} />
-          <Route path="editfood/:id" element={<FoodEdit />} />
-          <Route path="main-content" element={<MainContent />} />
-          <Route path="/foods/:id" element={<FoodDetail />} />
-        </Route>
-      </Routes>
+            } />
+            <Route path="profile" element={<Profile />} />
+            <Route path="users" element={<Users />} />
+            <Route path="menu" element={<Menu />} />
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+            <Route path="signup" element={<Signup />} />
+            <Route path="listmerchant" element={<MerchantList />} />
+            <Route path="changeinfo" element={<ChangeInfo />} />
+            <Route path="orderlist" element={<OrderList />} />
+            <Route path="orderdetail/:orderId" element={<OrderDetail />} />
+            <Route path="verify/:userId" element={<Verify />} />
+            <Route path="addfood" element={<AddFoodItem />} />
+            <Route path="listfood" element={<ListFood />} />
+            <Route path="editfood/:id" element={<FoodEdit />} />
+            <Route path="main-content" element={<MainContent />} />
+            <Route path="/foods/:id" element={<FoodDetail />} />
+            <Route path="cart" element={<Cart />} />
+            <Route path="checkout" element={<Checkout />} />
+          </Route>
+        </Routes>
+      </CartProvider>
     </ErrorBoundary>
   );
 }
