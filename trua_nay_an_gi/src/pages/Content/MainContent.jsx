@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom"; // ✅ dùng để nhận dữ liệu từ navigate
+import { useLocation } from "react-router-dom";
 import "./MainContent.css";
 import axios from "axios";
 
 const MainContent = () => {
   const location = useLocation();
-  const title = location.state?.title || "Deal hot trong ngày"; // ✅ nhận title nếu có
+  const title = location.state?.title || "Deal hot trong ngày";
 
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -44,7 +44,6 @@ const MainContent = () => {
     setCurrentPage(1);
   };
 
-  // Lọc theo danh mục và địa điểm
   const filteredProducts = products.filter((p) => {
     const matchCategory =
       selectedCategory === "Tất cả" ||
@@ -61,7 +60,7 @@ const MainContent = () => {
 
   return (
     <>
-      <h2 className="deal-title">{title}</h2> {/* ✅ tiêu đề thay đổi theo hình ảnh */}
+      <h2 className="deal-title">{title}</h2>
       <div className="flash-sale-section">
         <div className="flash-sale-header">
           <div className="filter-bar d-flex gap-3">
@@ -122,6 +121,9 @@ const MainContent = () => {
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
               <h2>{selectedProduct.name}</h2>
               <img src={selectedProduct.image} alt={selectedProduct.name} />
+              <p>
+                <strong>Nhà hàng:</strong> {selectedProduct.restname || "Chưa cập nhật"}
+              </p>
               <p>
                 <strong>Địa chỉ:</strong> {selectedProduct.address || "Chưa có"}
               </p>

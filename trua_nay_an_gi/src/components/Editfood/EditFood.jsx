@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import axios from 'axios';
 import { FaSave, FaArrowLeft, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
+import { Card, Form, Button, Row, Col, Alert } from 'react-bootstrap';
 
 const FoodEdit = () => {
   const { id } = useParams();
@@ -23,13 +24,12 @@ const FoodEdit = () => {
         console.error('Lỗi khi tải dữ liệu:', err);
       }
     };
-
     fetchFood();
   }, [id]);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-    setFood((prev) => ({ ...prev, [id]: value }));
+    setFood(prev => ({ ...prev, [id]: value }));
   };
 
   const handleImageChange = (e) => {
@@ -50,18 +50,14 @@ const FoodEdit = () => {
     });
 
     const data = await response.json();
-    if (!response.ok || !data.secure_url) {
-      throw new Error(data.error?.message || 'Upload thất bại');
-    }
+    if (!response.ok || !data.secure_url) throw new Error(data.error?.message || 'Upload thất bại');
     return data.secure_url;
   };
 
   const handleSave = async () => {
     try {
       let imageUrl = food.image;
-      if (image) {
-        imageUrl = await uploadToCloudinary(image);
-      }
+      if (image) imageUrl = await uploadToCloudinary(image);
 
       const updatedFood = {
         ...food,
@@ -82,7 +78,6 @@ const FoodEdit = () => {
       setMessage(<><FaTimesCircle className="me-2" /> Cập nhật thất bại!</>);
       setIsSuccess(false);
     }
-
     setTimeout(() => setMessage(''), 4000);
   };
 
@@ -90,74 +85,95 @@ const FoodEdit = () => {
 
   return (
     <div className="container mt-5">
-      <h2 className="text-center">Chỉnh sửa món ăn</h2>
+      <Card className="shadow-sm border-0 rounded">
+        <Card.Header className="bg-primary text-white text-center">
+          <h4>Chỉnh sửa món ăn</h4>
+        </Card.Header>
+        <Card.Body>
+          {message && (
+            <Alert variant={isSuccess ? 'success' : 'danger'}>{message}</Alert>
+          )}
 
-      {message && (
-        <div className={`alert ${isSuccess ? 'alert-success' : 'alert-danger'}`}>{message}</div>
-      )}
+          {/* Ảnh món ăn - đặt đầu tiên */}
+          <Form.Group className="mb-4">
+            <Form.Label>Ảnh món ăn</Form.Label>
+            <div>
+              {image ? (
+                <img src={URL.createObjectURL(image)} style={{ maxWidth: 200, borderRadius: 8 }} alt="preview" />
+              ) : food.image && (
+                <img src={food.image} style={{ maxWidth: 200, borderRadius: 8 }} alt="current" />
+              )}
+              <Form.Control type="file" onChange={handleImageChange} className="mt-2" />
+            </div>
+          </Form.Group>
 
-      <div className="mb-3">
-        <label className="form-label">Tên món ăn</label>
-        <input id="name" value={food.name} onChange={handleChange} className="form-control" />
-      </div>
+          {/* Các thông tin khác */}
+          <Row>
+            <Col md={6}>
+              <Form.Group className="mb-3" controlId="name">
+                <Form.Label>Tên món ăn</Form.Label>
+                <Form.Control type="text" value={food.name} onChange={handleChange} />
+              </Form.Group>
+            </Col>
+            <Col md={6}>
+              <Form.Group className="mb-3" controlId="address">
+                <Form.Label>Địa chỉ</Form.Label>
+                <Form.Control type="text" value={food.address} onChange={handleChange} />
+              </Form.Group>
+            </Col>
+          </Row>
 
-      <div className="mb-3">
-        <label className="form-label">Địa chỉ</label>
-        <input id="address" value={food.address} onChange={handleChange} className="form-control" />
-      </div>
+          <Row>
+            <Col md={4}>
+              <Form.Group className="mb-3" controlId="prepareTime">
+                <Form.Label>Thời gian chuẩn bị</Form.Label>
+                <Form.Control type="number" value={food.prepareTime} onChange={handleChange} />
+              </Form.Group>
+            </Col>
+            <Col md={4}>
+              <Form.Group className="mb-3" controlId="price">
+                <Form.Label>Giá</Form.Label>
+                <Form.Control type="number" value={food.price} onChange={handleChange} />
+              </Form.Group>
+            </Col>
+            <Col md={4}>
+              <Form.Group className="mb-3" controlId="discountPrice">
+                <Form.Label>Giá khuyến mãi</Form.Label>
+                <Form.Control type="number" value={food.discountPrice} onChange={handleChange} />
+              </Form.Group>
+            </Col>
+          </Row>
 
-      <div className="mb-3">
-        <label className="form-label">Ảnh món ăn</label>
-        {image ? (
-          <div>
-            <img src={URL.createObjectURL(image)} style={{ maxWidth: 200 }} alt="preview" />
+          <Row>
+            <Col md={6}>
+              <Form.Group className="mb-3" controlId="serviceFee">
+                <Form.Label>Phí dịch vụ</Form.Label>
+                <Form.Control type="number" value={food.serviceFee} onChange={handleChange} />
+              </Form.Group>
+            </Col>
+            <Col md={6}>
+              <Form.Group className="mb-3" controlId="tag">
+                <Form.Label>Tags (cách nhau bởi dấu phẩy)</Form.Label>
+                <Form.Control type="text" value={food.tag} onChange={handleChange} />
+              </Form.Group>
+            </Col>
+          </Row>
+
+          <Form.Group className="mb-4" controlId="note">
+            <Form.Label>Ghi chú</Form.Label>
+            <Form.Control as="textarea" rows={3} value={food.note} onChange={handleChange} />
+          </Form.Group>
+
+          <div className="d-flex justify-content-end gap-2">
+            <Button variant="success" onClick={handleSave}>
+              <FaSave className="me-2" /> Lưu
+            </Button>
+            <Button variant="secondary" onClick={() => navigate('/listfood')}>
+              <FaArrowLeft className="me-2" /> Quay lại
+            </Button>
           </div>
-        ) : food.image && (
-          <div>
-            <img src={food.image} style={{ maxWidth: 200 }} alt="current" />
-          </div>
-        )}
-        <input type="file" onChange={handleImageChange} className="form-control mt-2" />
-      </div>
-
-      <div className="mb-3">
-        <label className="form-label">Thời gian chuẩn bị</label>
-        <input id="prepareTime" value={food.prepareTime} onChange={handleChange} className="form-control" type="number" />
-      </div>
-
-      <div className="mb-3">
-        <label className="form-label">Giá</label>
-        <input id="price" value={food.price} onChange={handleChange} className="form-control" type="number" />
-      </div>
-
-      <div className="mb-3">
-        <label className="form-label">Giá khuyến mãi</label>
-        <input id="discountPrice" value={food.discountPrice} onChange={handleChange} className="form-control" type="number" />
-      </div>
-
-      <div className="mb-3">
-        <label className="form-label">Phí dịch vụ</label>
-        <input id="serviceFee" value={food.serviceFee} onChange={handleChange} className="form-control" type="number" />
-      </div>
-
-      <div className="mb-3">
-        <label className="form-label">Ghi chú</label>
-        <textarea id="note" value={food.note} onChange={handleChange} className="form-control" />
-      </div>
-
-      <div className="mb-3">
-        <label className="form-label">Tags (cách nhau bởi dấu phẩy)</label>
-        <input id="tag" value={food.tag} onChange={handleChange} className="form-control" />
-      </div>
-
-      <div className="d-flex justify-content-between">
-        <button className="btn btn-success" onClick={handleSave}>
-          <FaSave className="me-2" /> Lưu
-        </button>
-        <button className="btn btn-secondary" onClick={() => navigate('/listfood')}>
-          <FaArrowLeft className="me-2" /> Quay lại
-        </button>
-      </div>
+        </Card.Body>
+      </Card>
     </div>
   );
 };

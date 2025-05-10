@@ -21,7 +21,8 @@ import AddFoodItem from './components/Addfood/AddFoodItem.jsx';
 import ListFood from './components/Listfood/ListFood.jsx';
 import FoodEdit from './components/Editfood/EditFood.jsx';
 import MainContent from './pages/Content/MainContent.jsx';
-
+import Menu from './components/Navigate/Menu.jsx';
+import FoodDetail from './pages/FoodDetail/FoodDetail.jsx'; 
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
@@ -67,7 +68,7 @@ function App() {
           } />
           <Route path="profile" element={<Profile />} />
           <Route path="users" element={<Users />} />
-          <Route path="menu" element={<h1>Menu</h1>} />
+          <Route path="menu" element={<Menu />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="signup" element={<Signup />} />
@@ -80,6 +81,7 @@ function App() {
           <Route path="listfood" element={<ListFood />} />
           <Route path="editfood/:id" element={<FoodEdit />} />
           <Route path="main-content" element={<MainContent />} />
+          <Route path="/foods/:id" element={<FoodDetail />} />
         </Route>
       </Routes>
     </ErrorBoundary>

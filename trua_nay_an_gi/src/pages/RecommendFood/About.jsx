@@ -2,10 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import './About.css';
 import axios from 'axios';
 import MainContent from '../Content/MainContent';
+import { useNavigate } from 'react-router'; // ✅ thêm
 
 const About = () => {
   const [products, setProducts] = useState([]);
   const scrollRef = useRef(null);
+  const navigate = useNavigate(); // ✅ thêm
 
   useEffect(() => {
     axios.get('http://localhost:3001/foods')
@@ -28,10 +30,15 @@ const About = () => {
           <button className="scroll-btn left" onClick={scrollLeft}>❮</button>
           <div className="product-list" ref={scrollRef}>
             {products.map(product => (
-              <div className="product-card" key={product.id}>
+              <div 
+                className="product-card" 
+                key={product.id}
+                onClick={() => navigate(`/foods/${product.id}`)} // ✅ điều hướng khi click
+                style={{ cursor: 'pointer' }}
+              >
                 <img src={product.image} alt={product.name} />
                 <p className="product-name">{product.name}</p>
-                <p className="price"> {product.price.toLocaleString()}₫</p>
+                <p className="price">{product.price.toLocaleString()}₫</p>
               </div>
             ))}
           </div>
