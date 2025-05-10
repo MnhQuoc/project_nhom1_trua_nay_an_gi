@@ -14,8 +14,12 @@ const FoodDetail = () => {
   const { addToCart } = useCart();
   const navigate = useNavigate();
   const [message, setMessage] = useState('');
+  const [userRole, setUserRole] = useState(null);
 
   useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    setUserRole(user.role);
+    
     const fetchData = async () => {
       try {
         const res = await axios.get(`http://localhost:3001/foods/${id}`);
@@ -116,16 +120,18 @@ const FoodDetail = () => {
                 </Alert>
               )}
 
-              <div className="d-flex justify-content-end mt-4">
-                <Button 
-                  variant="primary" 
-                  size="lg"
-                  onClick={handleAddToCart}
-                >
-                  <FaShoppingCart className="me-2" />
-                  Thêm vào giỏ hàng
-                </Button>
-              </div>
+              {userRole === 'user' && (
+                <div className="d-flex justify-content-end mt-4">
+                  <Button 
+                    variant="primary" 
+                    size="lg"
+                    onClick={handleAddToCart}
+                  >
+                    <FaShoppingCart className="me-2" />
+                    Thêm vào giỏ hàng
+                  </Button>
+                </div>
+              )}
             </Card.Body>
           </Card>
         </Col>
