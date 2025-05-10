@@ -56,7 +56,7 @@ const NavbarWeb = () => {
               <span>Trưa nay ăn gì</span>
             </NavLink>
             <span className="nav-link text-primary ms-3">
-              CALL US: <span className="text-muted">(123) 456 7890)</span>
+              CALL US: <span className="text-muted">(123) 456 7890</span>
             </span>
           </div>
 
