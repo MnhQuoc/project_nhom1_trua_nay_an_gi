@@ -69,7 +69,7 @@ const NavbarWeb = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mx-auto">
               <Nav.Link href="/home">Trang chủ</Nav.Link>
-              <Nav.Link href="/menu">Thực đơn</Nav.Link>
+              <Nav.Link href="/listfood">Thực đơn</Nav.Link>
             </Nav>
 
             <div className="d-flex align-items-center">
