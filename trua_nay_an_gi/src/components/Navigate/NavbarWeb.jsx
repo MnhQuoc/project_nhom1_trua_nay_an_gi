@@ -17,7 +17,18 @@ const NavbarWeb = () => {
   const [username, setUsername] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [allFoods, setAllFoods] = useState([]);
+  const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const navigate = useNavigate();
+
+  // Hàm chuẩn hóa chuỗi (bỏ dấu, đổi về chữ thường)
+  const normalizeString = (str) => {
+    return str.toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/đ/g, 'd')
+      .replace(/Đ/g, 'D');
+  };
 
   useEffect(() => {
     const user = localStorage.getItem('user');
@@ -29,6 +40,31 @@ const NavbarWeb = () => {
     }
   }, []);
 
+  // Fetch all foods
+  useEffect(() => {
+    fetch('http://localhost:3001/foods')
+      .then(res => res.json())
+      .then(data => {
+        setAllFoods(data);
+      })
+      .catch(err => console.error('Error fetching foods:', err));
+  }, []);
+
+  // Update suggestions when search query changes
+  useEffect(() => {
+    if (searchQuery.trim() !== '') {
+      const normalizedSearch = normalizeString(searchQuery.trim());
+      const filtered = allFoods
+        .filter(food => 
+          normalizeString(food.name).includes(normalizedSearch)
+        )
+        .map(food => food.name);
+      setFilteredSuggestions(filtered);
+    } else {
+      setFilteredSuggestions([]);
+    }
+  }, [searchQuery, allFoods]);
+
   const handleLogout = () => {
     localStorage.removeItem('user');
     setIsLoggedIn(false);
@@ -39,12 +75,10 @@ const NavbarWeb = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim() !== '') {
-      navigate(`/menu?search=${encodeURIComponent(searchQuery)}`);
+      navigate(`/menu?search=${encodeURIComponent(searchQuery.trim())}`);
       setShowSuggestions(false);
     }
   };
-
-  const suggestions = ['Bánh mì', 'Phở', 'Cơm'];
 
   return (
     <div>
@@ -168,16 +202,18 @@ const NavbarWeb = () => {
                 background: 'white',
                 border: '1px solid #ddd',
                 borderTop: 'none',
-                zIndex: 9999
+                zIndex: 9999,
+                maxHeight: '200px',
+                overflowY: 'auto'
               }}>
-                {suggestions
-                  .filter(item => item.toLowerCase().includes(searchQuery.toLowerCase()))
-                  .map((item, index) => (
+                {filteredSuggestions.length > 0 ? (
+                  filteredSuggestions.map((item, index) => (
                     <div
                       key={index}
                       onMouseDown={() => {
                         navigate(`/menu?search=${encodeURIComponent(item)}`);
                         setShowSuggestions(false);
+                        setSearchQuery(item);
                       }}
                       style={{
                         padding: '8px 12px',
@@ -188,10 +224,7 @@ const NavbarWeb = () => {
                       {item}
                     </div>
                   ))
-                }
-                {suggestions.filter(item =>
-                  item.toLowerCase().includes(searchQuery.toLowerCase())
-                ).length === 0 && (
+                ) : (
                   <div style={{ padding: '8px 12px', color: '#888' }}>
                     Không có gợi ý phù hợp.
                   </div>

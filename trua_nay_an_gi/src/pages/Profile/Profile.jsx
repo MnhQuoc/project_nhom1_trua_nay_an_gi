@@ -45,7 +45,7 @@ const Profile = () => {
             setMessage('Vui lòng cập nhật thông tin');
           }
         } else {
-          setMessage('Không thể tải thông tin người dùng');
+          setMessage('Vui lòng cập nhật thông tin');
         }
       } catch (error) {
         console.error('Error fetching user data:', error);

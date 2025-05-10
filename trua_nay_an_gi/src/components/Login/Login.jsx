@@ -84,7 +84,8 @@ function Login() {
 
         // Chuyển hướng đến trang chủ sau 1 giây
         setTimeout(() => {
-          navigate('/home');         
+          navigate('/home');  
+          window.location.reload(); // Thêm dòng này để reload trang       
         }, 1000);
       } else {
         setMessage('Tên đăng nhập hoặc mật khẩu không đúng');

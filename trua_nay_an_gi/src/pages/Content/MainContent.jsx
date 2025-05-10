@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import "./MainContent.css";
 import axios from "axios";
+import { useCart } from "../../contexts/CartContext";
 
 const MainContent = () => {
   const location = useLocation();
   const title = location.state?.title || "Deal hot trong ngày";
+  const { addToCart } = useCart();
 
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -42,6 +44,12 @@ const MainContent = () => {
   const handleLocationChange = (e) => {
     setSelectedLocation(e.target.value);
     setCurrentPage(1);
+  };
+
+  const handleAddToCart = (e, product) => {
+    e.stopPropagation();
+    addToCart(product);
+    alert("Đã thêm vào giỏ hàng!");
   };
 
   const filteredProducts = products.filter((p) => {
@@ -138,9 +146,15 @@ const MainContent = () => {
                 <span className="open-status">{selectedProduct.status || "OPEN"}</span>
               </p>
               <p>{selectedProduct.description || "Không có mô tả."}</p>
-              <button onClick={closeModal} className="close-button">
-                Đóng
-              </button>
+              <div className="modal-buttons">
+                <button  className="close-button"
+                  onClick={(e) => handleAddToCart(e, selectedProduct)}>
+                  Đặt hàng
+                </button>
+                <button onClick={closeModal} className="close-button">
+                  Đóng
+                </button>
+              </div>
             </div>
           </div>
         )}

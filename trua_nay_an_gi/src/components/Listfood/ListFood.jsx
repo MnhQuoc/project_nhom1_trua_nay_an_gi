@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import { FaEdit, FaTrash } from 'react-icons/fa'; // Import các icon từ react-icons
 
 const ListFood = () => {
   const [foods, setFoods] = useState([]);
   const navigate = useNavigate();
-  const [currentMerchantId, setCurrentMerchantId] = useState(null);
 
   useEffect(() => {
-    const user = localStorage.getItem('user');
-    if (user) {
-      const parsedUser = JSON.parse(user);
-      if (parsedUser.role === 'merchant') {
-        setCurrentMerchantId(parsedUser.id);
-      }
-    }
     fetchFoods();
   }, []);
 
@@ -41,23 +33,22 @@ const ListFood = () => {
     }
   };
 
-  const merchantFoods = foods.filter(food => food.merchantId === currentMerchantId);
-
   return (
     <div className="container mt-5">
-      <h2 className="mb-4">Danh sách món ăn của cửa hàng</h2>
+      <h2 className="mb-4">Danh sách món ăn</h2>
 
+      {/* Nút thêm món ăn ở trên, dưới tiêu đề */}
       <div className="d-flex justify-content-start mb-4">
         <button
           className="btn btn-success"
-          onClick={() => navigate('/addfood')}
+          onClick={() => navigate('/addfood')} // Điều hướng đến trang thêm món ăn
         >
           Thêm món ăn
         </button>
       </div>
 
       <div className="row">
-        {merchantFoods.map((food) => (
+        {foods.map((food) => (
           <div className="col-md-4 mb-4" key={food.id}>
             <div className="card h-100">
               <img
@@ -69,7 +60,6 @@ const ListFood = () => {
                 <h5 className="card-title">{food.name}</h5>
                 <p className="card-text">{food.note}</p>
                 <p className="card-text">
-                  <strong>Địa chỉ:</strong> {food.address} <br />
                   <strong>Giá:</strong> {food.price}đ <br />
                   <strong>Giá KM:</strong> {food.discountPrice}đ <br />
                   <strong>Phí DV:</strong> {food.serviceFee}đ
@@ -92,8 +82,8 @@ const ListFood = () => {
             </div>
           </div>
         ))}
-        {merchantFoods.length === 0 && (
-          <div className="text-center mt-4 text-muted">Cửa hàng bạn chưa có món ăn nào.</div>
+        {foods.length === 0 && (
+          <div className="text-center mt-4 text-muted">Không tìm thấy món ăn nào.</div>
         )}
       </div>
     </div>

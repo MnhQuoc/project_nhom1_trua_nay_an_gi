@@ -10,7 +10,16 @@ const Menu = () => {
 
   // Lấy query param search từ URL
   const queryParams = new URLSearchParams(location.search);
-  const searchQuery = queryParams.get('search')?.toLowerCase() || '';
+  const searchQuery = queryParams.get('search') || '';
+
+  // Hàm chuẩn hóa chuỗi (bỏ dấu, đổi về chữ thường)
+  const normalizeString = (str) => {
+    return str.toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/đ/g, 'd')
+      .replace(/Đ/g, 'D');
+  };
 
   useEffect(() => {
     const fetchFoods = async () => {
@@ -20,8 +29,9 @@ const Menu = () => {
 
         // Nếu có search → lọc theo name
         if (searchQuery) {
+          const normalizedSearch = normalizeString(searchQuery);
           data = data.filter((food) =>
-            food.name.toLowerCase().includes(searchQuery)
+            normalizeString(food.name).includes(normalizedSearch)
           );
         }
 

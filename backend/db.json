@@ -14,7 +14,21 @@
       "district": "sss",
       "ward": "ss",
       "streetAddress": "ss",
-      "address": "ss, ss, sss, sss"
+      "address": "ss, ss, sss, sss",
+      "addresses": [
+        {
+          "id": 1746878288389,
+          "name": "s",
+          "phone": "0978870124",
+          "address": "2906, Nam Hoa, sss, A1"
+        },
+        {
+          "id": 1746878300132,
+          "name": "s",
+          "phone": "09788701241",
+          "address": "2906, Nam Hoa, sss, A1"
+        }
+      ]
     },
     {
       "id": "1745312310240",
@@ -93,6 +107,7 @@
       "blocked": false,
       "verified": true
     }
+   
   ],
   "request": [
     {
@@ -143,6 +158,13 @@
       "role": "merchant",
       "verified": false,
       "id": "7"
+    },
+    {
+      "id": "36a0",
+      "userId": "1746879405498",
+      "status": "approved",
+      "role": "merchant",
+      "verified": false
     }
   ],
   "orders": [
@@ -335,6 +357,30 @@
       "totalAmount": 151161,
       "status": "Chờ nhận hàng",
       "createdAt": "2025-04-27T02:02:43.058Z"
+    },
+    {
+      "id": "62d9",
+      "userId": "1746879405498",
+      "items": [
+        {
+          "id": "1",
+          "name": "Bánh mì thịt nguội",
+          "price": 25000,
+          "image": "https://tse4.mm.bing.net/th?id=OIP.t47v8dgxjhC1uFaYe4cSjAHaHa&w=474&h=474&c=7",
+          "restname": "Quán Anh Béo 22",
+          "quantity": 1
+        }
+      ],
+      "address": "ssss | ssss | sss, Nam Hoa, A1, HCM",
+      "paymentMethod": "COD",
+      "note": "",
+      "subtotal": 25000,
+      "serviceFee": 15000,
+      "deliveryFee": 25000,
+      "discount": 0,
+      "total": 65000,
+      "status": "pending",
+      "createdAt": "2025-05-10T12:19:14.717Z"
     }
   ],
   "foods": [
@@ -813,6 +859,20 @@
       ],
       "merchantId": "1745421209258",
       "restname": "Ngõ Nhỏ Quán 2"
+    },
+    {
+      "id": "28a2",
+      "name": "Bún",
+      "address": "QQQQ",
+      "image": "https://res.cloudinary.com/dr1ihrvvg/image/upload/v1746880475/lnz4pqwiewz7fcir3gke.png",
+      "prepareTime": 3,
+      "note": "sssss",
+      "price": 40000,
+      "discountPrice": 10000,
+      "serviceFee": 10000,
+      "tag": [
+        "quoc"
+      ]
     }
   ]
 }
